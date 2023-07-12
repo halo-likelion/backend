@@ -1,0 +1,45 @@
+#spring:
+#  datasource:
+#  url: jdbc:h2:tcp://localhost/~/reserve
+#  username: sa
+#  password:
+#  driver-class-name: org.h2.Driver
+#jpa:
+#  hibernate:
+#    ddl-auto: create
+#  properties:
+#    hibernate:
+#      show_sql: true
+#      format_sql: true
+#    logging.level:
+#      org.hibernate.type: trace #??? ?? 2.x, hibernate5
+#      org.hibernate.SQL: debug
+#      org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
+# org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
+server:
+  address: localhost
+  port: 8080
+  servlet:
+    session:
+      tracking-modes: cookie
+spring:
+  jackson:
+    time-zone: Asia/Seoul
+  datasource:
+    url: jdbc:mysql://localhost:3306/haloDB?serverTimezone=Asia/Seoul
+    username: root
+    password: 1111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        show_sql: true
+        format_sql: true
+      logging.level:
+        org.hibernate.type: trace
+
