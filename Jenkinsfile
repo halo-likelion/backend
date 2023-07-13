@@ -5,14 +5,24 @@ pipeline {
   tools {
       jdk 'JDK 17'
     }
-  environment {
-      JAVA_HOME = "${tool 'JDK_17'}/jdk-17"
-      PATH = "${JAVA_HOME}/bin:/opt/gradle/gradle-7.3/bin:$PATH"
-      SLACK_CHANNEL = '#jenkins-notification'
-  }
+//   environment {
+//       JAVA_HOME = "${tool 'JDK_17'}/jdk-17"
+//       PATH = "${JAVA_HOME}/bin:/opt/gradle/gradle-7.3/bin:$PATH"
+//       SLACK_CHANNEL = '#jenkins-notification'
+//   }
 
 
   stages {
+
+    stages {
+        stage('Print JAVA_HOME') {
+          steps {
+            script {
+              println "JAVA_HOME is: ${System.getenv('JAVA_HOME')}"
+            }
+          }
+        }
+      }
 
     stage('Git Checkout') {
       steps {
