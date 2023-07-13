@@ -3,7 +3,7 @@ def mainBranch = false
 pipeline {
   agent any
   tools {
-      jdk 'jdk17'
+      jdk 'JDK 17'
     }
   environment {
       JAVA_HOME = "/var/lib/jenkins/tools/hudson.model.JDK/JDK_17/jdk-17"
