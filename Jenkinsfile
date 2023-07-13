@@ -23,6 +23,7 @@ pipeline {
 
     stage('Test') {
       steps {
+        sh 'java -version'
         sh 'gradle test'
         echo 'test success'
       }
