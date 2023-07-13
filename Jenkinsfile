@@ -6,10 +6,11 @@ pipeline {
       jdk 'JDK 17'
     }
   environment {
-        JAVA_HOME = "${tool 'JDK_17'}/jdk-17"
-        PATH = "/opt/gradle/gradle-7.3/bin:$PATH"
-        SLACK_CHANNEL = '#jenkins-notification'
-    }
+      JAVA_HOME = "${tool 'JDK_17'}/jdk-17"
+      PATH = "${JAVA_HOME}/bin:/opt/gradle/gradle-7.3/bin:$PATH"
+      SLACK_CHANNEL = '#jenkins-notification'
+  }
+
 
   stages {
 
