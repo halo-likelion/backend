@@ -3,7 +3,7 @@ def mainBranch = false
 pipeline {
   agent any
   tools {
-      jdk 'JDK 17'
+      jdk 'jdk17'
     }
   environment {
       PATH = "/opt/gradle/gradle-6.3/bin:$PATH"
