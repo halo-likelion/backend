@@ -6,7 +6,7 @@ pipeline {
       jdk 'JDK 17'
     }
   environment {
-        JAVA_HOME = "/var/lib/jenkins/tools/hudson.model.JDK/JDK_17/jdk-17"
+        JAVA_HOME = "${tool 'JDK_17'}/jdk-17"
         PATH = "/opt/gradle/gradle-7.3/bin:$PATH"
         SLACK_CHANNEL = '#jenkins-notification'
     }
