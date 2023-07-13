@@ -2,10 +2,10 @@ def mainBranch = false
 
 pipeline {
   agent any
-//   tools {
+  tools {
 //       jdk 'JDK 17'
-//       gradle 'gradle 8.2.1'
-//     }
+      gradle 'gradle 8.2.1'
+    }
   environment {
 //       JAVA_HOME = "/var/lib/jenkins/tools/hudson.model.JDK/JDK_17/jdk-17"
       PATH = "/opt/gradle/gradle-8.2.1/bin:$PATH"
