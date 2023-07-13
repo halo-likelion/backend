@@ -13,16 +13,6 @@ pipeline {
 
   stages {
 
-    stages {
-        stage('Print JAVA_HOME') {
-          steps {
-            script {
-              println "JAVA_HOME is: ${System.getenv('JAVA_HOME')}"
-            }
-          }
-        }
-      }
-
     stage('Git Checkout') {
       steps {
         checkout scm
