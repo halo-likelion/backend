@@ -6,7 +6,7 @@ pipeline {
       jdk 'JDK 17'
     }
   environment {
-        JAVA_HOME = "${tool 'JDK 17'}"  // 이 이름은 실제 Jenkins에서 설정한 JDK 이름에 맞춰 변경해야 합니다.
+        JAVA_HOME = "/var/lib/jenkins/tools/hudson.model.JDK/JDK_17/jdk-17"
         PATH = "/opt/gradle/gradle-7.3/bin:$PATH"
         SLACK_CHANNEL = '#jenkins-notification'
     }
