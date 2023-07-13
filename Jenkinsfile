@@ -4,6 +4,7 @@ pipeline {
   agent any
   tools {
       jdk 'JDK 17'
+      gradle 'gradle 8.2.1'
     }
   environment {
       JAVA_HOME = "/var/lib/jenkins/tools/hudson.model.JDK/JDK_17/jdk-17"
