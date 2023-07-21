@@ -32,7 +32,6 @@ public class Member {
     private String email; // 이메일
 
     public Member(MemberJoinDto memberInfo) {
-        this.id = memberInfo.getId();
         this.loginId = memberInfo.getLoginId();
         this.name = memberInfo.getName();
         this.phoneNo = memberInfo.getPhoneNo();
