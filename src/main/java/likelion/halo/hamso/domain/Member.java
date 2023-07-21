@@ -33,7 +33,6 @@ public class Member {
     public Member(MemberDto memberDto) {
         this.id = memberDto.getId();
         this.loginId = memberDto.getLoginId();
-        this.password = memberDto.getPassword();
         this.name = memberDto.getName();
         this.phoneNo = memberDto.getPhoneNo();
         this.email = memberDto.getEmail();

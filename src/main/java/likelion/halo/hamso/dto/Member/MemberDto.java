@@ -10,8 +10,6 @@ public class MemberDto {
 
     private String loginId; // 로그인 아이디
 
-    private String password; // 비밀번호
-
     private String name; // 회원의 이름
 
     private String phoneNo; // 전화번호
