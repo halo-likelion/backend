@@ -4,8 +4,10 @@ import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
+import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -32,8 +35,12 @@ public class MemberService {
 
     public MemberDto findByLoginId(String loginId){
         Member member = memberRepository.findByLoginId(loginId);
-        MemberDto memberDto = new MemberDto(member);
-        return memberDto;
+        if(member == null) {
+            // Member not found, handle accordingly
+            throw new MemberNotFoundException("Member not found with loginId: " + loginId);
+        } else {
+            return new MemberDto(member);
+        }
     }
 
     public List<MemberDto> findAll() {

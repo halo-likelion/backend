@@ -15,8 +15,6 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("---------------------LogInterceptor Start---------------------");
-
         String requestURI = request.getRequestURI();
         String uuid = UUID.randomUUID().toString();
         request.setAttribute(LOG_ID, uuid);
@@ -26,18 +24,11 @@ public class LogInterceptor implements HandlerInterceptor {
         if(handler instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) handler;// 호출할 컨트롤러의 모든 정보가 포함되어 있다.
         }
-
-        log.info("preHandle REQUEST: uuid = [{}]",
-                uuid);
-
-        log.info("preHandle REQUEST: requestURI = [{}]",
+        log.info("LOG == preHandle REQUEST: requestURI = [{}]",
                 requestURI);
 
-        log.info("preHandle REQUEST: handler = [{}]",
+        log.info("LOG == preHandle REQUEST: handler = [{}]",
                 handler);
-
-        log.info("---------------------LogInterceptor End---------------------");
-
 
         return true;
     }

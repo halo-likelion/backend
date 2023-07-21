@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import likelion.halo.hamso.dto.Member.MemberDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter @ToString
 @Table(name = "member")
 public class Member {
     @Id
@@ -15,7 +15,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "login_id")
+    @Column(name = "login_id", unique = true)
     private String loginId; // 로그인 아이디
 
     @Column(name = "pwd")
