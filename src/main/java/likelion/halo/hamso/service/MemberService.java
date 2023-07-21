@@ -22,9 +22,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long join(Member member){
+    public String join(Member member){
         memberRepository.save(member);
-        return member.getId();
+        return member.getLoginId();
     }
 
     public MemberDto findById(Long id){

@@ -52,9 +52,9 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Long> insertMember(@RequestBody MemberDto memberDto) {
+    public ResponseEntity<String> insertMember(@RequestBody MemberDto memberDto) {
         Member member = new Member(memberDto);
-        Long memberId = memberService.join(member);
-        return new ResponseEntity<>(memberId, HttpStatus.CREATED);
+        String memberLoginId = memberService.join(member);
+        return new ResponseEntity<>(memberLoginId, HttpStatus.CREATED);
     }
 }
