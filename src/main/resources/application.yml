@@ -17,8 +17,8 @@
 #      org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
 # org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
 server:
-  address: 0.0.0.0
-  port: 9999
+  address: localhost
+  port: 8081
   servlet:
     session:
       tracking-modes: cookie
@@ -26,7 +26,7 @@ spring:
   jackson:
     time-zone: Asia/Seoul
   datasource:
-    url: hamso-rds-instance.cd3bbnyyiapd.ap-northeast-2.rds.amazonaws.com:3306/haloDB?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://hamso-rds-instance.cd3bbnyyiapd.ap-northeast-2.rds.amazonaws.com:3306/hamsoDB?serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: Hamso9800
     driver-class-name: com.mysql.cj.jdbc.Driver
