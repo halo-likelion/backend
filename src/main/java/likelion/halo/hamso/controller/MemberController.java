@@ -2,6 +2,7 @@ package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
+import likelion.halo.hamso.dto.Member.MemberJoinDto;
 import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
 import likelion.halo.hamso.service.MemberService;
@@ -52,8 +53,8 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> insertMember(@RequestBody MemberDto memberDto) {
-        Member member = new Member(memberDto);
+    public ResponseEntity<String> insertMember(@RequestBody MemberJoinDto memberInfo) {
+        Member member = new Member(memberInfo);
         String memberLoginId = memberService.join(member);
         return new ResponseEntity<>(memberLoginId, HttpStatus.CREATED);
     }

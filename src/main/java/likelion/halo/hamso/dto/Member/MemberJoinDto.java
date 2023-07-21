@@ -9,7 +9,7 @@ public class MemberJoinDto {
 
     private String loginId; // 로그인 아이디
 
-    private String password; // 비밀번호
+    private String password;
 
     private String name; // 회원의 이름
 

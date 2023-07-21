@@ -2,6 +2,7 @@ package likelion.halo.hamso.domain;
 
 import jakarta.persistence.*;
 import likelion.halo.hamso.dto.Member.MemberDto;
+import likelion.halo.hamso.dto.Member.MemberJoinDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,12 +31,13 @@ public class Member {
     @Column(name="email")
     private String email; // 이메일
 
-    public Member(MemberDto memberDto) {
-        this.id = memberDto.getId();
-        this.loginId = memberDto.getLoginId();
-        this.name = memberDto.getName();
-        this.phoneNo = memberDto.getPhoneNo();
-        this.email = memberDto.getEmail();
+    public Member(MemberJoinDto memberInfo) {
+        this.id = memberInfo.getId();
+        this.loginId = memberInfo.getLoginId();
+        this.name = memberInfo.getName();
+        this.phoneNo = memberInfo.getPhoneNo();
+        this.email = memberInfo.getEmail();
+        this.password = memberInfo.getPassword();
     }
 
     public Member() {
