@@ -24,4 +24,7 @@ public class MemberJoinDto {
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
     }
+
+    public MemberJoinDto() {
+    }
 }

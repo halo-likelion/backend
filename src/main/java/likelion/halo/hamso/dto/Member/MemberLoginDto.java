@@ -11,4 +11,7 @@ public class MemberLoginDto {
         this.loginId = loginId;
         this.password = password;
     }
+
+    public MemberLoginDto() {
+    }
 }

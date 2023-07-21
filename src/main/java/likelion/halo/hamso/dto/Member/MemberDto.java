@@ -23,4 +23,7 @@ public class MemberDto {
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
     }
+
+    public MemberDto() {
+    }
 }
