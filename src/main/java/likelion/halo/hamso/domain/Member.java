@@ -1,6 +1,7 @@
 package likelion.halo.hamso.domain;
 
 import jakarta.persistence.*;
+import likelion.halo.hamso.dto.Member.MemberDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Table(name = "member")
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -29,4 +30,16 @@ public class Member {
     @Column(name="email")
     private String email; // 이메일
 
+    public Member(MemberDto memberDto) {
+        this.id = memberDto.getId();
+        this.loginId = memberDto.getLoginId();
+        this.password = memberDto.getPassword();
+        this.name = memberDto.getName();
+        this.phoneNo = memberDto.getPhoneNo();
+        this.email = memberDto.getEmail();
+    }
+
+    public Member() {
+
+    }
 }
