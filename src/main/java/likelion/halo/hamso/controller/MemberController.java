@@ -24,7 +24,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private final AuthService authService;
+//    private final AuthService authService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MemberDto>> getMemberList() {

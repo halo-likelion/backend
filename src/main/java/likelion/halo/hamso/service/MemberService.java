@@ -2,7 +2,6 @@ package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
-import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
 import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
