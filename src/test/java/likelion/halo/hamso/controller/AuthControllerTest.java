@@ -3,6 +3,7 @@ package likelion.halo.hamso.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
+import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.service.AuthService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,6 +70,9 @@ class AuthControllerTest {
         String phoneNo = "010-1111-1111"; // 전화번호
 
         String email = "test@email.com"; // 이메일
+
+        when(authService.join(any()))
+                .thenThrow(new MemberDuplicateException("해당 userId가 중복됩니다."));
 
 
         mockMvc.perform(post("/auth/join")

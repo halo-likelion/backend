@@ -18,13 +18,13 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handleCntException(MemberNotFoundException ex) {
-        return new ErrorResponse(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value(), ex.getMessage());
+    public ErrorResponse handleMemberNotFoundExceptionException(MemberNotFoundException ex) {
+        return new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
     }
 
     @ExceptionHandler(MemberDuplicateException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handleCntException(MemberDuplicateException ex) {
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleMemberDuplicateExceptionException(MemberDuplicateException ex) {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 

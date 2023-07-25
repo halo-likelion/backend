@@ -29,7 +29,7 @@ public class AuthService {
         // loginID 중복 확인
         memberRepository.findByLoginId(memberInfo.getLoginId())
                 .ifPresent(u -> {
-                    throw new MemberDuplicateException(memberInfo.getLoginId()+"is already existed.");
+                    throw new MemberDuplicateException("ID '" + memberInfo.getLoginId()+"' is already existed.");
                 });
 
         Member member = Member.builder()
