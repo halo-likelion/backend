@@ -27,6 +27,12 @@ public class AuthController {
         return new ResponseEntity<>(memberLoginId, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody MemberLoginDto memberInfo) {
+        authService.login(memberInfo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/update-password")
     public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
         authService.updatePassword(memberInfo);

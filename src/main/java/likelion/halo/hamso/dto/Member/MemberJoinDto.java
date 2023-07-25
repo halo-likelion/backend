@@ -1,12 +1,10 @@
 package likelion.halo.hamso.dto.Member;
 
 import likelion.halo.hamso.domain.Member;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter @ToString
 public class MemberJoinDto {
     private String loginId; // 로그인 아이디
@@ -26,6 +24,4 @@ public class MemberJoinDto {
         this.email = member.getEmail();
     }
 
-    public MemberJoinDto() {
-    }
 }

@@ -75,4 +75,8 @@ public class AuthService {
             oMember.get().setPassword(memberInfo.getPassword());
         }
     }
+
+    public String login(MemberLoginDto memberInfo) {
+        return "token return";
+    }
 }

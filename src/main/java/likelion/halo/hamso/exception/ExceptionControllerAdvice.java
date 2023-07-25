@@ -17,14 +17,20 @@ public class ExceptionControllerAdvice {
     }
 
     @ExceptionHandler(MemberNotFoundException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handleMemberNotFoundExceptionException(MemberNotFoundException ex) {
-        return new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleMemberNotFoundException(MemberNotFoundException ex) {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleLoginException(InvalidPasswordException ex) {
+        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
 
     @ExceptionHandler(MemberDuplicateException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleMemberDuplicateExceptionException(MemberDuplicateException ex) {
+    public ErrorResponse handleMemberDuplicateException(MemberDuplicateException ex) {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 
