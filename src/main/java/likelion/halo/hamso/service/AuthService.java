@@ -6,6 +6,7 @@ import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
 import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
+import likelion.halo.hamso.exception.InvalidPasswordException;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
@@ -77,6 +78,16 @@ public class AuthService {
     }
 
     public String login(MemberLoginDto memberInfo) {
+        // userName X
+        Member selectedMember = memberRepository.findByLoginId(memberInfo.getLoginId())
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
+        // password wrong
+        if(!encoder.matches(selectedMember.getPassword(), memberInfo.getPassword())) {
+            throw new InvalidPasswordException("This is wrong password.");
+        }
+
+        // 예외가 없을 시, token 발행
+
         return "token return";
     }
 }

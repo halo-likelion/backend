@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.096s</div>
+<div class="counter">0.118s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,19 +81,19 @@
 <tr>
 <td class="success">회원가입 성공</td>
 <td class="success">join()</td>
-<td class="success">0.004s</td>
+<td class="success">0.007s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">회원가입 실패 - loginId 중복</td>
 <td class="success">join_fail()</td>
-<td class="success">0.012s</td>
+<td class="success">0.013s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">로그인 실패 - loginId 없음</td>
 <td class="success">login_fail1()</td>
-<td class="success">0.006s</td>
+<td class="success">0.007s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 <tr>
 <td class="success">로그인 성공</td>
 <td class="success">login_success()</td>
-<td class="success">0.068s</td>
+<td class="success">0.085s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -113,8 +113,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>20:13:11.071 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [likelion.halo.hamso.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-20:13:11.122 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration likelion.halo.hamso.HamsoApplication for test class likelion.halo.hamso.controller.AuthControllerTest
+<pre>20:35:47.231 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [likelion.halo.hamso.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:35:47.280 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration likelion.halo.hamso.HamsoApplication for test class likelion.halo.hamso.controller.AuthControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -124,41 +124,41 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.1)
 
-2023-07-25T20:13:11.281+09:00  INFO 23836 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : Starting AuthControllerTest using Java 17.0.4 with PID 23836 (started by vivi in /Users/vivi/git/projects/HALO/hamso-backend)
-2023-07-25T20:13:11.282+09:00  INFO 23836 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2023-07-25T20:13:11.448+09:00  INFO 23836 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-07-25T20:13:11.465+09:00  INFO 23836 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 1 JPA repository interfaces.
-2023-07-25T20:13:12.159+09:00  INFO 23836 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-07-25T20:13:12.190+09:00  INFO 23836 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.5.Final
-2023-07-25T20:13:12.192+09:00  INFO 23836 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2023-07-25T20:13:12.261+09:00  INFO 23836 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-07-25T20:13:12.267+09:00  INFO 23836 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-07-25T20:13:12.276+09:00  INFO 23836 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-07-25T20:13:12.959+09:00  INFO 23836 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a77eb6
-2023-07-25T20:13:12.963+09:00  INFO 23836 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-07-25T20:13:13.033+09:00  WARN 23836 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2023-07-25T20:13:13.102+09:00  INFO 23836 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-07-25T20:13:13.282+09:00  INFO 23836 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-07-25T20:13:13.404+09:00  INFO 23836 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-07-25T20:13:13.571+09:00  WARN 23836 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-07-25T20:13:13.581+09:00  WARN 23836 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2023-07-25T20:35:47.438+09:00  INFO 24620 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : Starting AuthControllerTest using Java 17.0.4 with PID 24620 (started by vivi in /Users/vivi/git/projects/HALO/hamso-backend)
+2023-07-25T20:35:47.439+09:00  INFO 24620 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-07-25T20:35:47.609+09:00  INFO 24620 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-25T20:35:47.630+09:00  INFO 24620 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 1 JPA repository interfaces.
+2023-07-25T20:35:48.326+09:00  INFO 24620 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-25T20:35:48.356+09:00  INFO 24620 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.5.Final
+2023-07-25T20:35:48.357+09:00  INFO 24620 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-25T20:35:48.424+09:00  INFO 24620 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-25T20:35:48.430+09:00  INFO 24620 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-25T20:35:48.437+09:00  INFO 24620 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-25T20:35:49.151+09:00  INFO 24620 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a77eb6
+2023-07-25T20:35:49.153+09:00  INFO 24620 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-25T20:35:49.221+09:00  WARN 24620 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-25T20:35:49.308+09:00  INFO 24620 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-25T20:35:49.494+09:00  INFO 24620 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-25T20:35:49.590+09:00  INFO 24620 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-25T20:35:49.787+09:00  WARN 24620 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-25T20:35:49.802+09:00  WARN 24620 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: b7b9e440-1910-4c97-b8f6-25291f4d5978
+Using generated security password: b180b7a4-6fff-4d82-8e41-340098196484
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2023-07-25T20:13:13.711+09:00  INFO 23836 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure Or [Mvc [pattern='/member/**'], Mvc [pattern='/auth/**']] with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c4eccd2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@564e9c0b, org.springframework.security.web.context.SecurityContextHolderFilter@100d071, org.springframework.security.web.header.HeaderWriterFilter@58e2af93, org.springframework.security.web.csrf.CsrfFilter@4fb3c670, org.springframework.security.web.authentication.logout.LogoutFilter@26edfa34, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@333d5a0c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13446044, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c7d19bf, org.springframework.security.web.access.ExceptionTranslationFilter@5efa05f9, org.springframework.security.web.access.intercept.AuthorizationFilter@41db6e4b]
-2023-07-25T20:13:13.833+09:00  INFO 23836 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2023-07-25T20:13:13.833+09:00  INFO 23836 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2023-07-25T20:13:13.834+09:00  INFO 23836 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2023-07-25T20:13:13.848+09:00  INFO 23836 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : Started AuthControllerTest in 2.667 seconds (process running for 3.111)
-2023-07-25T20:13:13.897+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
-2023-07-25T20:13:13.897+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
+2023-07-25T20:35:49.976+09:00  INFO 24620 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure Or [Mvc [pattern='/member/**'], Mvc [pattern='/auth/**']] with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c4eccd2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@564e9c0b, org.springframework.security.web.context.SecurityContextHolderFilter@100d071, org.springframework.security.web.header.HeaderWriterFilter@58e2af93, org.springframework.security.web.csrf.CsrfFilter@4fb3c670, org.springframework.security.web.authentication.logout.LogoutFilter@26edfa34, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@333d5a0c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13446044, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c7d19bf, org.springframework.security.web.access.ExceptionTranslationFilter@5efa05f9, org.springframework.security.web.access.intercept.AuthorizationFilter@41db6e4b]
+2023-07-25T20:35:50.120+09:00  INFO 24620 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-07-25T20:35:50.120+09:00  INFO 24620 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-07-25T20:35:50.121+09:00  INFO 24620 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-07-25T20:35:50.138+09:00  INFO 24620 --- [    Test worker] l.h.hamso.controller.AuthControllerTest  : Started AuthControllerTest in 2.803 seconds (process running for 3.239)
+2023-07-25T20:35:50.190+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
+2023-07-25T20:35:50.190+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /auth/login
-       Parameters = {_csrf=[UpcIkWeeJXEPPa4p3tev2jg2HYlFXeFM_H6X5T1pRZXX5OTXMKE6pVKoR0MiCJxM6vqb4ggDMOh9bddhnkumgFtRI6zmh9Tg]}
+       Parameters = {_csrf=[y4ulb136inl3yTYFHz3ggOcCRclo9aLU6alwF9SLLpS05MWI_bLBCTvNvkxa_1I3JhDUstIyaPBfxZP5ipFDdbXtGabW0PTu]}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;38&quot;]
              Body = {&quot;loginId&quot;:&quot;testId&quot;,&quot;password&quot;:&quot;1111&quot;}
     Session Attrs = {}
@@ -185,19 +185,19 @@ FlashMap:
 MockHttpServletResponse:
            Status = 200
     Error message = null
-          Headers = [X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
-     Content type = null
-             Body = 
+          Headers = [Content-Type:&quot;text/plain;charset=UTF-8&quot;, Content-Length:&quot;5&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = text/plain;charset=UTF-8
+             Body = token
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2023-07-25T20:13:13.929+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/join]
-2023-07-25T20:13:13.930+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#insertMember(MemberJoinDto)]
+2023-07-25T20:35:50.238+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/join]
+2023-07-25T20:35:50.238+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#insertMember(MemberJoinDto)]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /auth/join
-       Parameters = {_csrf=[ziO_M1h9Vuyt3nO_gNSm6iU9NvU5PM58__514ge85KfEU8l8qEbaBmtKYomAvUHasPmSixQMG81YD6xRnMlF1jLf0MP8a6hF]}
+       Parameters = {_csrf=[NmLPb7fXzE_qDr7UWdF2Q8eGqI8aohurbP_GLmzfIquqT9b-UFOqC4S1qnjHP4bgYfxCd_63hbYuxC6GWpyjGV_pEZqTLu_P]}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;107&quot;]
              Body = {&quot;loginId&quot;:&quot;testId&quot;,&quot;password&quot;:&quot;1111&quot;,&quot;name&quot;:&quot;testName&quot;,&quot;phoneNo&quot;:&quot;010-1111-1111&quot;,&quot;email&quot;:&quot;test@email.com&quot;}
     Session Attrs = {}
@@ -230,13 +230,13 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2023-07-25T20:13:13.941+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/join]
-2023-07-25T20:13:13.941+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#insertMember(MemberJoinDto)]
+2023-07-25T20:35:50.252+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/join]
+2023-07-25T20:35:50.252+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#insertMember(MemberJoinDto)]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /auth/join
-       Parameters = {_csrf=[9bypaFzpCtNqxuryv5ZIFViqbdbbQPBSp5gt27lp6HsQlKV_k4ScDmzfO7dH9tqTiLt8cTvIQO7udJR_lvlO4o1Z3R8jpJVL]}
+       Parameters = {_csrf=[cV90Fd1ho1QYlsSel27Fgj-mxr-gOPNKkeoUJYT3VfFkgCZURz1HJu4AkGE19_OnrkPxsw7C64bGC8pnqNotRrzDNpAGsBNj]}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;107&quot;]
              Body = {&quot;loginId&quot;:&quot;testId&quot;,&quot;password&quot;:&quot;1111&quot;,&quot;name&quot;:&quot;testName&quot;,&quot;phoneNo&quot;:&quot;010-1111-1111&quot;,&quot;email&quot;:&quot;test@email.com&quot;}
     Session Attrs = {}
@@ -269,13 +269,13 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2023-07-25T20:13:13.945+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
-2023-07-25T20:13:13.945+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
+2023-07-25T20:35:50.258+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
+2023-07-25T20:35:50.258+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /auth/login
-       Parameters = {_csrf=[D3ABbx4N_DuYPvOjBhnYTBjiqO3dxS4ePwcp1_uci2e4m9VAPhEyCy9vmF-1DsuWPzTsfHyGhdTv8EgzD2MY4s3_vlaNouQm]}
+       Parameters = {_csrf=[zQdkAfS2NXf9_wYkHZU6zc31qC7m3pxUgPcRx5hc8er1YoZz_zRRNsPQBRTQxjYXK7gO9ayWhReDuKh5ss4ioa0_x9qWVrRD]}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;38&quot;]
              Body = {&quot;loginId&quot;:&quot;testId&quot;,&quot;password&quot;:&quot;1111&quot;}
     Session Attrs = {}
@@ -308,13 +308,13 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2023-07-25T20:13:13.951+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
-2023-07-25T20:13:13.951+09:00  INFO 23836 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
+2023-07-25T20:35:50.267+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: requestURI = [/auth/login]
+2023-07-25T20:35:50.267+09:00  INFO 24620 --- [    Test worker] l.halo.hamso.interceptor.LogInterceptor  : LOG == preHandle REQUEST: handler = [likelion.halo.hamso.controller.AuthController#login(MemberLoginDto)]
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /auth/login
-       Parameters = {_csrf=[1Mvq4J0faqu4LnC-VlzI0UYbcuhGrqOkjFrpE0JKpiCOKXTFsPOL1_l7WM6VHETcYXH85yR5X9ElmZqJuGjeIyN4whC9GBby]}
+       Parameters = {_csrf=[SVFf5hh7ShrtmSd05Hf6xGu-zKQ4m-6c3VIxAgTqVywknUzmfWBq0ysaeCjAqEER1VrOognd4ZwLot-xvGUJNTGLZx4TrX-E]}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;38&quot;]
              Body = {&quot;loginId&quot;:&quot;testId&quot;,&quot;password&quot;:&quot;1111&quot;}
     Session Attrs = {}
@@ -358,7 +358,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.5</a> at 2023. 7. 25. 오후 8:13:14</p>
+<a href="http://www.gradle.org">Gradle 7.5</a> at 2023. 7. 25. 오후 8:35:50</p>
 </div>
 </div>
 </body>

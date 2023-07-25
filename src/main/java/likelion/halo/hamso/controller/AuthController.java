@@ -30,7 +30,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody MemberLoginDto memberInfo) {
         String token = authService.login(memberInfo);
-        return new ResponseEntity.ok().
+        return ResponseEntity.ok().body(token);
     }
 
     @PostMapping("/update-password")
