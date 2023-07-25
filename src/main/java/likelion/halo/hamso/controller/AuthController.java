@@ -28,9 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody MemberLoginDto memberInfo) {
-        authService.login(memberInfo);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody MemberLoginDto memberInfo) {
+        String token = authService.login(memberInfo);
+        return new ResponseEntity.ok().
     }
 
     @PostMapping("/update-password")
