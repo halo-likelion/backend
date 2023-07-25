@@ -2,6 +2,7 @@ package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
+import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
 import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
@@ -67,6 +68,16 @@ public class MemberService {
         } else {
             Member member = oMember.get();
             memberRepository.delete(member);
+        }
+    }
+
+    @Transactional
+    public void updatePassword(MemberLoginDto memberInfo) {
+        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
+        if(oMember.isEmpty()) {
+            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+        } else {
+            oMember.get().setPassword(memberInfo.getPassword());
         }
     }
 

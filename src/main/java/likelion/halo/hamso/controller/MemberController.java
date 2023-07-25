@@ -24,7 +24,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-//    private final AuthService authService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MemberDto>> getMemberList() {
@@ -47,6 +46,12 @@ public class MemberController {
     @PostMapping("/update-all")
     public ResponseEntity<Void> updateMemberAll(@RequestBody MemberUpdateAllDto memberInfo) {
         memberService.updateMemberAll(memberInfo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
+        memberService.updatePassword(memberInfo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

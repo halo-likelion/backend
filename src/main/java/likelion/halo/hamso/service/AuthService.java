@@ -72,22 +72,13 @@ public class AuthService {
         return memberDtoList;
     }
 
-    @Transactional
-    public void updatePassword(MemberLoginDto memberInfo) {
-        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
-        if(oMember.isEmpty()) {
-            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
-        } else {
-            oMember.get().setPassword(memberInfo.getPassword());
-        }
-    }
+
 
     public String login(MemberLoginDto memberInfo) {
         // userName X
         Member selectedMember = memberRepository.findByLoginId(memberInfo.getLoginId())
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
         // password wrong
-//        log.info("finded = {}, insert = {}", selectedMember.getPassword(), memberInfo.getPassword());
         if(!encoder.matches(memberInfo.getPassword(), selectedMember.getPassword())) {
             throw new InvalidPasswordException("This is wrong password.");
         }

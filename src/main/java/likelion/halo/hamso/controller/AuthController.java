@@ -33,9 +33,4 @@ public class AuthController {
         return ResponseEntity.ok().body(token);
     }
 
-    @PostMapping("/update-password")
-    public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
-        authService.updatePassword(memberInfo);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
