@@ -1,5 +1,6 @@
 package likelion.halo.hamso.service;
 
+import likelion.halo.hamso.configuration.EncodeConfig;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
@@ -10,6 +11,7 @@ import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthService {
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional
     public String join(MemberJoinDto memberInfo){
@@ -34,7 +37,7 @@ public class AuthService {
 
         Member member = Member.builder()
                 .loginId(memberInfo.getLoginId())
-                .password(memberInfo.getPassword())
+                .password(encoder.encode(memberInfo.getPassword()))
                 .email(memberInfo.getEmail())
                 .name(memberInfo.getName())
                 .phoneNo(memberInfo.getPhoneNo())
