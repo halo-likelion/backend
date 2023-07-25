@@ -3,11 +3,12 @@ package likelion.halo.hamso.domain;
 import jakarta.persistence.*;
 import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter @Setter @ToString
 @Table(name = "member")
 public class Member {
@@ -32,7 +33,6 @@ public class Member {
     private String email; // 이메일
 
     public Member(MemberJoinDto memberInfo) {
-        this.id = memberInfo.getId();
         this.loginId = memberInfo.getLoginId();
         this.name = memberInfo.getName();
         this.phoneNo = memberInfo.getPhoneNo();
@@ -40,7 +40,4 @@ public class Member {
         this.password = memberInfo.getPassword();
     }
 
-    public Member() {
-
-    }
 }

@@ -1,9 +1,13 @@
 package likelion.halo.hamso.dto.Member;
 
 import likelion.halo.hamso.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@AllArgsConstructor
+@Getter @ToString
 public class MemberJoinDto {
     private String loginId; // 로그인 아이디
 

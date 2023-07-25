@@ -5,7 +5,10 @@ import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
 import likelion.halo.hamso.dto.Member.MemberLoginDto;
 import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
+import likelion.halo.hamso.service.AuthService;
 import likelion.halo.hamso.service.MemberService;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final AuthService authService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MemberDto>> getMemberList() {
@@ -40,22 +44,9 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/update-password")
-    public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
-        memberService.updatePassword(memberInfo);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @PostMapping("/update-all")
     public ResponseEntity<Void> updateMemberAll(@RequestBody MemberUpdateAllDto memberInfo) {
         memberService.updateMemberAll(memberInfo);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/join")
-    public ResponseEntity<String> insertMember(@RequestBody MemberJoinDto memberInfo) {
-        Member member = new Member(memberInfo);
-        String memberLoginId = memberService.join(member);
-        return new ResponseEntity<>(memberLoginId, HttpStatus.CREATED);
     }
 }
