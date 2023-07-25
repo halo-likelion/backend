@@ -10,8 +10,10 @@ import likelion.halo.hamso.exception.InvalidPasswordException;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
+import likelion.halo.hamso.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
 public class AuthService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
+    @Value("${jwt.token.secret}")
+    private String key;
+    private Long expireTimeMs = 1000*60*60l; // 1 hour
 
     @Transactional
     public String join(MemberJoinDto memberInfo){
@@ -82,12 +87,14 @@ public class AuthService {
         Member selectedMember = memberRepository.findByLoginId(memberInfo.getLoginId())
                 .orElseThrow(() -> new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
         // password wrong
-        if(!encoder.matches(selectedMember.getPassword(), memberInfo.getPassword())) {
+//        log.info("finded = {}, insert = {}", selectedMember.getPassword(), memberInfo.getPassword());
+        if(!encoder.matches(memberInfo.getPassword(), selectedMember.getPassword())) {
             throw new InvalidPasswordException("This is wrong password.");
         }
 
         // 예외가 없을 시, token 발행
+        String token = JwtTokenUtil.createToken(selectedMember.getLoginId(), key, expireTimeMs);
 
-        return "token return";
+        return token;
     }
 }

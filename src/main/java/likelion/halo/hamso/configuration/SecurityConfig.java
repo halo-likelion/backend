@@ -21,7 +21,7 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher("/member/**", "/auth/**")
-//                .csrf().disable().cors().disable() // CSRF 보호를 비활성화합니다.
+                .csrf().disable().cors().disable() // CSRF 보호를 비활성화합니다.
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/images/**", "/auth/join", "/auth/login").permitAll()
