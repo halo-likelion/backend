@@ -1,4 +1,4 @@
-package likelion.halo.hamso.configuration;
+package likelion.halo.hamso;
 
 import jakarta.servlet.DispatcherType;
 import likelion.halo.hamso.security.JwtAuthenticationFilter;

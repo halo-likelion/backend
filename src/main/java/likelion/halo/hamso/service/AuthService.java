@@ -12,11 +12,9 @@ import likelion.halo.hamso.repository.MemberRepository;
 import likelion.halo.hamso.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +31,6 @@ public class AuthService {
     private final PasswordEncoder encoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-//    @Value("${jwt.token.secret}")
-//    private String key;
-//    private Long expireTimeMs = 1000*60*60l; // 1 hour
 
     @Transactional
     public String join(MemberJoinDto memberInfo){

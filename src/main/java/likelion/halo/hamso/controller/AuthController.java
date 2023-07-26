@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final MemberService memberService;
-    private final JwtTokenProvider jwtTokenProvider;
-
 
     @PostMapping("/join")
     public ResponseEntity<String> insertMember(@RequestBody MemberJoinDto memberInfo) {
