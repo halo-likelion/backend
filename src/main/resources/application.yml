@@ -44,4 +44,4 @@ spring:
         org.hibernate.type: trace
 jwt:
   token:
-    secret: "secretKey"
+    secret: "${JWT_SECRET}"
