@@ -61,7 +61,7 @@ public class AuthService {
         // loginID 중복 확인
         memberRepository.findByLoginId(loginId)
                 .ifPresent(u -> {
-                    throw new MemberDuplicateException(loginId+"is already existed.");
+                    throw new MemberDuplicateException("ID '" + loginId+"' is already existed.");
                 });
 
         return false;

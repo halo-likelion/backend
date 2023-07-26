@@ -39,8 +39,8 @@ public class SecurityConfig{
                 .httpBasic().disable().csrf().disable().cors().disable() // CSRF 보호를 비활성화합니다.
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/auth/join", "/auth/login").permitAll()
-                        .requestMatchers("/members/..").hasRole("USER")
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/members/**").hasRole("USER")
                         .anyRequest().authenticated()
                         .and()
                         .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
