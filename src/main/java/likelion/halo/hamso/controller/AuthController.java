@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 
 
@@ -35,6 +36,12 @@ public class AuthController {
     public ResponseEntity<TokenInfoDto> login(@RequestBody MemberLoginDto memberInfo) {
         TokenInfoDto tokenInfo = authService.login(memberInfo);
         return ResponseEntity.ok().body(tokenInfo);
+    }
+
+    @GetMapping("/duplicate")
+    public ResponseEntity<Boolean> checkLoginIdDuplicate(@RequestParam String loginId) {
+        Boolean check = authService.checkDuplicate(loginId);
+        return new ResponseEntity<>(check, HttpStatus.OK);
     }
 
 }
