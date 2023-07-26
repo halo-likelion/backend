@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,12 +22,6 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public String join(Member member){
-        memberRepository.save(member);
-        return member.getLoginId();
-    }
-
     public MemberDto findById(Long id){
         Member member = memberRepository.findById(id).get();
         MemberDto memberDto = new MemberDto(member);
@@ -34,12 +29,12 @@ public class MemberService {
     }
 
     public MemberDto findByLoginId(String loginId){
-        Member member = memberRepository.findByLoginId(loginId);
-        if(member == null) {
+        Optional<Member> member = memberRepository.findByLoginId(loginId);
+        if(member.isEmpty()) {
             // Member not found, handle accordingly
             throw new MemberNotFoundException("Member not found with loginId: " + loginId);
         } else {
-            return new MemberDto(member);
+            return new MemberDto(member.get());
         }
     }
 
@@ -51,22 +46,39 @@ public class MemberService {
 
     @Transactional
     public void updateMemberAll(MemberUpdateAllDto memberInfo) {
-        Member member = memberRepository.findByLoginId(memberInfo.getLoginId());
-        member.setName(member.getName());
-        member.setEmail(member.getEmail());
-        member.setPhoneNo(member.getPhoneNo());
-    }
+        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
+        if(oMember.isEmpty()) {
+            // Member not found, handle accordingly
+            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+        } else {
+            Member member = oMember.get();
+            member.setName(member.getName());
+            member.setEmail(member.getEmail());
+            member.setPhoneNo(member.getPhoneNo());
+        }
 
-    @Transactional
-    public void updatePassword(MemberLoginDto loginInfo) {
-        Member member = memberRepository.findByLoginId(loginInfo.getLoginId());
-        member.setPassword(loginInfo.getPassword());
     }
 
     @Transactional
     public void deleteMember(String loginId) {
-        Member member = memberRepository.findByLoginId(loginId);
-        memberRepository.delete(member);
+        Optional<Member> oMember = memberRepository.findByLoginId(loginId);
+        if(oMember.isEmpty()) {
+            // Member not found, handle accordingly
+            throw new MemberNotFoundException("Member not found with loginId: " + loginId);
+        } else {
+            Member member = oMember.get();
+            memberRepository.delete(member);
+        }
+    }
+
+    @Transactional
+    public void updatePassword(MemberLoginDto memberInfo) {
+        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
+        if(oMember.isEmpty()) {
+            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+        } else {
+            oMember.get().setPassword(memberInfo.getPassword());
+        }
     }
 
     private static List<MemberDto> convertMemberToMemberDto(List<Member> memberList) {
