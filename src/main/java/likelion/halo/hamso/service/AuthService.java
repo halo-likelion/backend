@@ -1,16 +1,14 @@
 package likelion.halo.hamso.service;
 
-import likelion.halo.hamso.configuration.EncodeConfig;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.Member.MemberDto;
 import likelion.halo.hamso.dto.Member.MemberJoinDto;
 import likelion.halo.hamso.dto.Member.MemberLoginDto;
-import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
 import likelion.halo.hamso.exception.InvalidPasswordException;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.MemberNotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
-import likelion.halo.hamso.utils.JwtTokenUtil;
+import likelion.halo.hamso.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,7 +81,7 @@ public class AuthService {
         }
 
         // 예외가 없을 시, token 발행
-        String token = JwtTokenUtil.createToken(selectedMember.getLoginId(), key, expireTimeMs);
+        String token = JwtUtil.createJwt(selectedMember.getLoginId(), key, expireTimeMs);
 
         return token;
     }

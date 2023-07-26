@@ -6,8 +6,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
-public class JwtTokenUtil {
-    public static String createToken(String loginId, String key, long expiredTimeMs) {
+public class JwtUtil {
+    public static String createJwt(String loginId, String key, Long expiredTimeMs) {
         Claims claims = Jwts.claims(); // like a map
         claims.put("loginId", loginId);
 
