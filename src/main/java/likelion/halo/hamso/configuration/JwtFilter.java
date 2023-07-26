@@ -51,7 +51,8 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // loginId Token 에서 꺼내기
-        String loginId = "";
+        String loginId = JwtUtil.getLoginId(token, secretKey);
+        log.info("loginId = {}", loginId);
 
         // 권한 부여
         UsernamePasswordAuthenticationToken authenticationToken =
