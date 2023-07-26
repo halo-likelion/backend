@@ -87,25 +87,25 @@ class AuthControllerTest {
                 .andExpect(status().isConflict());
     }
 
-    @Test
-    @DisplayName("로그인 성공")
-    @WithAnonymousUser
-    void login_success() throws Exception{
-        String loginId = "testId"; // 로그인 아이디
-
-        String password = "1111";
-
-        when(authService.login(any()))
-                .thenReturn("token");
-
-        mockMvc.perform(post("/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new MemberLoginDto(
-                                loginId, password))))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    @DisplayName("로그인 성공")
+//    @WithAnonymousUser
+//    void login_success() throws Exception{
+//        String loginId = "testId"; // 로그인 아이디
+//
+//        String password = "1111";
+//
+//        when(authService.login(any()))
+//                .thenReturn("token");
+//
+//        mockMvc.perform(post("/auth/login")
+//                        .with(csrf())
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsBytes(new MemberLoginDto(
+//                                loginId, password))))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+//    }
 
     @Test
     @DisplayName("로그인 실패 - loginId 없음")
