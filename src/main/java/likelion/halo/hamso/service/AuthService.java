@@ -59,7 +59,7 @@ public class AuthService {
                     throw new MemberDuplicateException("ID '" + loginId+"' is already existed.");
                 });
 
-        return false;
+        return true;
     }
 
 
