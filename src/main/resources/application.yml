@@ -17,8 +17,8 @@
 #      org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
 # org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6
 server:
-  address: localhost
-  port: 8081
+  address: 0.0.0.0
+  port: 9999
   servlet:
     session:
       tracking-modes: cookie
