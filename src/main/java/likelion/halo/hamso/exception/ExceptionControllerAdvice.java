@@ -16,9 +16,9 @@ public class ExceptionControllerAdvice {
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
     }
 
-    @ExceptionHandler(MemberNotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleMemberNotFoundException(MemberNotFoundException ex) {
+    public ErrorResponse handleMemberNotFoundException(NotFoundException ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 
