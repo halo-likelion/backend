@@ -1,8 +1,7 @@
 package likelion.halo.hamso.domain;
 
 import jakarta.persistence.*;
-import likelion.halo.hamso.dto.Member.MemberDto;
-import likelion.halo.hamso.dto.Member.MemberJoinDto;
+import likelion.halo.hamso.dto.member.MemberJoinDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
