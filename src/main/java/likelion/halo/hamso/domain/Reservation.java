@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,8 +35,8 @@ public class Reservation {
     private Boolean deposit; // 입금 여부
 
     @Column(name = "created_at")
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now(); // 예약 신청 일자
+    @CreationTimestamp
+    private LocalDateTime createdAt; // 예약 신청 일자
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long>  {
-    Optional<AgriMachine> findByMachineType(AgriMachineType type);
+    Optional<AgriMachine> findByType(AgriMachineType type);
 
 
 }

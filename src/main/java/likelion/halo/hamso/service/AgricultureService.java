@@ -29,11 +29,12 @@ public class AgricultureService {
 
     @Transactional
     public Long addMachine(MachineInfoDto infoDto){
+        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2());
         AgriMachine machine = AgriMachine.builder()
                 .type(infoDto.getType())
                 .content(infoDto.getContent())
                 .price(infoDto.getPrice())
-                .region(infoDto.getRegion())
+                .region(region)
                 .reservePossible(infoDto.getReservePossible())
                 .build();
 
@@ -50,7 +51,7 @@ public class AgricultureService {
     }
 
     public MachineInfoDto findByMachineType(AgriMachineType type){
-        Optional<AgriMachine> oMachine = agriMachineRepository.findByMachineType(type);
+        Optional<AgriMachine> oMachine = agriMachineRepository.findByType(type);
         if(oMachine.isEmpty()) {
             throw new NotFoundException("Machine not found with type: " + type.toString());
         } else {

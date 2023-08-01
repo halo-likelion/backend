@@ -1,5 +1,6 @@
 package likelion.halo.hamso.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import lombok.*;

@@ -19,13 +19,15 @@ public class MachineInfoDto {
 
     private Boolean reservePossible; // 예약 가능 여부
 
-    private AgriRegion region;
+    private String region1;
+    private String region2;
 
     public MachineInfoDto(AgriMachine agriMachine) {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();
         this.reservePossible = agriMachine.getReservePossible();
-        this.region = agriMachine.getRegion();
+        this.region1 = agriMachine.getRegion().getRegion1().toString();
+        this.region2 = agriMachine.getRegion().getRegion2().toString();
     }
 }

@@ -30,8 +30,8 @@ public class AgriRegion {
     @Column(name = "region2")
     private Region2 region2; // 시, 군, 구
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
-    private List<AgriMachine> agriMachines;
-
+    public AgriRegion(String region1, String region2) {
+        this.region1 = Region1.valueOf(region1);
+        this.region2 = Region2.valueOf(region2);
+    }
 }

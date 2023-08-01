@@ -18,7 +18,6 @@ public class MachineUpdateDto {
 
     private String content; // 농기계 설명
 
-
     private AgriRegion region;
 
     public MachineUpdateDto(AgriMachine agriMachine) {
@@ -26,7 +25,6 @@ public class MachineUpdateDto {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();
-        this.reservePossible = agriMachine.getReservePossible();
         this.region = agriMachine.getRegion();
     }
 }
