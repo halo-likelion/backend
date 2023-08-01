@@ -15,18 +15,23 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Table(name = "agriculture_information")
+@Table(name = "region")
 public class AgriRegion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "agriculture_machine_id")
+    @Column(name = "region_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "region1")
     private Region1 region1; // 특별시, 광역시, 도
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "region2")
     private Region2 region2; // 시, 군, 구
 
     @JsonIgnore
-    @OneToMany(mappedBy = "agriculture_machine", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
     private List<AgriMachine> agriMachines;
 
 }

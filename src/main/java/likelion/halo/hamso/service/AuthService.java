@@ -1,13 +1,13 @@
 package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.Member;
-import likelion.halo.hamso.dto.Member.MemberDto;
-import likelion.halo.hamso.dto.Member.MemberJoinDto;
-import likelion.halo.hamso.dto.Member.MemberLoginDto;
+import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.member.MemberJoinDto;
+import likelion.halo.hamso.dto.member.MemberLoginDto;
 import likelion.halo.hamso.dto.TokenInfoDto;
 import likelion.halo.hamso.exception.InvalidPasswordException;
 import likelion.halo.hamso.exception.MemberDuplicateException;
-import likelion.halo.hamso.exception.MemberNotFoundException;
+import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
 import likelion.halo.hamso.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +77,7 @@ public class AuthService {
     public TokenInfoDto login(MemberLoginDto memberInfo) {
         // userName X
         Member selectedMember = memberRepository.findByLoginId(memberInfo.getLoginId())
-                .orElseThrow(() -> new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
+                .orElseThrow(() -> new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
         // password wrong
         if(!encoder.matches(memberInfo.getPassword(), selectedMember.getPassword())) {
             throw new InvalidPasswordException("This is wrong password.");

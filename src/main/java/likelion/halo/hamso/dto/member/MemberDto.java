@@ -1,15 +1,13 @@
-package likelion.halo.hamso.dto.Member;
+package likelion.halo.hamso.dto.member;
 
 import likelion.halo.hamso.domain.Member;
-import lombok.*;
+import lombok.Data;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter @ToString
-public class MemberJoinDto {
+@Data
+public class MemberDto {
+    private Long id;
+
     private String loginId; // 로그인 아이디
-
-    private String password;
 
     private String name; // 회원의 이름
 
@@ -17,11 +15,14 @@ public class MemberJoinDto {
 
     private String email; // 이메일
 
-    public MemberJoinDto(Member member) {
+    public MemberDto(Member member) {
+        this.id = member.getId();
         this.loginId = member.getLoginId();
         this.name = member.getName();
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
     }
 
+    public MemberDto() {
+    }
 }

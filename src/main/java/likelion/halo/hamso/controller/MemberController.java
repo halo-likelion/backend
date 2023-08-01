@@ -1,18 +1,12 @@
 package likelion.halo.hamso.controller;
 
-import likelion.halo.hamso.domain.Member;
-import likelion.halo.hamso.dto.Member.MemberDto;
-import likelion.halo.hamso.dto.Member.MemberJoinDto;
-import likelion.halo.hamso.dto.Member.MemberLoginDto;
-import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
-import likelion.halo.hamso.service.AuthService;
+import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.member.MemberLoginDto;
+import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
 import likelion.halo.hamso.service.MemberService;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

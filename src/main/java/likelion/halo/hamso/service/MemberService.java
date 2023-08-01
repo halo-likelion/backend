@@ -1,10 +1,10 @@
 package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.Member;
-import likelion.halo.hamso.dto.Member.MemberDto;
-import likelion.halo.hamso.dto.Member.MemberLoginDto;
-import likelion.halo.hamso.dto.Member.MemberUpdateAllDto;
-import likelion.halo.hamso.exception.MemberNotFoundException;
+import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.member.MemberLoginDto;
+import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
+import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByLoginId(loginId);
         if(member.isEmpty()) {
             // Member not found, handle accordingly
-            throw new MemberNotFoundException("Member not found with loginId: " + loginId);
+            throw new NotFoundException("Member not found with loginId: " + loginId);
         } else {
             return new MemberDto(member.get());
         }
@@ -49,7 +49,7 @@ public class MemberService {
         Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
         if(oMember.isEmpty()) {
             // Member not found, handle accordingly
-            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+            throw new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
         } else {
             Member member = oMember.get();
             member.setName(member.getName());
@@ -64,7 +64,7 @@ public class MemberService {
         Optional<Member> oMember = memberRepository.findByLoginId(loginId);
         if(oMember.isEmpty()) {
             // Member not found, handle accordingly
-            throw new MemberNotFoundException("Member not found with loginId: " + loginId);
+            throw new NotFoundException("Member not found with loginId: " + loginId);
         } else {
             Member member = oMember.get();
             memberRepository.delete(member);
@@ -75,7 +75,7 @@ public class MemberService {
     public void updatePassword(MemberLoginDto memberInfo) {
         Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
         if(oMember.isEmpty()) {
-            throw new MemberNotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+            throw new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
         } else {
             oMember.get().setPassword(memberInfo.getPassword());
         }

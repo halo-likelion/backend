@@ -1,6 +1,5 @@
-package likelion.halo.hamso.dto.Member;
+package likelion.halo.hamso.dto.member;
 
-import likelion.halo.hamso.domain.Member;
 import lombok.Data;
 
 @Data
