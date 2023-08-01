@@ -2,6 +2,8 @@ package likelion.halo.hamso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import likelion.halo.hamso.domain.type.Region1;
+import likelion.halo.hamso.domain.type.Region2;
 import lombok.*;
 
 import java.util.List;

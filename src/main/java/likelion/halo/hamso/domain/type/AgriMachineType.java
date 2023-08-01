@@ -1,4 +1,4 @@
-package likelion.halo.hamso.domain;
+package likelion.halo.hamso.domain.type;
 
 public enum AgriMachineType {
     돌수집기, 박피기, 굴삭기, 스키드로더, 로우더, 베일집게, 디스크모아, 곡물적재함, 동력예초기, 쟁기,
