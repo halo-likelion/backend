@@ -30,6 +30,9 @@ public class AgriMachine {
     @Column(name = "agriculture_machine_content")
     private String content; // 농기계 설명
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agriculture_machine_id")
+    private AgriRegion region;
 
 
 }
