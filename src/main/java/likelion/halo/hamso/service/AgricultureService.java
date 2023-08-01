@@ -2,17 +2,11 @@ package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriRegion;
-import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
-import likelion.halo.hamso.dto.agriculture.RegionDto;
-import likelion.halo.hamso.dto.member.MemberDto;
-import likelion.halo.hamso.dto.member.MemberJoinDto;
-import likelion.halo.hamso.dto.member.MemberLoginDto;
-import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
-import likelion.halo.hamso.exception.MemberDuplicateException;
+import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
@@ -21,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.plaf.synth.Region;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,9 +64,9 @@ public class AgricultureService {
         return machineDtoList;
     }
 
-    public List<RegionDto> findRegionAll() {
+    public List<RegionInfoDto> findRegionAll() {
         List<AgriRegion> regionList = agriRegionRepository.findAll();
-        List<RegionDto> machineDtoList = convertRegionToRegionDto(regionList);
+        List<RegionInfoDto> machineDtoList = convertRegionToRegionDto(regionList);
         return machineDtoList;
     }
 
@@ -92,7 +85,7 @@ public class AgricultureService {
     }
 
     @Transactional
-    public void updateMachineReservation(MachineStatusUpdateDto infoDto) {
+    public void updateMachineRevStatus(MachineStatusUpdateDto infoDto) {
         Optional<AgriMachine> oMachine = agriMachineRepository.findById(infoDto.getId());
         if(oMachine.isEmpty()) {
             throw new NotFoundException("Machine is not founded with loginId: " + infoDto.getId());
@@ -121,9 +114,9 @@ public class AgricultureService {
         return dtoList;
     }
 
-    private static List<RegionDto> convertRegionToRegionDto(List<AgriRegion> list) {
-        List<RegionDto> dtoList = list.stream()
-                .map(a -> new RegionDto(a))
+    private static List<RegionInfoDto> convertRegionToRegionDto(List<AgriRegion> list) {
+        List<RegionInfoDto> dtoList = list.stream()
+                .map(a -> new RegionInfoDto(a))
                 .collect(Collectors.toList());
         return dtoList;
     }
