@@ -43,6 +43,4 @@ public class AgriMachine {
     @JoinColumn(name = "agriculture_machine_id")
     private AgriRegion region;
 
-
-
 }
