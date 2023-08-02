@@ -33,12 +33,12 @@ public class AgriMachine {
     @Column(name = "machine_content")
     private String content; // 농기계 설명
 
-    @Column(name = "reserve_possible", columnDefinition = "TINYINT(1)")
-    @ColumnDefault("0")
-    private Boolean reservePossible; // 예약 가능 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private AgriRegion region;
 
+    @Column(name = "origin_cnt")
+    @ColumnDefault("0")
+    private Integer oriCnt;
 }
