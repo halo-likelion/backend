@@ -29,7 +29,7 @@ public class AgricultureService {
 
     @Transactional
     public Long addMachine(MachineInfoDto infoDto){
-        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2());
+        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2(), infoDto.getRegion3());
         AgriMachine machine = AgriMachine.builder()
                 .type(infoDto.getType())
                 .content(infoDto.getContent())
