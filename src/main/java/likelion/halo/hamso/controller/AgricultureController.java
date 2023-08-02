@@ -47,9 +47,9 @@ public class AgricultureController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/update-machine-status")
-    public ResponseEntity<Void> updateMachineRevStatus(@RequestBody MachineStatusUpdateDto info) {
-        agricultureService.updateMachineRevStatus(info);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping("/update-machine-status")
+//    public ResponseEntity<Void> updateMachineRevStatus(@RequestBody MachineStatusUpdateDto info) {
+//        agricultureService.updateMachineRevStatus(info);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

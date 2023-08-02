@@ -35,7 +35,6 @@ public class AgricultureService {
                 .content(infoDto.getContent())
                 .price(infoDto.getPrice())
                 .region(region)
-                .reservePossible(infoDto.getReservePossible())
                 .build();
 
         agriMachineRepository.save(machine);
@@ -85,16 +84,16 @@ public class AgricultureService {
         }
     }
 
-    @Transactional
-    public void updateMachineRevStatus(MachineStatusUpdateDto infoDto) {
-        Optional<AgriMachine> oMachine = agriMachineRepository.findById(infoDto.getId());
-        if(oMachine.isEmpty()) {
-            throw new NotFoundException("Machine is not founded with loginId: " + infoDto.getId());
-        } else {
-            AgriMachine machine = oMachine.get();
-            machine.setReservePossible(infoDto.getReservePossible());
-        }
-    }
+//    @Transactional
+//    public void updateMachineRevStatus(MachineStatusUpdateDto infoDto) {
+//        Optional<AgriMachine> oMachine = agriMachineRepository.findById(infoDto.getId());
+//        if(oMachine.isEmpty()) {
+//            throw new NotFoundException("Machine is not founded with loginId: " + infoDto.getId());
+//        } else {
+//            AgriMachine machine = oMachine.get();
+//            machine.setReservePossible(infoDto.getReservePossible());
+//        }
+//    }
 
     @Transactional
     public void deleteMachine(Long id) {
