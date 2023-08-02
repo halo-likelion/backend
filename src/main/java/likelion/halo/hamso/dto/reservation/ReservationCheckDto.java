@@ -17,7 +17,7 @@ import java.util.Date;
 @Getter @ToString
 public class ReservationCheckDto {
     private Long machineId;
-    int year;
-    int month;
-    int day;
+    private int year;
+    private int month;
+    private int day;
 }
