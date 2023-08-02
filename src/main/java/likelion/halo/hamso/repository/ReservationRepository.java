@@ -27,7 +27,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     // 해당 로그인 아이디의 회원 예약 내역 리스트 반환
     @Query("select r from Reservation r where r.member.loginId = :loginId and r.status =:status")
-    List<Reservation> getStatusList(@Param("loginId") String loginId, @Param("status") ReservationStatus status);
+    List<Reservation> getStatusListByLoginId(@Param("loginId") String loginId, @Param("status") ReservationStatus status);
 
     // 오늘 전체 예약 리스트
     @Query("select r from Reservation r where r.wantTime >= :wantTime ")
