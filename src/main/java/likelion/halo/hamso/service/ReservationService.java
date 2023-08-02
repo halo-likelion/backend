@@ -3,11 +3,13 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.AgriRegion;
+import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
+import likelion.halo.hamso.exception.NotEnoughCntException;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
@@ -39,10 +41,25 @@ public class ReservationService {
         return possible.getReservePossible();
     }
 
-//    public Boolean checkReservePossible(Long machineId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
-//        List<AgriPossible> possible = possibleRepository.test(machineId);
-//        log.info("machineId = {}, date = {}", machineId, date);
-//        log.info("possible = {}", possible);
-//        return possible.get(0).getReservePossible();
-//    }
+    @Transactional
+    public Integer removeCnt(Long machineId, LocalDateTime date) {
+        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
+        int cnt = possible.getCnt();
+        cnt--;
+        if (cnt < 0) {
+            throw new NotEnoughCntException("No more stock to reserve");
+        }
+        possible.setCnt(cnt);
+        return possible.getCnt();
+    }
+
+    @Transactional
+    public Long makeReservation(Reservation reservation) {
+        log.info("예약 시작: {}", reservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+        log.info("예약 완료: {}", savedReservation);
+        return savedReservation.getId();
+    }
+
+
 }
