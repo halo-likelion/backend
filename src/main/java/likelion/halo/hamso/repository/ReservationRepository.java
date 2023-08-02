@@ -22,7 +22,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // 해당 시간대에 예약 여부 (건수) 반환 1이면 예약이 이미 있는 상황
     @Query("select count(r) from Reservation r where r.wantTime = :wantTime and r.status = 'RESERVED'" +
             " and r.agriMachine.id = :machineId ")
-    int isReserved(@Param("wantTime")LocalDateTime wantTime,@Param("machineId")Long machineId);
+    int isReserved(@Param("machineId")Long machineId, @Param("wantTime")LocalDateTime wantTime);
 
 
     // 해당 로그인 아이디의 회원 예약 내역 리스트 반환

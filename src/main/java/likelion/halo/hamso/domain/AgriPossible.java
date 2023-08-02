@@ -25,9 +25,7 @@ public class AgriPossible {
     @Column(name = "origin_cnt")
     private Integer cnt;
 
-    @Column(name = "date")
-    @CreationTimestamp
-    private LocalDateTime date; // 날짜
+    private LocalDateTime findDate; // 날짜
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")

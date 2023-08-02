@@ -26,7 +26,7 @@ spring:
   jackson:
     time-zone: Asia/Seoul
   datasource:
-    url: jdbc:mysql://hamso-rds-instance.cd3bbnyyiapd.ap-northeast-2.rds.amazonaws.com:3306/hamsoDB?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://hamso-rds-instance.cd3bbnyyiapd.ap-northeast-2.rds.amazonaws.com:3306/hamsoDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
     password: Hamso9800
     driver-class-name: com.mysql.cj.jdbc.Driver
