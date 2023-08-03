@@ -49,6 +49,9 @@ public class ReservationService {
         if (cnt < 0) {
             throw new NotEnoughCntException("No more stock to reserve");
         }
+        if (cnt == 0) {
+            possible.setReservePossible(false);
+        }
         possible.setCnt(cnt);
         return possible.getCnt();
     }

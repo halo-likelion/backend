@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 public class ReservationController {
     private final ReservationService reservationService;
     private final AgricultureService agricultureService;
-    private final MemberService memberService;
+//    private final MemberService memberService;
 
     @PostMapping("/check-possible")
     public ResponseEntity<Boolean> checkReservePossible(@RequestBody ReservationCheckDto reservationCheckDto) {
