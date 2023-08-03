@@ -4,7 +4,7 @@ import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.member.MemberJoinDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
-import likelion.halo.hamso.dto.TokenInfoDto;
+import likelion.halo.hamso.dto.security.TokenInfoDto;
 import likelion.halo.hamso.exception.InvalidPasswordException;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotFoundException;
