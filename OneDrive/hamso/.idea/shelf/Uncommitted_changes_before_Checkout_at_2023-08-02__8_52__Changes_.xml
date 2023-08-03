@@ -1,0 +1,44 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]" date="1690977160146" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2023-08-02 오후 8:52 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/7.5/executionHistory/executionHistory.lock" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/7.5/executionHistory/executionHistory.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/executionHistory.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="AFTER_PATH" value="hamso-backend/build/tmp/compileJava/previous-compilation-data.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/previous-compilation-data.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/7.5/fileHashes/resourceHashesCache.bin" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/7.5/fileHashes/resourceHashesCache.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/resourceHashesCache.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/7.5/executionHistory/executionHistory.bin" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/7.5/executionHistory/executionHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/executionHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/buildOutputCleanup.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/outputFiles.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/7.5/fileHashes/fileHashes.lock" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/7.5/fileHashes/fileHashes.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/fileHashes.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="hamso-backend/.gradle/7.5/fileHashes/fileHashes.bin" />
+    <option name="AFTER_PATH" value="hamso-backend/.gradle/7.5/fileHashes/fileHashes.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-08-02_오후_8_52_[Changes]/fileHashes.bin" />
+  </binary>
+</changelist>
