@@ -14,6 +14,7 @@ import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,5 +100,20 @@ public class ReservationService {
                 .map(a -> new ReservationLogSpecificDto(a))
                 .collect(Collectors.toList());
         return reservationLogDtoList;
+    }
+
+    @Transactional
+    public Boolean updateDepositStatus(Long reservationId) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 내역은 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        if(reservation.getDeposit()) {
+            reservation.setDeposit(false);
+        } else {
+            reservation.setDeposit(true);
+        }
+        return reservation.getDeposit();
     }
 }
