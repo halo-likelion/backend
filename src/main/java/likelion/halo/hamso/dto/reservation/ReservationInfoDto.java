@@ -12,4 +12,6 @@ import java.time.format.DateTimeFormatter;
 public class ReservationInfoDto {
     private LocalDateTime wantTime; // 예약 원하는 날짜
     private Long machineId; // 빌리기 원하는 농기계 아이디
+    private String workType; // 작업 종류
+    private Double workload; // 작업량
 }

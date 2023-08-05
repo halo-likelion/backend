@@ -49,6 +49,13 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
+
+    @Column(name = "work_type")
+    private String workType; // 작업 종류
+
+    @Column(name = "workload")
+    private Double workload; // 작업량
+
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
         Reservation reservation = new Reservation();
@@ -57,6 +64,8 @@ public class Reservation {
         reservation.setWantTime(reservationDto.getWantTime());
         reservation.setStatus(ReservationStatus.RESERVED);
         reservation.setDeposit(false);
+        reservation.setWorkType(reservation.getWorkType());
+        reservation.setWorkload(reservation.getWorkload());
         return reservation;
     }
 }
