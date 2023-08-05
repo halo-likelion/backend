@@ -36,8 +36,9 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final PossibleRepository possibleRepository;
 
-    public Boolean checkReservePossible(Long machineId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
-        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
+    public Boolean checkReservePossible(AgriMachineType machineType, Long regionId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
+        Optional<AgriMachine> oMachine = agriMachineRepository.findByTypeAndRegion(machineType, regionId);
+        AgriPossible possible = possibleRepository.getMachineDateInfo(oMachine.get().getId(), date);
         return possible.getReservePossible();
     }
 
