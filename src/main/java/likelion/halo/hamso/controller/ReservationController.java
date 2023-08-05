@@ -4,6 +4,7 @@ import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
 import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
@@ -84,6 +85,11 @@ public class ReservationController {
     @PutMapping("/deposit")
     public ResponseEntity<Boolean> updateDepositStatus(@RequestParam("reservationId") Long reservationId) {
         return new ResponseEntity<>(reservationService.updateDepositStatus(reservationId), HttpStatus.OK);
+    }
+
+    @PostMapping("/possible/month")
+    public ResponseEntity<Integer[]> possibleMonthArray(@RequestBody RegionMachineDto regionMachineDto) {
+        return new ResponseEntity<>(reservationService.getPossibleMonthArray(regionMachineDto.getMachineId()), HttpStatus.OK);
     }
 
 }

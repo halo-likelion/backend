@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -115,5 +117,22 @@ public class ReservationService {
             reservation.setDeposit(true);
         }
         return reservation.getDeposit();
+    }
+
+    public Integer[] getPossibleMonthArray(Long machineId) {
+        LocalDateTime now = LocalDateTime.now();
+        int lastDayOfMonth = YearMonth.of(now.getYear(), now.getMonth()).lengthOfMonth();
+        LocalDateTime start = LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0);
+        LocalDateTime end = LocalDateTime.of(now.getYear(), now.getMonth(), lastDayOfMonth, 23, 59);
+        List<AgriPossible> possibleList = possibleRepository.getPossibleList(machineId, start, end);
+        Integer[] arr = new Integer[lastDayOfMonth];
+        for(int i=0;i<arr.length;i++) {
+            if(possibleList.get(i).getReservePossible()) {
+                arr[i] = 1;
+            } else{
+                arr[i] = 0;
+            }
+        }
+        return arr;
     }
 }

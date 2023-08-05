@@ -27,7 +27,7 @@ public class AgriPossible {
 
     private LocalDateTime findDate; // 날짜
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "machine_id")
     private AgriMachine machine;
 

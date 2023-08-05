@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Date;
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface PossibleRepository extends JpaRepository<AgriPossible, Long> {
     AgriPossible getMachineDateInfo(@Param("machineId") Long machineId, @Param("findDate") LocalDateTime findDate);
 
 
+    @Query("select p from AgriPossible p where p.machine.id =:machineId and p.findDate >=:start and p.findDate <=:end")
+    List<AgriPossible> getPossibleList(Long machineId, LocalDateTime start, LocalDateTime end);
 }
