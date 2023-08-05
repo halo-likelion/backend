@@ -7,6 +7,7 @@ import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
 import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
+import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.exception.NotLoginException;
@@ -71,6 +72,12 @@ public class ReservationController {
     @GetMapping("/list")
     public ResponseEntity<List<ReservationLogDto>> getReservationLogList(@Login Member loginMember) {
         List<ReservationLogDto> reservationLogDtoList = reservationService.getReservationLogList(loginMember.getLoginId());
+        return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/list-specific")
+    public ResponseEntity<List<ReservationLogSpecificDto>> getReservationLogSpecificList(@Login Member loginMember) {
+        List<ReservationLogSpecificDto> reservationLogDtoList = reservationService.getReservationLogSpecificList(loginMember.getLoginId());
         return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
     }
 

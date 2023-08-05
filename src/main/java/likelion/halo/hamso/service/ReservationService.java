@@ -7,6 +7,7 @@ import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
+import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotEnoughCntException;
 import likelion.halo.hamso.exception.NotFoundException;
@@ -80,6 +81,22 @@ public class ReservationService {
     private static List<ReservationLogDto> convertReservationToReservationDto(List<Reservation> reservationList) {
         List<ReservationLogDto> reservationLogDtoList = reservationList.stream()
                 .map(a -> new ReservationLogDto(a))
+                .collect(Collectors.toList());
+        return reservationLogDtoList;
+    }
+
+    public List<ReservationLogSpecificDto> getReservationLogSpecificList(String loginId) {
+        Optional<List<Reservation>> reservationList = reservationRepository.getReservationListByLoginId(loginId);
+        if (reservationList.isEmpty()) {
+            throw new NotFoundException("예약 내역이 존재하지 않습니다.");
+        }
+
+        return convertReservationToReservationSpecificDto(reservationList.get());
+    }
+
+    private static List<ReservationLogSpecificDto> convertReservationToReservationSpecificDto(List<Reservation> reservationList) {
+        List<ReservationLogSpecificDto> reservationLogDtoList = reservationList.stream()
+                .map(a -> new ReservationLogSpecificDto(a))
                 .collect(Collectors.toList());
         return reservationLogDtoList;
     }
