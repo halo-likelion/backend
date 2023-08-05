@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -41,6 +42,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     // 해당 로그인아이디 회원의 예약 상태에 따른 예약 내역 리스트 반환
     @Query("select r from Reservation r where r.member.loginId = :loginId and r.status = :status")
-    List<Reservation> getReservationListBySnoAndStatus(@Param("loginId") String loginId, @Param("status") ReservationStatus status);
+    List<Reservation> getReservationListByLoginIdAndStatus(@Param("loginId") String loginId, @Param("status") ReservationStatus status);
 
+    @Query("select r from Reservation r where r.member.loginId = :loginId")
+    Optional<List<Reservation>> getReservationListByLoginId(String loginId);
 }

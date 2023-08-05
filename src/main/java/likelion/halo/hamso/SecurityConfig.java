@@ -41,7 +41,7 @@ public class SecurityConfig{
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/auth/**", "/reserve/check-possible").permitAll()
                         .requestMatchers("/members/**").hasRole("USER")
-                        .requestMatchers("/reserve").hasRole("USER")
+                        .requestMatchers("/reserve", "/reserve/list").hasRole("USER")
                         .anyRequest().authenticated()
                         .and()
                         .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)

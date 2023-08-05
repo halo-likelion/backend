@@ -6,7 +6,9 @@ import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
 import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
+import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
+import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.exception.NotLoginException;
 import likelion.halo.hamso.service.AgricultureService;
 import likelion.halo.hamso.service.MemberService;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -63,6 +66,12 @@ public class ReservationController {
         reservationService.removeCnt(machineId, wantTime);
 
         return new ResponseEntity<>(reservation.getId(), HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ReservationLogDto>> getReservationLogList(@Login Member loginMember) {
+        List<ReservationLogDto> reservationLogDtoList = reservationService.getReservationLogList(loginMember.getLoginId());
+        return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
     }
 
 }

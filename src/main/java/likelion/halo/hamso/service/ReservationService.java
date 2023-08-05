@@ -1,20 +1,16 @@
 package likelion.halo.hamso.service;
 
-import likelion.halo.hamso.domain.AgriMachine;
-import likelion.halo.hamso.domain.AgriPossible;
-import likelion.halo.hamso.domain.AgriRegion;
-import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.domain.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
+import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotEnoughCntException;
 import likelion.halo.hamso.exception.NotFoundException;
-import likelion.halo.hamso.repository.AgriMachineRepository;
-import likelion.halo.hamso.repository.AgriRegionRepository;
-import likelion.halo.hamso.repository.PossibleRepository;
-import likelion.halo.hamso.repository.ReservationRepository;
+import likelion.halo.hamso.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,6 +31,7 @@ public class ReservationService {
     private final AgriRegionRepository agriRegionRepository;
     private final ReservationRepository reservationRepository;
     private final PossibleRepository possibleRepository;
+    private final MemberRepository memberRepository;
 
     public Boolean checkReservePossible(AgriMachineType machineType, Long regionId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
         Optional<AgriMachine> oMachine = agriMachineRepository.findByTypeAndRegion(machineType, regionId);
@@ -71,4 +68,19 @@ public class ReservationService {
     }
 
 
+    public List<ReservationLogDto> getReservationLogList(String loginId) {
+        Optional<List<Reservation>> reservationList = reservationRepository.getReservationListByLoginId(loginId);
+        if (reservationList.isEmpty()) {
+            throw new NotFoundException("예약 내역이 존재하지 않습니다.");
+        }
+
+        return convertReservationToReservationDto(reservationList.get());
+    }
+
+    private static List<ReservationLogDto> convertReservationToReservationDto(List<Reservation> reservationList) {
+        List<ReservationLogDto> reservationLogDtoList = reservationList.stream()
+                .map(a -> new ReservationLogDto(a))
+                .collect(Collectors.toList());
+        return reservationLogDtoList;
+    }
 }
