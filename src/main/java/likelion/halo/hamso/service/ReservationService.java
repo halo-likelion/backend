@@ -42,6 +42,11 @@ public class ReservationService {
         return possible.getReservePossible();
     }
 
+    public Boolean checkReservePossible(Long machineId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
+        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
+        return possible.getReservePossible();
+    }
+
     @Transactional
     public Integer removeCnt(Long machineId, LocalDateTime date) {
         AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);

@@ -30,8 +30,8 @@ public class ReservationController {
 
     @PostMapping("/check-possible")
     public ResponseEntity<Boolean> checkReservePossible(@RequestBody ReservationCheckDto reservationCheckDto) {
-        LocalDateTime date = LocalDateTime.of(reservationCheckDto.getYear(), reservationCheckDto.getMonth(), reservationCheckDto.getDay(), 0, 0);
-        Boolean possibleCheck = reservationService.checkReservePossible(reservationCheckDto.getMachineType(), reservationCheckDto.getRegionId(), date);
+        LocalDateTime wantTime = LocalDateTime.of(reservationCheckDto.getYear(), reservationCheckDto.getMonth(), reservationCheckDto.getDay(), 0, 0);
+        Boolean possibleCheck = reservationService.checkReservePossible(reservationCheckDto.getMachineType(), reservationCheckDto.getRegionId(), wantTime);
         return new ResponseEntity<>(possibleCheck, HttpStatus.OK);
     }
 
@@ -49,9 +49,9 @@ public class ReservationController {
         // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
         log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
         // 머신 타입으로 예약 가능하게 변경하기!
-//        if(!reservationService.checkReservePossible(reservationInfo.getMachineTy, wantTime)) {
-//            throw new NotAvailableReserveException("예약이 불가능합니다.");
-//        }
+        if(!reservationService.checkReservePossible(reservationInfo.getMachineId(), wantTime)) {
+            throw new NotAvailableReserveException("예약이 불가능합니다.");
+        }
 
         // 예약 저장
         AgriMachine machine = agricultureService.findByMachineIdReal(machineId);
