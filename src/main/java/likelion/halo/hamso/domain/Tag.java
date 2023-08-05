@@ -21,7 +21,6 @@ public class Tag {
     @JoinColumn(name = "machine_id")
     private AgriMachine agriMachine;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "tag_column") // 열 이름 설정
     private String tagColumn; // 농기계 종류
 }
