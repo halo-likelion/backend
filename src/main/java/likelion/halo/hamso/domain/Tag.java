@@ -1,9 +1,8 @@
 package likelion.halo.hamso.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +20,8 @@ public class Tag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     private AgriMachine agriMachine;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tag_column") // 열 이름 설정
+    private String tagColumn; // 농기계 종류
 }
