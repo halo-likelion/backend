@@ -6,6 +6,7 @@ import likelion.halo.hamso.domain.type.AgriMachineType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,4 +14,5 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
     Optional<AgriMachine> findByType(AgriMachineType type);
 
 
+    List<AgriMachine> findByRegion(String region);
 }

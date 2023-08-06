@@ -52,4 +52,10 @@ public class AgricultureController {
         agricultureService.updateMachineRevStatus(info);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{machies_region/{region}")
+    public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("region") String region) {
+        List<MachineInfoDto> machines = agricultureService.findMachinesByRegion(region);
+        return new ResponseEntity<>(machines, HttpStatus.OK);
+    }
 }
