@@ -17,11 +17,14 @@ public class MemberJoinDto {
 
     private String email; // 이메일
 
+    private String address; // 주소
+
     public MemberJoinDto(Member member) {
         this.loginId = member.getLoginId();
         this.name = member.getName();
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
+        this.address = member.getAddress();
     }
 
 }

@@ -39,12 +39,16 @@ public class Member implements UserDetails {
     @Column(name="email")
     private String email; // 이메일
 
+    @Column(name = "address")
+    private String address; // 주소
+
     public Member(MemberJoinDto memberInfo) {
         this.loginId = memberInfo.getLoginId();
         this.name = memberInfo.getName();
         this.phoneNo = memberInfo.getPhoneNo();
         this.email = memberInfo.getEmail();
         this.password = memberInfo.getPassword();
+        this.address = memberInfo.getAddress();
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
