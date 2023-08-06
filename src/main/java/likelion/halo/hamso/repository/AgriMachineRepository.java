@@ -14,5 +14,5 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
     Optional<AgriMachine> findByType(AgriMachineType type);
 
 
-    List<AgriMachine> findByRegion(String region);
+    List<AgriMachine> findByRegionId(Long regionId);
 }

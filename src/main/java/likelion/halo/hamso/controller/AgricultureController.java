@@ -53,9 +53,9 @@ public class AgricultureController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{machies_region/{region}")
-    public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("region") String region) {
-        List<MachineInfoDto> machines = agricultureService.findMachinesByRegion(region);
+    @GetMapping("/machies_region/{regionId}")
+    public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("region") Long regionId) {
+        List<MachineInfoDto> machines = agricultureService.findMachinesByRegionId(regionId);
         return new ResponseEntity<>(machines, HttpStatus.OK);
     }
 }
