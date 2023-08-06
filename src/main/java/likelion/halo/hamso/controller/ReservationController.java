@@ -82,11 +82,6 @@ public class ReservationController {
         return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
     }
 
-    @PutMapping("/deposit")
-    public ResponseEntity<Boolean> updateDepositStatus(@RequestParam("reservationId") Long reservationId) {
-        return new ResponseEntity<>(reservationService.updateDepositStatus(reservationId), HttpStatus.OK);
-    }
-
     @PostMapping("/possible/month")
     public ResponseEntity<Integer[]> possibleMonthArray(@RequestBody RegionMachineDto regionMachineDto) {
         return new ResponseEntity<>(reservationService.getPossibleMonthArray(regionMachineDto.getMachineId()), HttpStatus.OK);
