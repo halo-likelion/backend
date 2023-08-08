@@ -38,6 +38,16 @@ public class MemberService {
         }
     }
 
+    public Member findByLoginIdForReal(String loginId){
+        Optional<Member> member = memberRepository.findByLoginId(loginId);
+        if(member.isEmpty()) {
+            // Member not found, handle accordingly
+            throw new NotFoundException("Member not found with loginId: " + loginId);
+        } else {
+            return member.get();
+        }
+    }
+
     public List<MemberDto> findAll() {
         List<Member> all = memberRepository.findAll();
         List<MemberDto> memberDtoList = convertMemberToMemberDto(all);

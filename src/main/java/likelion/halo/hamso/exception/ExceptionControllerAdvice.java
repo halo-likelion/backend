@@ -50,5 +50,23 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleLoginFailedException(NotLoginException ex) {
+        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(NotEnoughCntException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorResponse handleCntException(NotEnoughCntException ex) {
+        return new ErrorResponse(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = {NotAvailableReserveException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse NotAvailableReservationException(NotAvailableReserveException e) {
+        return new ErrorResponse(HttpStatus.CONFLICT.value(),e.getMessage());
+    }
+
 
 }

@@ -4,7 +4,6 @@ import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
-import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.exception.NotFoundException;
@@ -35,19 +34,26 @@ public class AgricultureService {
                 .content(infoDto.getContent())
                 .price(infoDto.getPrice())
                 .region(region)
-                .reservePossible(infoDto.getReservePossible())
                 .build();
 
         agriMachineRepository.save(machine);
         return machine.getId();
     }
 
-    public MachineInfoDto findById(Long id){
+    public MachineInfoDto findByMachineId(Long id){
         Optional<AgriMachine> oMachine = agriMachineRepository.findById(id);
         if(oMachine.isEmpty()) {
             throw new NotFoundException("Machine is not founded with loginId: " + id);
         }
         return new MachineInfoDto(oMachine.get());
+    }
+
+    public AgriMachine findByMachineIdReal(Long id){
+        Optional<AgriMachine> oMachine = agriMachineRepository.findById(id);
+        if(oMachine.isEmpty()) {
+            throw new NotFoundException("Machine is not founded with loginId: " + id);
+        }
+        return oMachine.get();
     }
 
     public MachineInfoDto findByMachineType(AgriMachineType type){
@@ -82,17 +88,6 @@ public class AgricultureService {
             machine.setContent(infoDto.getContent());
             machine.setRegion(infoDto.getRegion());
             machine.setPrice(infoDto.getPrice());
-        }
-    }
-
-    @Transactional
-    public void updateMachineRevStatus(MachineStatusUpdateDto infoDto) {
-        Optional<AgriMachine> oMachine = agriMachineRepository.findById(infoDto.getId());
-        if(oMachine.isEmpty()) {
-            throw new NotFoundException("Machine is not founded with loginId: " + infoDto.getId());
-        } else {
-            AgriMachine machine = oMachine.get();
-            machine.setReservePossible(infoDto.getReservePossible());
         }
     }
 

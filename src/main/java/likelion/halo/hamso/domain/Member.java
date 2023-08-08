@@ -39,7 +39,7 @@ public class Member implements UserDetails {
     @Column(name="email")
     private String email; // 이메일
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address; // 주소
 
     public Member(MemberJoinDto memberInfo) {

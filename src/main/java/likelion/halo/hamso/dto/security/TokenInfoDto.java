@@ -1,4 +1,4 @@
-package likelion.halo.hamso.dto;
+package likelion.halo.hamso.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

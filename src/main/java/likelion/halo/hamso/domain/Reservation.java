@@ -3,6 +3,7 @@ package likelion.halo.hamso.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import likelion.halo.hamso.domain.type.ReservationStatus;
+import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -47,4 +48,24 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
+
+
+    @Column(name = "work_type")
+    private String workType; // 작업 종류
+
+    @Column(name = "workload")
+    private Double workload; // 작업량
+
+    //==생성 메서드==//
+    public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
+        Reservation reservation = new Reservation();
+        reservation.setMember(member);
+        reservation.setAgriMachine(machine);
+        reservation.setWantTime(reservationDto.getWantTime());
+        reservation.setStatus(ReservationStatus.RESERVED);
+        reservation.setDeposit(false);
+        reservation.setWorkType(reservation.getWorkType());
+        reservation.setWorkload(reservation.getWorkload());
+        return reservation;
+    }
 }

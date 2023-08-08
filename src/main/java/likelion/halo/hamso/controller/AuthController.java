@@ -2,7 +2,7 @@ package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.dto.member.MemberJoinDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
-import likelion.halo.hamso.dto.TokenInfoDto;
+import likelion.halo.hamso.dto.security.TokenInfoDto;
 import likelion.halo.hamso.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
