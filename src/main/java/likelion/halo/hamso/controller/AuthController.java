@@ -1,19 +1,12 @@
 package likelion.halo.hamso.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import likelion.halo.hamso.domain.Member;
-import likelion.halo.hamso.dto.Member.MemberJoinDto;
-import likelion.halo.hamso.dto.Member.MemberLoginDto;
+import likelion.halo.hamso.dto.member.MemberJoinDto;
+import likelion.halo.hamso.dto.member.MemberLoginDto;
 import likelion.halo.hamso.dto.TokenInfoDto;
-import likelion.halo.hamso.security.JwtTokenProvider;
 import likelion.halo.hamso.service.AuthService;
-import likelion.halo.hamso.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

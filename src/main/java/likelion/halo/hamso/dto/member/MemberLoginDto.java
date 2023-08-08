@@ -1,4 +1,4 @@
-package likelion.halo.hamso.dto.Member;
+package likelion.halo.hamso.dto.member;
 
 import lombok.*;
 
