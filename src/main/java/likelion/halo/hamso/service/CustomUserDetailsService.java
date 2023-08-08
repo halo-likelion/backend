@@ -26,10 +26,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Member member) {
-        return User.builder()
-                .username(member.getUsername())
-                .password((member.getPassword()))
-                .roles("USER") // role을 "USER"로 설정
-                .build();
+        // 만약 로그인 아이디가 gapyeong11이라면 ADMIN 권한을 부여
+        if ("gapyeong11".equals(member.getLoginId())) {
+            return User.builder()
+                    .username(member.getUsername())
+                    .password(member.getPassword())
+                    .roles("ADMIN")  // role을 "ADMIN"으로 설정
+                    .build();
+        } else {
+            // 그렇지 않다면 기존처럼 USER 권한을 부여
+            return User.builder()
+                    .username(member.getUsername())
+                    .password(member.getPassword())
+                    .roles("USER") // role을 "USER"로 설정
+                    .build();
+        }
     }
 }

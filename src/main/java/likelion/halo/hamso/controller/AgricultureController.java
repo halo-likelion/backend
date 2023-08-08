@@ -1,7 +1,6 @@
 package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
-import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.service.AgricultureService;
@@ -31,7 +30,7 @@ public class AgricultureController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MachineInfoDto> getMachineById(@PathVariable("id") Long id) {
-        MachineInfoDto machine = agricultureService.findById(id);
+        MachineInfoDto machine = agricultureService.findByMachineId(id);
         return new ResponseEntity<>(machine, HttpStatus.OK);
     }
 
@@ -47,9 +46,9 @@ public class AgricultureController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/update-machine-status")
-    public ResponseEntity<Void> updateMachineRevStatus(@RequestBody MachineStatusUpdateDto info) {
-        agricultureService.updateMachineRevStatus(info);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping("/update-machine-status")
+//    public ResponseEntity<Void> updateMachineRevStatus(@RequestBody MachineStatusUpdateDto info) {
+//        agricultureService.updateMachineRevStatus(info);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

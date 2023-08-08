@@ -35,12 +35,13 @@ public class SecurityConfig{
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .securityMatcher("/member/**", "/auth/**", "/security/**")
+                .securityMatcher("/member/**", "/auth/**", "/security/**", "/reserve/**", "/admin/**")
                 .httpBasic().disable().csrf().disable().cors().disable() // CSRF 보호를 비활성화합니다.
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/members/**").hasRole("USER")
+                        .requestMatchers("/auth/**", "/reserve/check-possible", "/possible/month").permitAll()
+                        .requestMatchers("/members/**", "/reserve", "/reserve/list", "/reserve/list-specific").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 추후 ROLE ADMIN으로 수정하기
                         .anyRequest().authenticated()
                         .and()
                         .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
