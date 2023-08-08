@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -107,7 +108,15 @@ public class AgricultureService {
         }
     }
 
+    public List<MachineInfoDto> findByRegionId(Long regionId) {
+        log.info("service regionId: {}", regionId);
+        List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
+        log.info("machine = {}", machinesInRegion.get(0));
 
+        // 조회된 엔티티들을 DTO로 변환하여 리스트에 저장하여 반환
+        List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
+        return machineDtoList != null ? machineDtoList : new ArrayList<>();
+    }
     private static List<MachineInfoDto> convertMachineToMachineDto(List<AgriMachine> list) {
         List<MachineInfoDto> dtoList = list.stream()
                 .map(a -> new MachineInfoDto(a))
@@ -121,12 +130,14 @@ public class AgricultureService {
                 .collect(Collectors.toList());
         return dtoList;
     }
-    public List<MachineInfoDto> findMachinesByRegion(String region) {
+    private List<MachineInfoDto> findMachinesByRegionId(Long regionId) {
         // AgriRegion 객체에서 해당 지역 정보와 일치하는 엔티티들을 조회
-        List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegion(region);
+        List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
 
         // 조회된 엔티티들을 DTO로 변환하여 리스트에 저장하여 반환
         List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
         return machineDtoList;
     }
+
+
 }
