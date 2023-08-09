@@ -1,6 +1,7 @@
 package likelion.halo.hamso.dto.reservation;
 
 import likelion.halo.hamso.domain.Member;
+import likelion.halo.hamso.domain.type.AgriMachineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter @ToString
 public class ReservationCheckDto {
-    private Long machineId;
+    private AgriMachineType machineType;
+    private Long regionId;
     private int year;
     private int month;
     private int day;

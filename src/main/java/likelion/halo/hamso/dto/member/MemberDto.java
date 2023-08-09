@@ -15,12 +15,15 @@ public class MemberDto {
 
     private String email; // 이메일
 
+    private String address; // 주소
+
     public MemberDto(Member member) {
         this.id = member.getId();
         this.loginId = member.getLoginId();
         this.name = member.getName();
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
+        this.address = member.getAddress();
     }
 
     public MemberDto() {

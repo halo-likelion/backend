@@ -29,7 +29,7 @@ public class Reservation {
     private LocalDateTime wantTime; // 예약하기 원하는 시간
 
     @Enumerated(EnumType.STRING)
-    private ReservationStatus status; // 예약 상태 RESERVED, FINISHED, CANCELED
+    private ReservationStatus status; // 예약 상태 RESERVING, RESERVED, FINISHED, CANCELED
 
     @Column(name = "deposit", columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
@@ -49,6 +49,13 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
+
+    @Column(name = "work_type")
+    private String workType; // 작업 종류
+
+    @Column(name = "workload")
+    private Double workload; // 작업량
+
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
         Reservation reservation = new Reservation();
@@ -57,6 +64,8 @@ public class Reservation {
         reservation.setWantTime(reservationDto.getWantTime());
         reservation.setStatus(ReservationStatus.RESERVED);
         reservation.setDeposit(false);
+        reservation.setWorkType(reservation.getWorkType());
+        reservation.setWorkload(reservation.getWorkload());
         return reservation;
     }
 }
