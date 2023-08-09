@@ -41,9 +41,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                                                 @Param("region2")Region2 region2);
 
     // 해당 로그인아이디 회원의 예약 상태에 따른 예약 내역 리스트 반환
-    @Query("select r from Reservation r where r.member.loginId = :loginId and r.status = :status")
+    @Query("select r from Reservation r where r.member.loginId=:loginId and r.status=:status")
     List<Reservation> getReservationListByLoginIdAndStatus(@Param("loginId") String loginId, @Param("status") ReservationStatus status);
 
-    @Query("select r from Reservation r where r.member.loginId = :loginId")
+    @Query("select r from Reservation r where r.member.loginId=:loginId")
     Optional<List<Reservation>> getReservationListByLoginId(String loginId);
+
+    @Query("select r from Reservation r where r.agriMachine.region.id =:regionId")
+    List<Reservation> findByRegionId(@Param("regionId") Long regionId);
 }
