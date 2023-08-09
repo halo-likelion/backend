@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             return User.builder()
                     .username(member.getUsername())
                     .password(member.getPassword())
-                    .roles("ADMIN")  // role을 "ADMIN"으로 설정
+                    .roles("ADMIN", "USER")  // role을 "ADMIN"으로 설정
                     .build();
         } else {
             // 그렇지 않다면 기존처럼 USER 권한을 부여

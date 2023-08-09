@@ -40,7 +40,10 @@ public class Member implements UserDetails {
     private String email; // 이메일
 
     @Column(name = "address")
-    private String address; // 주소
+    private String address; // 도로명주소
+
+    @Column(name = "specific_address")
+    private String specificAddress; // 상세주소
 
     public Member(MemberJoinDto memberInfo) {
         this.loginId = memberInfo.getLoginId();
@@ -49,6 +52,7 @@ public class Member implements UserDetails {
         this.email = memberInfo.getEmail();
         this.password = memberInfo.getPassword();
         this.address = memberInfo.getAddress();
+        this.specificAddress = memberInfo.getSpecificAddress();
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

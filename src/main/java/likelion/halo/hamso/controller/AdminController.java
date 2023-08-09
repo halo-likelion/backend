@@ -6,10 +6,14 @@ import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
+import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.member.MemberLoginDto;
+import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
 import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotLoginException;
 import likelion.halo.hamso.service.AgricultureService;
+import likelion.halo.hamso.service.MemberService;
 import likelion.halo.hamso.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +31,13 @@ import java.util.List;
 public class AdminController {
     private final ReservationService reservationService;
     private final AgricultureService agricultureService;
+    private final MemberService memberService;
 
+    @GetMapping("/list")
+    public ResponseEntity<List<MemberDto>> getMemberList() {
+        List<MemberDto> members = memberService.findAll();
+        return new ResponseEntity<>(members, HttpStatus.OK);
+    }
 
 
     @PutMapping("/deposit")
@@ -44,4 +54,6 @@ public class AdminController {
     public ResponseEntity<ReservationStatus> updateReservationStatus(@RequestBody ReservationStatusDto reservationStatusInfo) {
         return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
     }
+
+
 }

@@ -1,10 +1,13 @@
 package likelion.halo.hamso.controller;
 
+import likelion.halo.hamso.argumentresolver.Login;
+import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
 import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
 import likelion.halo.hamso.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +20,8 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-    private final MemberService memberService;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<MemberDto>> getMemberList() {
-        List<MemberDto> members = memberService.findAll();
-        return new ResponseEntity<>(members, HttpStatus.OK);
-    }
+    private final MemberService memberService;
 
     @GetMapping("/{loginId}")
     public ResponseEntity<MemberDto> getMemberByLoginId(@PathVariable("loginId") String loginId) {
@@ -47,5 +45,10 @@ public class MemberController {
     public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
         memberService.updatePassword(memberInfo);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<MemberDto> getMemberInfo(@Login Member loginMember) {
+        return new ResponseEntity<>(new MemberDto(loginMember), HttpStatus.OK);
     }
 }

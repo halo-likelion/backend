@@ -19,12 +19,15 @@ public class MemberJoinDto {
 
     private String address; // 주소
 
+    private String specificAddress; // 상세주소
+
     public MemberJoinDto(Member member) {
         this.loginId = member.getLoginId();
         this.name = member.getName();
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
         this.address = member.getAddress();
+        this.specificAddress = member.getSpecificAddress();
     }
 
 }
