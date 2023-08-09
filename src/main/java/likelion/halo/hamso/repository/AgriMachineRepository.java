@@ -15,11 +15,7 @@ import java.util.Optional;
 public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long>  {
     Optional<AgriMachine> findByType(AgriMachineType type);
 
-<<<<<<< HEAD
     @Query("select m from AgriMachine m where m.region.id=:id")
     List<AgriMachine> findByRegionId(@Param("id") Long id);
-=======
-
-    List<AgriMachine> findByRegionId(Long regionId);
->>>>>>> 4f963bfb2992c772ea3df805b8410603453d2810
+    //List<AgriMachine> findByRegionId(Long regionId);
 }

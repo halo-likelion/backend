@@ -54,16 +54,11 @@ public class AgricultureController {
     }
 
     @GetMapping("/machies_region/{regionId}")
-<<<<<<< HEAD
     public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("regionId") Long regionId) {
         //로그 추가
         System.out.println("Received regionId: " + regionId);
 
         List<MachineInfoDto> machines = agricultureService.findByRegionId(regionId);
-=======
-    public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("region") Long regionId) {
-        List<MachineInfoDto> machines = agricultureService.findMachinesByRegionId(regionId);
->>>>>>> 4f963bfb2992c772ea3df805b8410603453d2810
         return new ResponseEntity<>(machines, HttpStatus.OK);
     }
 }

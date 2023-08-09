@@ -130,12 +130,7 @@ public class AgricultureService {
                 .collect(Collectors.toList());
         return dtoList;
     }
-<<<<<<< HEAD
     private List<MachineInfoDto> findMachinesByRegionId(Long regionId) {
-=======
-    public List<MachineInfoDto> findMachinesByRegionId(Long regionId) {
->>>>>>> 4f963bfb2992c772ea3df805b8410603453d2810
-        // AgriRegion 객체에서 해당 지역 정보와 일치하는 엔티티들을 조회
         List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
 
         // 조회된 엔티티들을 DTO로 변환하여 리스트에 저장하여 반환
