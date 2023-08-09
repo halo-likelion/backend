@@ -4,6 +4,7 @@ import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
 import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
@@ -31,7 +32,7 @@ import java.util.List;
 public class ReservationController {
     private final ReservationService reservationService;
     private final AgricultureService agricultureService;
-//    private final MemberService memberService;
+    private final MemberService memberService;
 
     @PostMapping("/check-possible")
     public ResponseEntity<Boolean> checkReservePossible(@RequestBody ReservationCheckDto reservationCheckDto) {
@@ -85,6 +86,11 @@ public class ReservationController {
     @PostMapping("/possible/month")
     public ResponseEntity<Integer[]> possibleMonthArray(@RequestBody RegionMachineDto regionMachineDto) {
         return new ResponseEntity<>(reservationService.getPossibleMonthArray(regionMachineDto.getMachineId()), HttpStatus.OK);
+    }
+
+    @GetMapping("/cancel/{reservationId}")
+    public ResponseEntity<ReservationStatus> cancelReservation(@PathVariable("reservationId") Long reservationId) {
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED), HttpStatus.OK);
     }
 
 }

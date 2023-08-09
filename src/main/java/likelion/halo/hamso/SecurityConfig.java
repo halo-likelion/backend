@@ -40,8 +40,8 @@ public class SecurityConfig{
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/auth/**", "/reserve/check-possible", "/possible/month").permitAll()
-                        .requestMatchers("/members/**", "/reserve", "/reserve/list", "/reserve/list-specific").hasRole("USER")
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // 추후 ROLE ADMIN으로 수정하기
+                        .requestMatchers("/members/**", "/reserve", "/reserve/list", "/reserve/list-specific", "/reserve/cancel/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                         .and()
                         .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)

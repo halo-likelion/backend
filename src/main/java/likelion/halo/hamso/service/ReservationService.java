@@ -2,10 +2,12 @@ package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
+import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
@@ -134,5 +136,29 @@ public class ReservationService {
             }
         }
         return arr;
+    }
+
+    public List<ReservationAdminInfoDto> getReservationAdminInfoList(Long regionId) {
+        List<Reservation> reservationList = reservationRepository.findByRegionId(regionId);
+        List<ReservationAdminInfoDto> reservationAdminInfoDtoList = convertReservationToReservationAdminInfoDto(reservationList);
+        return reservationAdminInfoDtoList;
+    }
+
+    private static List<ReservationAdminInfoDto> convertReservationToReservationAdminInfoDto(List<Reservation> reservationList) {
+        List<ReservationAdminInfoDto> reservationLogDtoList = reservationList.stream()
+                .map(a -> new ReservationAdminInfoDto(a))
+                .collect(Collectors.toList());
+        return reservationLogDtoList;
+    }
+
+    @Transactional
+    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        reservation.setStatus(reservationStatus);
+        return reservation.getStatus();
     }
 }
