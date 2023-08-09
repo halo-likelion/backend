@@ -117,6 +117,14 @@ public class AgricultureService {
         List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
         return machineDtoList != null ? machineDtoList : new ArrayList<>();
     }
+
+//    public List<MachineInfoDto> findMachinesByType(AgriMachineType type) {
+//        List<AgriMachine> machinesByType = agriMachineRepository.findByType(type);
+//        List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesByType);
+//        return machineDtoList;
+//    }
+
+
     private static List<MachineInfoDto> convertMachineToMachineDto(List<AgriMachine> list) {
         List<MachineInfoDto> dtoList = list.stream()
                 .map(a -> new MachineInfoDto(a))
@@ -138,5 +146,17 @@ public class AgricultureService {
         return machineDtoList;
     }
 
+//    public List<MachineInfoDto> findMachinesByReservationDate(String reservationDate) {
+//        // Implement the logic to retrieve machines based on reservation date
+//        // You may need to modify your entity relationships and repository queries
+//        // to achieve this functionality.
+//        // Example:
+//        // List<AgriMachine> machinesByDate = agriMachineRepository.findByReservationDate(reservationDate);
+//        // List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesByDate);
+//        // return machineDtoList;
+//
+//        // For the purpose of this example, returning an empty list
+//        return new ArrayList<>();
+//    }
 
 }

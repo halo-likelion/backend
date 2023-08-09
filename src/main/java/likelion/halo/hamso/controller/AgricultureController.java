@@ -1,5 +1,6 @@
 package likelion.halo.hamso.controller;
 
+import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -61,4 +62,25 @@ public class AgricultureController {
         List<MachineInfoDto> machines = agricultureService.findByRegionId(regionId);
         return new ResponseEntity<>(machines, HttpStatus.OK);
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<List<MachineInfoDto>> searchMachines(
+//            @RequestParam(required = false) Long regionId,
+//            @RequestParam(required = false) AgriMachineType machineType,
+//            @RequestParam(required = false) String reservationDate) {
+//
+//        List<MachineInfoDto> machines;
+//
+//        if (regionId != null) {
+//            machines = agricultureService.findMachinesByRegionId(regionId);
+//        } else if (machineType != null) {
+//            machines = agricultureService.findMachinesByType(machineType);
+//        } else if (reservationDate != null) {
+//            machines = agricultureService.findMachinesByReservationDate(reservationDate);
+//        } else {
+//            machines = new ArrayList<>(); // No search criteria provided, return empty list
+//        }
+//
+//        return new ResponseEntity<>(machines, HttpStatus.OK);
+//    }
 }
