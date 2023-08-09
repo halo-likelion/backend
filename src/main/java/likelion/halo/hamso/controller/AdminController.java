@@ -34,7 +34,7 @@ public class AdminController {
         return new ResponseEntity<>(reservationService.updateDepositStatus(reservationId), HttpStatus.OK);
     }
 
-    @PostMapping("/reserve/list/{regionId}")
+    @GetMapping("/reserve/list/{regionId}")
     public ResponseEntity<List<ReservationAdminInfoDto>> getReservationAdminInfoList(@PathVariable("regionId") Long regionId) {
         return new ResponseEntity<>(reservationService.getReservationAdminInfoList(regionId), HttpStatus.OK);
     }
