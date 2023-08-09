@@ -5,10 +5,7 @@ import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
-import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
-import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
+import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotLoginException;
 import likelion.halo.hamso.service.AgricultureService;
@@ -35,6 +32,11 @@ public class AdminController {
     @PutMapping("/deposit")
     public ResponseEntity<Boolean> updateDepositStatus(@RequestParam("reservationId") Long reservationId) {
         return new ResponseEntity<>(reservationService.updateDepositStatus(reservationId), HttpStatus.OK);
+    }
+
+    @PostMapping("/reserve/list/{regionId}")
+    public ResponseEntity<List<ReservationAdminInfoDto>> getReservationAdminInfoList(@PathVariable("regionId") Long regionId) {
+        return new ResponseEntity<>(reservationService.getReservationAdminInfoList(regionId), HttpStatus.OK);
     }
 
 }

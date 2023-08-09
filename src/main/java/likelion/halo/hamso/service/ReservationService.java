@@ -6,6 +6,7 @@ import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.dto.member.MemberDto;
+import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
@@ -134,5 +135,18 @@ public class ReservationService {
             }
         }
         return arr;
+    }
+
+    public List<ReservationAdminInfoDto> getReservationAdminInfoList(Long regionId) {
+        List<Reservation> reservationList = reservationRepository.findByRegionId(regionId);
+        List<ReservationAdminInfoDto> reservationAdminInfoDtoList = convertReservationToReservationAdminInfoDto(reservationList);
+        return reservationAdminInfoDtoList;
+    }
+
+    private static List<ReservationAdminInfoDto> convertReservationToReservationAdminInfoDto(List<Reservation> reservationList) {
+        List<ReservationAdminInfoDto> reservationLogDtoList = reservationList.stream()
+                .map(a -> new ReservationAdminInfoDto(a))
+                .collect(Collectors.toList());
+        return reservationLogDtoList;
     }
 }
