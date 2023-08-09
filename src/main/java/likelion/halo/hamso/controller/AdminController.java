@@ -4,6 +4,7 @@ import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
@@ -39,4 +40,8 @@ public class AdminController {
         return new ResponseEntity<>(reservationService.getReservationAdminInfoList(regionId), HttpStatus.OK);
     }
 
+    @PostMapping("/reserve/status")
+    public ResponseEntity<ReservationStatus> updateReservationStatus(@RequestBody ReservationStatusDto reservationStatusInfo) {
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
+    }
 }

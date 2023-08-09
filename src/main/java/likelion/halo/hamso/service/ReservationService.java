@@ -2,6 +2,7 @@ package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
+import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
@@ -148,5 +149,16 @@ public class ReservationService {
                 .map(a -> new ReservationAdminInfoDto(a))
                 .collect(Collectors.toList());
         return reservationLogDtoList;
+    }
+
+    @Transactional
+    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        reservation.setStatus(reservationStatus);
+        return reservation.getStatus();
     }
 }

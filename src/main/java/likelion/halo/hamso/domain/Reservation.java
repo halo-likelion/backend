@@ -29,7 +29,7 @@ public class Reservation {
     private LocalDateTime wantTime; // 예약하기 원하는 시간
 
     @Enumerated(EnumType.STRING)
-    private ReservationStatus status; // 예약 상태 RESERVED, FINISHED, CANCELED
+    private ReservationStatus status; // 예약 상태 RESERVING, RESERVED, FINISHED, CANCELED
 
     @Column(name = "deposit", columnDefinition = "TINYINT(1)")
     @ColumnDefault("0")
