@@ -36,7 +36,7 @@ public class SecurityConfig{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .securityMatcher("/member/**", "/auth/**", "/security/**", "/reserve/**", "/admin/**")
-                .httpBasic().disable().csrf().disable().cors().disable() // CSRF 보호를 비활성화합니다.
+                .httpBasic().disable().csrf().disable()// CSRF 보호를 비활성화합니다.
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/auth/**", "/reserve/check-possible", "/possible/month").permitAll()
