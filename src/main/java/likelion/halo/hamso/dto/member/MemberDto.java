@@ -1,9 +1,13 @@
 package likelion.halo.hamso.dto.member;
 
 import likelion.halo.hamso.domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberDto {
     private Long id;
 
@@ -24,8 +28,5 @@ public class MemberDto {
         this.phoneNo = member.getPhoneNo();
         this.email = member.getEmail();
         this.address = member.getAddress();
-    }
-
-    public MemberDto() {
     }
 }
