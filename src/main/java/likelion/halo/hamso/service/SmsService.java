@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsRequestDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
+import likelion.halo.hamso.utils.Naver_Sens_V2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -26,6 +27,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -84,6 +86,8 @@ public class SmsService {
         List<MessageDto> messages = new ArrayList<>();
         messages.add(messageDto);
 
+        log.info("messageDto = {}", messageDto);
+
         SmsRequestDto request = SmsRequestDto.builder()
                 .type("SMS")
                 .contentType("COMM")
@@ -103,4 +107,20 @@ public class SmsService {
 
         return response;
     }
+
+    public String sendRandomMessage() {
+        Naver_Sens_V2 message = new Naver_Sens_V2();
+        Random rand = new Random();
+        String numStr = "";
+        for (int i = 0; i < 6; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr += ran;
+        }
+        System.out.println("회원가입 문자 인증 => " + numStr);
+
+//        message.send_msg(tel, numStr);
+
+        return numStr;
+    }
+
 }

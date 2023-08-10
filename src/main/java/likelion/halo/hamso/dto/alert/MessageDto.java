@@ -7,7 +7,9 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
+@ToString
 public class MessageDto {
     String to;
+    String code;
     String content;
 }
