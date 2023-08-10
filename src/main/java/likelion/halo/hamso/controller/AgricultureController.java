@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -87,8 +88,14 @@ public class AgricultureController {
 //    }
 
     @PostMapping("/search")
-    public ResponseEntity<List<MachineInfoDto>> searchMachines(@RequestBody ReservationSearchDto reservationSearchDto) {
-            AgriMachine foundMachine = (AgriMachine) agricultureService.searchMachine(reservationSearchDto);
-            return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<String>> searchMachines(@RequestBody ReservationSearchDto reservationSearchDto) {
+
+        List<AgriMachine> foundMachines = agricultureService.searchMachine(reservationSearchDto);
+
+        List<String> machineNames = new ArrayList<>();
+        for (AgriMachine machine : foundMachines) {
+            machineNames.add(machine.getType().toString());
+        }
+        return new ResponseEntity<>(machineNames, HttpStatus.OK);
         }
 }

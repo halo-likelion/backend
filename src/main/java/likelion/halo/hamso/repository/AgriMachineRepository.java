@@ -2,7 +2,7 @@ package likelion.halo.hamso.repository;
 
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.type.AgriMachineType;
-//import likelion.halo.hamso.
+import likelion.halo.hamso.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,14 +21,14 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
 
     @Query("select DISTINCT m from AgriMachine m " +
             "LEFT JOIN m.tag t " +
-            "LEFT JOIN m.reservation r " +
+            "LEFT JOIN m.reservations r " +
             "WHERE (:region1 IS NULL OR m.region.region1 = :region1) " +
             "AND (:region2 IS NULL OR m.region.region2 = :region2) " +
             "AND (:region3 IS NULL OR m.region.region3 = :region3) " +
             "AND (:tagColumn IS NULL OR t.tagColumn = :tagColumn) " +
             "AND (:type IS NULL OR m.type = :type) " +
-            "AND (:wantTime IS NULL OR :wantTime IN (SELECT res.wantTime FROM r) = :wantTime)"
+            "AND (:wantTime IS NULL OR :wantTime IN (SELECT res.wantTime FROM Reservation res WHERE res.agriMachine = m))"
     )
-    List<AgriMachine> findBySearch(String region1, String region2, String region3, String tagColumn, AgriMachineType type, LocalDateTime wantTime);
+    List<AgriMachine> findBySearch(@Param("region1") String region1, @Param("region2") String region2, @Param("region3") String region3, @Param("tagColumn") String tagColumn, @Param("type") AgriMachineType type, @Param("wantTime") LocalDateTime wantTime);
     //List<AgriMachine> findByRegionId(Long regionId);
 }
