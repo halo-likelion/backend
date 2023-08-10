@@ -3,6 +3,7 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
+import likelion.halo.hamso.dto.ReservationSearchDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,6 +110,24 @@ public class AgricultureService {
         }
     }
 
+    public List<AgriMachine> searchMachine(ReservationSearchDto reservationSearchDto) {
+        List<AgriMachine> matchingMachines = agriMachineRepository.findBySearch(
+                reservationSearchDto.getRegion1(),
+                reservationSearchDto.getRegion2(),
+                reservationSearchDto.getRegion3(),
+                reservationSearchDto.getTagColumn(),
+                reservationSearchDto.getType(),
+                reservationSearchDto.getWantTime()
+        );
+
+        if (matchingMachines.isEmpty()) {
+            throw new NotFoundException("No agricultural machinery exists that matches the search results.");
+        }
+
+        return matchingMachines;
+    }
+
+
     public List<MachineInfoDto> findByRegionId(Long regionId) {
         log.info("service regionId: {}", regionId);
         List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
@@ -145,6 +165,7 @@ public class AgricultureService {
         List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
         return machineDtoList;
     }
+
 
 //    public List<MachineInfoDto> findMachinesByReservationDate(String reservationDate) {
 //        // Implement the logic to retrieve machines based on reservation date

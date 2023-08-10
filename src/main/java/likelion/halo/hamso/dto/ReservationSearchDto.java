@@ -20,7 +20,9 @@ public class ReservationSearchDto {
     private String region3; // 임대소
 
     private String tagColumn; // 태그
+
     private AgriMachineType type; // 농기계 종류
+
     private LocalDateTime wantTime; // 예약하기 원하는 시간
 
     public ReservationSearchDto(AgriMachine agriMachine, Tag tag, Reservation reservation) {
