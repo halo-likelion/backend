@@ -30,19 +30,6 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("/alert")
 public class SmsController {
     private final SmsService smsService;
-
-//    @GetMapping("/send")
-//    public String getSmsPage() {
-//        return "sendSms";
-//    }
-
-//    @PostMapping("/sms/send")
-//    public String sendSms(MessageDto messageDto, Model model) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
-//        SmsResponseDto response = smsService.sendSms(messageDto);
-//        model.addAttribute("response", response);
-//        return "result";
-//    }
-
     private final MemberService memberService;
     private final HttpSession session;
 
@@ -61,18 +48,18 @@ public class SmsController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("phoneAuthOk")
+    @GetMapping("phoneAuthOk")
     @ResponseBody
-    public Boolean phoneAuthOk(@RequestParam String code) {
+    public ResponseEntity<Boolean> phoneAuthOk(@RequestParam String code) {
         String rand = (String) session.getAttribute("rand");
 
         log.info("rand = {}, code = {}", rand, code);
 
         if (rand.equals(code)) {
             session.removeAttribute("rand");
-            return true;
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
 
-        return false;
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }
