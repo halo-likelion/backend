@@ -3,7 +3,7 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
-import likelion.halo.hamso.dto.ReservationSearchDto;
+import likelion.halo.hamso.dto.agriculture.MachineSearchDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -110,14 +109,14 @@ public class AgricultureService {
         }
     }
 
-    public List<AgriMachine> searchMachine(ReservationSearchDto reservationSearchDto) {
+    public List<AgriMachine> searchMachine(MachineSearchDto machineSearchDto) {
         List<AgriMachine> matchingMachines = agriMachineRepository.findBySearch(
-                reservationSearchDto.getRegion1(),
-                reservationSearchDto.getRegion2(),
-                reservationSearchDto.getRegion3(),
-                reservationSearchDto.getTagColumn(),
-                reservationSearchDto.getType(),
-                reservationSearchDto.getWantTime()
+                machineSearchDto.getRegion1(),
+                machineSearchDto.getRegion2(),
+                machineSearchDto.getRegion3(),
+                machineSearchDto.getTagColumn(),
+                machineSearchDto.getType(),
+                machineSearchDto.getWantTime()
         );
 
         if (matchingMachines.isEmpty()) {

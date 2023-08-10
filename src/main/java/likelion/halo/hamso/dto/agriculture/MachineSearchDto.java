@@ -1,7 +1,6 @@
-package likelion.halo.hamso.dto;
+package likelion.halo.hamso.dto.agriculture;
 
 import likelion.halo.hamso.domain.AgriMachine;
-import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.Tag;
 import likelion.halo.hamso.domain.type.AgriMachineType;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReservationSearchDto {
+public class MachineSearchDto {
     private String region1; // 특별시, 광역시, 도
     private String region2; // 시, 군, 구
     private String region3; // 임대소
@@ -25,7 +24,7 @@ public class ReservationSearchDto {
 
     private LocalDateTime wantTime; // 예약하기 원하는 시간
 
-    public ReservationSearchDto(AgriMachine agriMachine, Tag tag, Reservation reservation) {
+    public MachineSearchDto(AgriMachine agriMachine, Tag tag, Reservation reservation) {
         this.region1 = agriMachine.getRegion().getRegion1().toString();
         this.region2 = agriMachine.getRegion().getRegion2().toString();
         this.region3 = agriMachine.getRegion().getRegion3().toString();

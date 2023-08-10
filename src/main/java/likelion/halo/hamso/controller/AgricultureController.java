@@ -1,8 +1,7 @@
 package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.domain.AgriMachine;
-import likelion.halo.hamso.domain.type.AgriMachineType;
-import likelion.halo.hamso.dto.ReservationSearchDto;
+import likelion.halo.hamso.dto.agriculture.MachineSearchDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -67,9 +66,9 @@ public class AgricultureController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<String>> searchMachines(@RequestBody ReservationSearchDto reservationSearchDto) {
+    public ResponseEntity<List<String>> searchMachines(@RequestBody MachineSearchDto machineSearchDto) {
 
-        List<AgriMachine> foundMachines = agricultureService.searchMachine(reservationSearchDto);
+        List<AgriMachine> foundMachines = agricultureService.searchMachine(machineSearchDto);
 
         List<String> machineNames = new ArrayList<>();
         for (AgriMachine machine : foundMachines) {
