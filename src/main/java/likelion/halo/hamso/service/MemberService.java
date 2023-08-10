@@ -97,4 +97,12 @@ public class MemberService {
                 .collect(Collectors.toList());
         return memberDtoList;
     }
+
+    public boolean checkPhoneNoDuplicate(String phoneNo) {
+        int cnt = memberRepository.findByPhoneNo(phoneNo);
+        if(cnt>0) {
+            return true;
+        }
+        return false;
+    }
 }
