@@ -8,6 +8,7 @@ import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder encoder;
 
     public MemberDto findById(Long id){
         Member member = memberRepository.findById(id).get();
@@ -81,15 +83,15 @@ public class MemberService {
         }
     }
 
-    @Transactional
-    public void updatePassword(MemberLoginDto memberInfo) {
-        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
-        if(oMember.isEmpty()) {
-            throw new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
-        } else {
-            oMember.get().setPassword(memberInfo.getPassword());
-        }
-    }
+//    @Transactional
+//    public void updatePassword(MemberLoginDto memberInfo) {
+//        Optional<Member> oMember = memberRepository.findByLoginId(memberInfo.getLoginId());
+//        if(oMember.isEmpty()) {
+//            throw new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
+//        } else {
+//            oMember.get().setPassword(memberInfo.getPassword());
+//        }
+//    }
 
     private static List<MemberDto> convertMemberToMemberDto(List<Member> memberList) {
         List<MemberDto> memberDtoList = memberList.stream()
@@ -104,5 +106,19 @@ public class MemberService {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public Boolean updatePassword(String loginId, String oldPassword, String newPassword) {
+        Optional<Member> oMember = memberRepository.findByLoginId(loginId);
+        if(oMember.isEmpty()) {
+            throw new NotFoundException("Member not found with loginId: " + loginId);
+        }
+        Member member = oMember.get();
+
+        if(encoder.matches(member.getPassword(), newPassword)) {
+            member.setPassword(encoder.encode(newPassword));
+        }
+        return true;
     }
 }
