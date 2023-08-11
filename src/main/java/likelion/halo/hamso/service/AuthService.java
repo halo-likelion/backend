@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,4 +98,14 @@ public class AuthService {
         return tokenInfo;
     }
 
+    @Transactional
+    public Boolean findAndUpdatePassword(String newPassword, String phoneNo) {
+        Optional<Member> oMember = memberRepository.findByPhoneNo(phoneNo);
+        if(oMember.isEmpty()) {
+            throw new NotFoundException("존재하지 않는 회원의 핸드폰 번호 정보입니다.");
+        }
+        Member member = oMember.get();
+        member.setPassword(encoder.encode(newPassword));
+        return true;
+    }
 }

@@ -99,7 +99,7 @@ public class MemberService {
     }
 
     public boolean checkPhoneNoDuplicate(String phoneNo) {
-        int cnt = memberRepository.findByPhoneNo(phoneNo);
+        int cnt = memberRepository.getCountPhoneNo(phoneNo);
         if(cnt>0) {
             return true;
         }
