@@ -75,5 +75,5 @@ public class AgricultureController {
             machineNames.add(machine.getType().toString());
         }
         return new ResponseEntity<>(machineNames, HttpStatus.OK);
-        }
+    }
 }

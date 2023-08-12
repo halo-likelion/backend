@@ -30,5 +30,4 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
             "AND (:wantTime IS NULL OR :wantTime IN (SELECT res.wantTime FROM Reservation res WHERE res.agriMachine = m))"
     )
     List<AgriMachine> findBySearch(@Param("region1") String region1, @Param("region2") String region2, @Param("region3") String region3, @Param("tagColumn") String tagColumn, @Param("type") AgriMachineType type, @Param("wantTime") LocalDateTime wantTime);
-    //List<AgriMachine> findByRegionId(Long regionId);
 }
