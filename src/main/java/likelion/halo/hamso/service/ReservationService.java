@@ -70,8 +70,8 @@ public class ReservationService {
         AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
         int cnt = possible.getCnt();
         cnt++;
-        if (cnt <= 0) {
-            possible.setReservePossible(false);
+        if (cnt > 0) {
+            possible.setReservePossible(true);
         }
         possible.setCnt(cnt);
         return possible.getCnt();
