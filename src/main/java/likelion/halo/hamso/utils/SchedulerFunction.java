@@ -35,35 +35,17 @@ public class SchedulerFunction {
         }
     }
 
-//    @Scheduled(cron = "0 * * * * ?") // 매분 확인
-    public void resetReservationStatus() {
+    @Scheduled(cron = "0 0 0 * * ?", zone="Asia/Seoul") // 매일 밤 12시 0분에 예약 날짜 마지막날에 시간지나고 완료된 예약은 끝남 처리
+    public void updateReservedToFinished() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayStartDateTime = LocalDateTime.of(now.getYear(), now.getMonth().minus(1), now.getDayOfMonth(), now.getHour(), 0, 0);
-
-        // 현재 시각 한시간 전부터 현재 시각까지의 예약 리스트에서 예약 상태인 것만 가져오기
-        List<ReservationsDto> reservationsDtoList = reservationService.getReservationListByDateAndStatus(todayStartDateTime, now, ReservationStatus.RESERVED);
-        for(ReservationsDto reservationsDto: reservationsDtoList) {
-            if(reservationsDto.getEnd().isBefore(now)) {
-                Long reservation_id = reservationsDto.getReservation_id();
-                reservationService.setStatus(ReservationStatus.FINISHED, reservation_id);
+        List<Reservation> reservationList = reservationService.getReservingReservation();
+        for(Reservation reservation:reservationList) {
+            if(reservation.getWantTime().isAfter(now) && reservation.getStatus() == ReservationStatus.RESERVED){
+                reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.FINISHED);
             }
         }
     }
 
-//    @Scheduled(cron = "0 * * * * ?") // 매분 확인
-    public void noShowCheck() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayDate = LocalDateTime.of(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), 0, 0, 0);
-        LocalDateTime nextDate = LocalDateTime.of(now.getYear(), now.getMonth().getValue(), now.plusDays(1).getDayOfMonth(), 0, 0, 0);
 
-        // 하루동안의 현재 시각까지의 예약 리스트에서 예약이 끝난 상태인 것만 가져오기
-        List<ReservationsDto> reservationsDtoList = reservationService.getReservationListByDateAndStatus(todayDate, nextDate, ReservationStatus.FINISHED);
-        for(ReservationsDto reservationsDto: reservationsDtoList) {
-            if(reservationsDto.getNoShowCheck() == false) { // 예약이 끝난 시간까지 노쇼가 안되어 있을 경우
-                memberService.addNoShowCnt(reservationsDto.getMember_sno());
-                reservationService.setNoShowStatus(reservationsDto.getReservation_id());
-            }
-        }
-    }
 
 }
