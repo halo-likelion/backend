@@ -119,10 +119,10 @@ public class ReservationController {
         return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/list-specific")
-    public ResponseEntity<List<ReservationLogSpecificDto>> getReservationLogSpecificList(@Login Member loginMember) {
-        List<ReservationLogSpecificDto> reservationLogDtoList = reservationService.getReservationLogSpecificList(loginMember.getLoginId());
-        return new ResponseEntity<>(reservationLogDtoList, HttpStatus.OK);
+    @GetMapping("/list-specific/{reservationId}")
+    public ResponseEntity<ReservationLogSpecificDto> getReservationLogSpecificList(@Login Member loginMember, @PathVariable("reservationId") Long reservationId) {
+        ReservationLogSpecificDto reservationLogDto = reservationService.getReservationLogSpecificList(loginMember.getLoginId(), reservationId);
+        return new ResponseEntity<>(reservationLogDto, HttpStatus.OK);
     }
 
     @PostMapping("/possible/month")

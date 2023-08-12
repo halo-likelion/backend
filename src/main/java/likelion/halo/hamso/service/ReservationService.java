@@ -102,13 +102,13 @@ public class ReservationService {
         return reservationLogDtoList;
     }
 
-    public List<ReservationLogSpecificDto> getReservationLogSpecificList(String loginId) {
-        Optional<List<Reservation>> reservationList = reservationRepository.getReservationListByLoginId(loginId);
-        if (reservationList.isEmpty()) {
+    public ReservationLogSpecificDto getReservationLogSpecificList(String loginId, Long reservationId) {
+        Optional<Reservation> reservation = reservationRepository.getReservationByLoginIdAndReservationId(loginId, reservationId);
+        if (reservation.isEmpty()) {
             throw new NotFoundException("예약 내역이 존재하지 않습니다.");
         }
 
-        return convertReservationToReservationSpecificDto(reservationList.get());
+        return new ReservationLogSpecificDto(reservation.get());
     }
 
     private static List<ReservationLogSpecificDto> convertReservationToReservationSpecificDto(List<Reservation> reservationList) {

@@ -56,6 +56,9 @@ public class Reservation {
     @Column(name = "workload")
     private Double workload; // 작업량
 
+    @Column(name = "lent_price")
+    private Integer lentPrice; // 임대료
+
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
         Reservation reservation = new Reservation();
@@ -66,6 +69,7 @@ public class Reservation {
         reservation.setDeposit(false);
         reservation.setWorkType(reservation.getWorkType());
         reservation.setWorkload(reservation.getWorkload());
+        reservation.setLentPrice(machine.getPrice() * reservationDto.getReserveDayCnt());
         return reservation;
     }
 }
