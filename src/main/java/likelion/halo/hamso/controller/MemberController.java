@@ -5,6 +5,7 @@ import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
 import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
+import likelion.halo.hamso.dto.member.UpdatePasswordDto;
 import likelion.halo.hamso.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -42,9 +43,9 @@ public class MemberController {
     }
 
     @PostMapping("/update-password")
-    public ResponseEntity<Void> updatePassword(@RequestBody MemberLoginDto memberInfo) {
-        memberService.updatePassword(memberInfo);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Boolean> updatePassword(@Login Member loginMember, @RequestBody UpdatePasswordDto updatePasswordDto) {
+        Boolean success = memberService.updatePassword(loginMember.getLoginId(), updatePasswordDto.getOldPassword(), updatePasswordDto.getNewPassword());
+        return new ResponseEntity<>(success, HttpStatus.OK);
     }
 
     @GetMapping("/info")
