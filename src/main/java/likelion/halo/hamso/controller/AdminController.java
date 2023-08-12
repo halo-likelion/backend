@@ -1,11 +1,14 @@
 package likelion.halo.hamso.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
+import likelion.halo.hamso.dto.alert.MessageDto;
+import likelion.halo.hamso.dto.alert.SmsResponseDto;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
 import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
@@ -15,12 +18,17 @@ import likelion.halo.hamso.exception.NotLoginException;
 import likelion.halo.hamso.service.AgricultureService;
 import likelion.halo.hamso.service.MemberService;
 import likelion.halo.hamso.service.ReservationService;
+import likelion.halo.hamso.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +40,8 @@ public class AdminController {
     private final ReservationService reservationService;
     private final AgricultureService agricultureService;
     private final MemberService memberService;
+    private final SmsService smsService;
+
 
     @GetMapping("/list")
     public ResponseEntity<List<MemberDto>> getMemberList() {
@@ -41,8 +51,20 @@ public class AdminController {
 
 
     @PutMapping("/deposit")
-    public ResponseEntity<Boolean> updateDepositStatus(@RequestParam("reservationId") Long reservationId) {
-        return new ResponseEntity<>(reservationService.updateDepositStatus(reservationId), HttpStatus.OK);
+    public ResponseEntity<Boolean> updateDepositStatus(@RequestParam("reservationId") Long reservationId) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        Reservation reservation = reservationService.findReservationById(reservationId);
+
+        Boolean depositStatus = reservationService.updateDepositStatus(reservationId);
+        if(depositStatus) {
+            Member member = reservation.getMember();
+            MessageDto messageDto = new MessageDto();
+            messageDto.setTo(member.getPhoneNo());
+            messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) 입금 확인되어 예약 신청 확정되셨습니다.");
+            SmsResponseDto response = smsService.sendSms(messageDto);
+            log.info("message log = {}", response);
+        }
+
+        return new ResponseEntity<>(depositStatus, HttpStatus.OK);
     }
 
     @GetMapping("/reserve/list/{regionId}")
