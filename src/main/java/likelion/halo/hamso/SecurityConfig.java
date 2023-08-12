@@ -40,7 +40,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests((authz) -> authz
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/auth/**", "/reserve/check-possible", "/possible/month", "/alert/**").permitAll()
-                        .requestMatchers("/members/**", "/reserve", "/reserve/list", "/reserve/list-specific", "/reserve/cancel/**").hasRole("USER")
+                        .requestMatchers("/member/**", "/reserve", "/reserve/list", "/reserve/list-specific", "/reserve/cancel/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                         .and()
