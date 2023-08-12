@@ -182,4 +182,14 @@ public class ReservationService {
         }
         return oReservation.get();
     }
+
+    public List<Reservation> getReservingReservation() {
+        List<Reservation> all = reservationRepository.findStatusReservation(ReservationStatus.RESERVING);
+        return all;
+    }
+
+    public List<Reservation> getReservedReservation() {
+        List<Reservation> all = reservationRepository.findStatusReservation(ReservationStatus.RESERVED);
+        return all;
+    }
 }

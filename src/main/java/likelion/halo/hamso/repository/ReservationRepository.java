@@ -52,4 +52,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select r from Reservation r where r.member.loginId=:loginId and r.id=:reservationId")
     Optional<Reservation> getReservationByLoginIdAndReservationId(String loginId, Long reservationId);
+
+    @Query("select r from Reservation r where r.status=:status")
+    List<Reservation> findStatusReservation(@Param("status") ReservationStatus status);
 }
