@@ -1,7 +1,9 @@
 package likelion.halo.hamso.controller;
 
+import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.dto.member.MemberJoinDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
+import likelion.halo.hamso.dto.security.FindPasswordDto;
 import likelion.halo.hamso.dto.security.TokenInfoDto;
 import likelion.halo.hamso.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,12 @@ public class AuthController {
     public ResponseEntity<Boolean> checkLoginIdDuplicate(@RequestParam String loginId) {
         Boolean check = authService.checkDuplicate(loginId);
         return new ResponseEntity<>(check, HttpStatus.OK);
+    }
+
+    @PostMapping("find-pwd")
+    public ResponseEntity<Boolean> findAndUpdatePassword(@RequestBody FindPasswordDto findPasswordDto) {
+        Boolean success = authService.findAndUpdatePassword(findPasswordDto.getNewPassword(), findPasswordDto.getPhoneNo());
+        return new ResponseEntity<>(success, HttpStatus.OK);
     }
 
 }
