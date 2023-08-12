@@ -14,4 +14,6 @@ public class ReservationInfoDto {
     private Long machineId; // 빌리기 원하는 농기계 아이디
     private String workType; // 작업 종류
     private Double workload; // 작업량
+
+    private Integer reserveDayCnt; // 연속 날짜
 }

@@ -39,7 +39,6 @@ public class SmsController {
             throw new MemberDuplicateException("해당 전화번호는 이미 이전에 인증된 휴대전화입니다.");
         };
         String code = smsService.sendRandomMessage();
-        messageDto.setCode(code);
         messageDto.setContent("[" + code + "]" + "<렛츠-농사>인증번호를 3분 내에 입력해주세요.");
         SmsResponseDto response = smsService.sendSms(messageDto);
 

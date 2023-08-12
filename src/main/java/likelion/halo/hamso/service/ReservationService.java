@@ -58,8 +58,20 @@ public class ReservationService {
         if (cnt < 0) {
             throw new NotEnoughCntException("No more stock to reserve");
         }
-        if (cnt == 0) {
+        if (cnt <= 0) {
             possible.setReservePossible(false);
+        }
+        possible.setCnt(cnt);
+        return possible.getCnt();
+    }
+
+    @Transactional
+    public Integer addCnt(Long machineId, LocalDateTime date) {
+        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
+        int cnt = possible.getCnt();
+        cnt++;
+        if (cnt > 0) {
+            possible.setReservePossible(true);
         }
         possible.setCnt(cnt);
         return possible.getCnt();
@@ -159,6 +171,15 @@ public class ReservationService {
         }
         Reservation reservation = oReservation.get();
         reservation.setStatus(reservationStatus);
+        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
         return reservation.getStatus();
+    }
+
+    public Reservation findReservationById(Long reservationId) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        return oReservation.get();
     }
 }
