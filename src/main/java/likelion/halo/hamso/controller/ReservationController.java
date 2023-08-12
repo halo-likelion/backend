@@ -130,8 +130,19 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.getPossibleMonthArray(regionMachineDto.getMachineId()), HttpStatus.OK);
     }
 
-    @GetMapping("/cancel/{reservationId}")
-    public ResponseEntity<ReservationStatus> cancelReservation(@PathVariable("reservationId") Long reservationId) {
+    @PutMapping("/cancel/{reservationId}")
+    public ResponseEntity<ReservationStatus> cancelReservation(@Login Member loginMember, @PathVariable("reservationId") Long reservationId) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        Reservation reservation = reservationService.findReservationById(reservationId);
+        LocalDateTime wantTime = reservation.getWantTime();
+        int year = wantTime.getYear();
+        Month month = wantTime.getMonth();
+        int day = wantTime.getDayOfMonth();
+
+        MessageDto messageDto = new MessageDto();
+        messageDto.setTo(loginMember.getPhoneNo());
+        messageDto.setContent("<렛츠-농사> " + loginMember.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 예약 신청이 취소되셨습니다.");
+        SmsResponseDto response = smsService.sendSms(messageDto);
+        log.info("message log1 = {}", response);
         return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED), HttpStatus.OK);
     }
 
