@@ -31,7 +31,7 @@ public class ReservationLogSpecificDto {
         this.wantTime = reservationInfo.getWantTime();
         this.createdAt = reservationInfo.getCreatedAt();
         this.machineId = reservationInfo.getAgriMachine().getId();
-        this.price = reservationInfo.getAgriMachine().getPrice();
+        this.price = reservationInfo.getLentPrice();
         this.reservationStatus =reservationInfo.getStatus();
         this.deposit = reservationInfo.getDeposit();
         this.region =  reservationInfo.getAgriMachine().getRegion();

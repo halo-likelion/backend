@@ -25,6 +25,9 @@ public class ReservationAdminInfoDto {
     private String loginId; // 예약한 사람의 아이디
     private String phoneNo; // 예약한 사람의 전화번호
 
+    private String workType; // 작업 종류
+    private Double workload; // 작업량
+
     public ReservationAdminInfoDto(Reservation reservationInfo) {
         this.wantTime = reservationInfo.getWantTime();
         this.createdAt = reservationInfo.getCreatedAt();
@@ -35,5 +38,7 @@ public class ReservationAdminInfoDto {
         this.name = reservationInfo.getMember().getName();
         this.loginId = reservationInfo.getMember().getLoginId();
         this.phoneNo = reservationInfo.getMember().getPhoneNo();
+        this.workload = reservationInfo.getWorkload();
+        this.workType = reservationInfo.getWorkType();
     }
 }

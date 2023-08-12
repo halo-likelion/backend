@@ -102,13 +102,13 @@ public class ReservationService {
         return reservationLogDtoList;
     }
 
-    public List<ReservationLogSpecificDto> getReservationLogSpecificList(String loginId) {
-        Optional<List<Reservation>> reservationList = reservationRepository.getReservationListByLoginId(loginId);
-        if (reservationList.isEmpty()) {
+    public ReservationLogSpecificDto getReservationLogSpecificList(String loginId, Long reservationId) {
+        Optional<Reservation> reservation = reservationRepository.getReservationByLoginIdAndReservationId(loginId, reservationId);
+        if (reservation.isEmpty()) {
             throw new NotFoundException("예약 내역이 존재하지 않습니다.");
         }
 
-        return convertReservationToReservationSpecificDto(reservationList.get());
+        return new ReservationLogSpecificDto(reservation.get());
     }
 
     private static List<ReservationLogSpecificDto> convertReservationToReservationSpecificDto(List<Reservation> reservationList) {
@@ -181,5 +181,15 @@ public class ReservationService {
             throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
         }
         return oReservation.get();
+    }
+
+    public List<Reservation> getReservingReservation() {
+        List<Reservation> all = reservationRepository.findStatusReservation(ReservationStatus.RESERVING);
+        return all;
+    }
+
+    public List<Reservation> getReservedReservation() {
+        List<Reservation> all = reservationRepository.findStatusReservation(ReservationStatus.RESERVED);
+        return all;
     }
 }
