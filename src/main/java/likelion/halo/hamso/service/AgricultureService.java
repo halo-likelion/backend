@@ -65,7 +65,7 @@ public class AgricultureService {
         }
     }
 
-    public List<MachineInfoDto> findMachineAll() {
+    public List<MachineInfoDto> findMachineInfoDtoAll() {
         List<AgriMachine> machineList = agriMachineRepository.findAll();
         List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machineList);
         return machineDtoList;
@@ -115,5 +115,11 @@ public class AgricultureService {
                 .map(a -> new RegionInfoDto(a))
                 .collect(Collectors.toList());
         return dtoList;
+    }
+
+    // 기계 전체 리스트 반환하는 메소드 생성
+    public List<AgriMachine> findMachineAll() {
+        List<AgriMachine> machineList = agriMachineRepository.findAll();
+        return machineList;
     }
 }

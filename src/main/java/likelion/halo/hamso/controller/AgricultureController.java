@@ -19,7 +19,7 @@ public class AgricultureController {
 
     @GetMapping("/machine-list")
     public ResponseEntity<List<MachineInfoDto>> getMachineList() {
-        List<MachineInfoDto> machines = agricultureService.findMachineAll();
+        List<MachineInfoDto> machines = agricultureService.findMachineInfoDtoAll();
         return new ResponseEntity<>(machines, HttpStatus.OK);
     }
     @GetMapping("/region-list")
