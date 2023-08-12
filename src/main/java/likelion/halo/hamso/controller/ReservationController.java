@@ -64,6 +64,9 @@ public class ReservationController {
         Long machineId = reservationInfo.getMachineId();
 
         LocalDateTime wantTime = reservationInfo.getWantTime();
+        if(wantTime.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("오늘보다 이전 날짜의 예약은 불가합니다.");
+        }
         AgriMachine machine = agricultureService.findByMachineIdReal(machineId);
 
         Integer reserveDayCnt = reservationInfo.getReserveDayCnt();
