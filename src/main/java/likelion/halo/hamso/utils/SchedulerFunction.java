@@ -69,7 +69,7 @@ public class SchedulerFunction {
             Member member = reservation.getMember();
             MessageDto messageDto = new MessageDto();
             messageDto.setTo(member.getPhoneNo());
-            messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 "+ reservation.getAgriMachine().getType() +"이(가) 예약상태이십니다.");
+            messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 "+ reservation.getAgriMachine().getType() +"이(가) 예약상태 예정입니다.");
             SmsResponseDto response = smsService.sendSms(messageDto);
             log.info("message log = {}", response);
         }
