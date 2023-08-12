@@ -1,16 +1,18 @@
 package likelion.halo.hamso.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import likelion.halo.hamso.domain.AgriMachine;
+import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
+import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
-import likelion.halo.hamso.service.MemberService;
-import likelion.halo.hamso.service.ReservationService;
-import likelion.halo.hamso.service.SmsService;
+import likelion.halo.hamso.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +33,9 @@ import static java.time.LocalTime.now;
 public class SchedulerFunction {
     private final MemberService memberService;
     private final ReservationService reservationService;
-
+    private final PossibleService possibleService;
     private final SmsService smsService;
+    private final AgricultureService agricultureService;
 
 
     @Scheduled(cron = "0 0 0 * * ?", zone="Asia/Seoul") // 매일 밤 12시 0분에 예약 날짜 마지막날 +1 에 입금이 안되어 있으면 자동으로 예약 취소로 변경
@@ -75,6 +78,32 @@ public class SchedulerFunction {
         }
     }
 
+    @Scheduled(cron = "0 0 0 * * ?", zone="Asia/Seoul") // 매달 1일
+    public void insertMonthNewPossibleData(){
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        Month month = now.getMonth();
+        int lastDay = month.maxLength();
+        LocalDateTime time = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        List<AgriMachine> machineList = agricultureService.findMachineAll();
+
+        // 이전 달 정보 전부 삭제
+        possibleService.deleteAll();
+
+        // 기계 전체 가져와서 각각 매달 데이터 값 넣기
+        for(AgriMachine machine:machineList) {
+            for(int i = 0;i<=lastDay;i++) {
+                AgriPossible possible = AgriPossible.builder()
+                        .cnt(machine.getOriCnt())
+                        .findDate(time.plusDays(i))
+                        .machine(machine)
+                        .reservePossible(true)
+                        .build();
+                possibleService.addPossible(possible);
+            }
+        }
+
+    }
 
 
 }
