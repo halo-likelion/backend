@@ -29,7 +29,7 @@ public class SchedulerFunction {
         LocalDateTime now = LocalDateTime.now();
         List<Reservation> reservationList = reservationService.getReservingReservation();
         for(Reservation reservation:reservationList) {
-            if(reservation.getWantTime().isAfter(now.plusDays(1))){
+            if(reservation.getWantTime().isAfter(now.plusDays(1)) && reservation.getStatus() == ReservationStatus.RESERVING){
                 reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.CANCELED);
             }
         }
