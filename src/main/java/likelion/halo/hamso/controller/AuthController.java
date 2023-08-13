@@ -42,4 +42,9 @@ public class AuthController {
         return new ResponseEntity<>(success, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<Void> checkHealthPath() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

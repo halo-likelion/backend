@@ -78,10 +78,5 @@ public class AdminController {
         return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Void> checkHealthPath() {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
 
 }
