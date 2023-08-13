@@ -34,7 +34,7 @@ public class SmsController {
     private final HttpSession session;
 
     @PostMapping("phoneAuth")
-    public ResponseEntity<SmsResponseDto> phoneAuth(@RequestBody MessageDto messageDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    public ResponseEntity<String> phoneAuth(@RequestBody MessageDto messageDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         if(memberService.checkPhoneNoDuplicate(messageDto.getTo())) {
             throw new MemberDuplicateException("해당 전화번호는 이미 이전에 인증된 휴대전화입니다.");
         };
@@ -42,9 +42,9 @@ public class SmsController {
         messageDto.setContent("[" + code + "]" + "<렛츠-농사>인증번호를 3분 내에 입력해주세요.");
         SmsResponseDto response = smsService.sendSms(messageDto);
 
-        session.setAttribute("rand", code);
+//        session.setAttribute("rand", code);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(code, HttpStatus.OK);
     }
 
     @GetMapping("phoneAuthOk")
