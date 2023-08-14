@@ -41,4 +41,11 @@ public class AgriMachine {
     @JoinColumn(name = "region_id")
     private AgriRegion region;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+
+    @OneToMany(mappedBy = "agriMachine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
+
 }

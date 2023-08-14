@@ -1,5 +1,7 @@
 package likelion.halo.hamso.controller;
 
+import likelion.halo.hamso.domain.AgriMachine;
+import likelion.halo.hamso.dto.agriculture.MachineSearchDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -51,5 +54,26 @@ public class AgricultureController {
     public ResponseEntity<Void> updateMachineRevStatus(@RequestBody MachineStatusUpdateDto info) {
         agricultureService.updateMachineRevStatus(info);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/machies_region/{regionId}")
+    public ResponseEntity<List<MachineInfoDto>> getMachinesByRegion(@PathVariable("regionId") Long regionId) {
+        //로그 추가
+        System.out.println("Received regionId: " + regionId);
+
+        List<MachineInfoDto> machines = agricultureService.findByRegionId(regionId);
+        return new ResponseEntity<>(machines, HttpStatus.OK);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<String>> searchMachines(@RequestBody MachineSearchDto machineSearchDto) {
+
+        List<AgriMachine> foundMachines = agricultureService.searchMachine(machineSearchDto);
+
+        List<String> machineNames = new ArrayList<>();
+        for (AgriMachine machine : foundMachines) {
+            machineNames.add(machine.getType().toString());
+        }
+        return new ResponseEntity<>(machineNames, HttpStatus.OK);
     }
 }

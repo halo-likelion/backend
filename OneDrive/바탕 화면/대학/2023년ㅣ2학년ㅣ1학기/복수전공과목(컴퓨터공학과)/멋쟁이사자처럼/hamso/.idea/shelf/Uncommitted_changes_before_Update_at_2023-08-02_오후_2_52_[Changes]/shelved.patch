@@ -1,0 +1,23 @@
+Index: hamso-backend/src/main/java/likelion/halo/hamso/service/MemberService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package likelion.halo.hamso.service;\r\n\r\nimport likelion.halo.hamso.domain.Member;\r\nimport likelion.halo.hamso.dto.Member.MemberDto;\r\nimport likelion.halo.hamso.dto.Member.MemberLoginDto;\r\nimport likelion.halo.hamso.dto.Member.MemberUpdateAllDto;\r\nimport likelion.halo.hamso.exception.MemberNotFoundException;\r\nimport likelion.halo.hamso.repository.MemberRepository;\r\nimport lombok.RequiredArgsConstructor;\r\nimport lombok.extern.slf4j.Slf4j;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.transaction.annotation.Transactional;\r\n\r\nimport java.util.List;\r\nimport java.util.stream.Collectors;\r\n\r\n@Service\r\n@RequiredArgsConstructor\r\n@Transactional(readOnly = true)\r\n@Slf4j\r\npublic class MemberService {\r\n    private final MemberRepository memberRepository;\r\n\r\n    @Transactional\r\n    public String join(Member member){\r\n        memberRepository.save(member);\r\n        return member.getLoginId();\r\n    }\r\n\r\n    public MemberDto findById(Long id){\r\n        Member member = memberRepository.findById(id).get();\r\n        MemberDto memberDto = new MemberDto(member);\r\n        return memberDto;\r\n    }\r\n\r\n    public MemberDto findByLoginId(String loginId){\r\n        Member member = memberRepository.findByLoginId(loginId);\r\n        if(member == null) {\r\n            // Member not found, handle accordingly\r\n            throw new MemberNotFoundException(\"Member not found with loginId: \" + loginId);\r\n        } else {\r\n            return new MemberDto(member);\r\n        }\r\n    }\r\n\r\n    public List<MemberDto> findAll() {\r\n        List<Member> all = memberRepository.findAll();\r\n        List<MemberDto> memberDtoList = convertMemberToMemberDto(all);\r\n        return memberDtoList;\r\n    }\r\n\r\n    @Transactional\r\n    public void updateMemberAll(MemberUpdateAllDto memberInfo) {\r\n        Member member = memberRepository.findByLoginId(memberInfo.getLoginId());\r\n        member.setName(member.getName());\r\n        member.setEmail(member.getEmail());\r\n        member.setPhoneNo(member.getPhoneNo());\r\n    }\r\n\r\n    @Transactional\r\n    public void updatePassword(MemberLoginDto loginInfo) {\r\n        Member member = memberRepository.findByLoginId(loginInfo.getLoginId());\r\n        member.setPassword(loginInfo.getPassword());\r\n    }\r\n\r\n    @Transactional\r\n    public void deleteMember(String loginId) {\r\n        Member member = memberRepository.findByLoginId(loginId);\r\n        memberRepository.delete(member);\r\n    }\r\n\r\n    private static List<MemberDto> convertMemberToMemberDto(List<Member> memberList) {\r\n        List<MemberDto> memberDtoList = memberList.stream()\r\n                .map(a -> new MemberDto(a))\r\n                .collect(Collectors.toList());\r\n        return memberDtoList;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/hamso-backend/src/main/java/likelion/halo/hamso/service/MemberService.java b/hamso-backend/src/main/java/likelion/halo/hamso/service/MemberService.java
+--- a/hamso-backend/src/main/java/likelion/halo/hamso/service/MemberService.java	(revision 17cfa2ecdd81308d7b84f2b4a808bf6ddbd92b47)
++++ b/hamso-backend/src/main/java/likelion/halo/hamso/service/MemberService.java	(date 1690440801041)
+@@ -19,6 +19,7 @@
+ @Transactional(readOnly = true)
+ @Slf4j
+ public class MemberService {
++}
+     private final MemberRepository memberRepository;
+ 
+     @Transactional
+@@ -75,4 +76,3 @@
+                 .collect(Collectors.toList());
+         return memberDtoList;
+     }
+-}

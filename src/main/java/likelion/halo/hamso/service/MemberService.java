@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class MemberService {
+
     private final MemberRepository memberRepository;
 
     public MemberDto findById(Long id){

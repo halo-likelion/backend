@@ -21,6 +21,7 @@ public class MachineInfoDto {
 
     private String region1;
     private String region2;
+    private String region3;
 
     public MachineInfoDto(AgriMachine agriMachine) {
         this.type = agriMachine.getType();
@@ -29,5 +30,6 @@ public class MachineInfoDto {
         this.reservePossible = agriMachine.getReservePossible();
         this.region1 = agriMachine.getRegion().getRegion1().toString();
         this.region2 = agriMachine.getRegion().getRegion2().toString();
+        this.region3 = agriMachine.getRegion().getRegion3().toString();
     }
 }

@@ -3,6 +3,7 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
+import likelion.halo.hamso.dto.agriculture.MachineSearchDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineStatusUpdateDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +31,7 @@ public class AgricultureService {
 
     @Transactional
     public Long addMachine(MachineInfoDto infoDto){
-        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2());
+        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2(), infoDto.getRegion3());
         AgriMachine machine = AgriMachine.builder()
                 .type(infoDto.getType())
                 .content(infoDto.getContent())
@@ -107,6 +109,33 @@ public class AgricultureService {
         }
     }
 
+    public List<AgriMachine> searchMachine(MachineSearchDto machineSearchDto) {
+        List<AgriMachine> matchingMachines = agriMachineRepository.findBySearch(
+                machineSearchDto.getRegion1(),
+                machineSearchDto.getRegion2(),
+                machineSearchDto.getRegion3(),
+                machineSearchDto.getTagColumn(),
+                machineSearchDto.getType(),
+                machineSearchDto.getWantTime()
+        );
+
+        if (matchingMachines.isEmpty()) {
+            throw new NotFoundException("No agricultural machinery exists that matches the search results.");
+        }
+
+        return matchingMachines;
+    }
+
+
+    public List<MachineInfoDto> findByRegionId(Long regionId) {
+        log.info("service regionId: {}", regionId);
+        List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
+        log.info("machine = {}", machinesInRegion.get(0));
+
+        // 조회된 엔티티들을 DTO로 변환하여 리스트에 저장하여 반환
+        List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
+        return machineDtoList != null ? machineDtoList : new ArrayList<>();
+    }
 
     private static List<MachineInfoDto> convertMachineToMachineDto(List<AgriMachine> list) {
         List<MachineInfoDto> dtoList = list.stream()
@@ -120,5 +149,12 @@ public class AgricultureService {
                 .map(a -> new RegionInfoDto(a))
                 .collect(Collectors.toList());
         return dtoList;
+    }
+    private List<MachineInfoDto> findMachinesByRegionId(Long regionId) {
+        List<AgriMachine> machinesInRegion = agriMachineRepository.findByRegionId(regionId);
+
+        // 조회된 엔티티들을 DTO로 변환하여 리스트에 저장하여 반환
+        List<MachineInfoDto> machineDtoList = convertMachineToMachineDto(machinesInRegion);
+        return machineDtoList;
     }
 }
