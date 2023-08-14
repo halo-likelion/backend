@@ -108,4 +108,12 @@ public class AuthService {
         member.setPassword(encoder.encode(newPassword));
         return true;
     }
+
+    public String findLoginId(String name, String phoneNo) {
+        Optional<Member> oMember = memberRepository.findByNameAndPhoneNo(name, phoneNo);
+        if(oMember.isEmpty()) {
+            throw new NotFoundException("존재하지 않는 회원 정보입니다.");
+        }
+        return oMember.get().getLoginId();
+    }
 }

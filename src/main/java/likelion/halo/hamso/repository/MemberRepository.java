@@ -16,4 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>  {
     int getCountPhoneNo(@Param("phoneNo")String phoneNo);
 
     Optional<Member> findByPhoneNo(String phoneNo);
+
+    @Query("select m from Member m where m.name=:name and m.phoneNo=:phoneNo")
+    Optional<Member> findByNameAndPhoneNo(String name, String phoneNo);
 }
