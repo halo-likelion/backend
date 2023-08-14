@@ -3,6 +3,7 @@ package likelion.halo.hamso.controller;
 import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.dto.member.MemberJoinDto;
 import likelion.halo.hamso.dto.member.MemberLoginDto;
+import likelion.halo.hamso.dto.security.FindLoginIdDto;
 import likelion.halo.hamso.dto.security.FindPasswordDto;
 import likelion.halo.hamso.dto.security.TokenInfoDto;
 import likelion.halo.hamso.service.AuthService;
@@ -40,6 +41,12 @@ public class AuthController {
     public ResponseEntity<Boolean> findAndUpdatePassword(@RequestBody FindPasswordDto findPasswordDto) {
         Boolean success = authService.findAndUpdatePassword(findPasswordDto.getNewPassword(), findPasswordDto.getPhoneNo());
         return new ResponseEntity<>(success, HttpStatus.OK);
+    }
+
+    @PostMapping("find-id")
+    public ResponseEntity<String> findLoginId(@RequestBody FindLoginIdDto findLoginIdDto) {
+        String loginId = authService.findLoginId(findLoginIdDto.getName(), findLoginIdDto.getPhoneNo());
+        return new ResponseEntity<>(loginId, HttpStatus.OK);
     }
 
 }
