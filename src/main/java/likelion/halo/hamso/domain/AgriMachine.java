@@ -40,5 +40,5 @@ public class AgriMachine {
 
     @Column(name = "origin_cnt")
     @ColumnDefault("0")
-    private Integer oriCnt;
+    private Integer oriCnt; // 원래 개수
 }
