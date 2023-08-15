@@ -48,7 +48,6 @@ public class AgriMachine {
 
 
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
-    @ToString.Exclude
     private List<Tag> tagList;
 
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
