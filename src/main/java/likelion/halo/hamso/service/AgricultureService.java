@@ -3,12 +3,14 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.AgriRegion;
+import likelion.halo.hamso.domain.Tag;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.*;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
 import likelion.halo.hamso.repository.PossibleRepository;
+import likelion.halo.hamso.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class AgricultureService {
     private final AgriMachineRepository agriMachineRepository;
     private final AgriRegionRepository agriRegionRepository;
     private final PossibleRepository possibleRepository;
+
+    private final TagRepository tagRepository;
 
     @Transactional
     public Long addMachine(MachineInsertDto infoDto){
@@ -189,5 +193,29 @@ public class AgricultureService {
                 .map(a -> new AdminMachineInfoDto(a))
                 .collect(Collectors.toList());
         return dtoList;
+    }
+
+    @Transactional
+    public Long addTag(TagDto tagDto) {
+        Long machineId = tagDto.getMachineId();
+        Optional<AgriMachine> oMachine = agriMachineRepository.findById(machineId);
+        if(oMachine.isEmpty()) {
+            throw new NotFoundException("해당 정보의 기계는 존재하지 않습니다!");
+        }
+        Tag tag = Tag.builder()
+                .machine(oMachine.get())
+                .tagColumn(tagDto.getTagValue())
+                .build();
+        tagRepository.save(tag);
+        return tag.getId();
+    }
+
+    @Transactional
+    public void deleteTag(Long tagId) {
+        Optional<Tag> oTag = tagRepository.findById(tagId);
+        if(oTag.isEmpty()) {
+            throw new NotFoundException("해당 정보의 태그는 존재하지 않습니다!");
+        }
+        tagRepository.delete(oTag.get());
     }
 }

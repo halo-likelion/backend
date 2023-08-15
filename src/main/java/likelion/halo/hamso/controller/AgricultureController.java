@@ -57,9 +57,21 @@ public class AgricultureController {
 
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/insert/machine")
     public ResponseEntity<Long> addMachine(@RequestBody MachineInsertDto machineInsertDto) {
         Long machineId = agricultureService.addMachine(machineInsertDto);
         return new ResponseEntity<>(machineId, HttpStatus.OK);
+    }
+
+    @PostMapping("/insert/tag")
+    public ResponseEntity<Long> addTag(@RequestBody TagDto tagDto) {
+        Long tagId = agricultureService.addTag(tagDto);
+        return new ResponseEntity<>(tagId, HttpStatus.OK);
+    }
+
+    @PostMapping("/delete/tag")
+    public ResponseEntity<Void> deleteTag(@RequestParam Long tagId) {
+        agricultureService.deleteTag(tagId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
