@@ -70,7 +70,7 @@ public class AgricultureController {
     }
 
     @DeleteMapping("/delete/tag")
-    public ResponseEntity<Void> deleteTag(@RequestParam Long tagId) {
+    public ResponseEntity<Void> deleteTag(@RequestParam("tagId") Long tagId) {
         agricultureService.deleteTag(tagId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
