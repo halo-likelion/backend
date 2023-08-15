@@ -1,5 +1,6 @@
 package likelion.halo.hamso.repository;
 
+import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.Region1;
@@ -14,9 +15,12 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PossibleRepository extends JpaRepository<AgriPossible, Long> {
+
+    Optional<AgriPossible> findByMachine(AgriMachine machine);
 
     // 해당 날짜와 농기계 아이디에 해당하는 농기계 정보 반환
     @Query("select p from AgriPossible p where p.machine.id = :machineId and p.findDate = :findDate")

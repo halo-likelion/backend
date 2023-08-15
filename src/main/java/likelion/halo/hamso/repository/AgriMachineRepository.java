@@ -18,6 +18,7 @@ import java.util.Optional;
 @Repository
 public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long>  {
     Optional<AgriMachine> findByType(AgriMachineType type);
+    //Optional<Region>
 
 
     @Query("select a from AgriMachine a where a.type =:machineType and a.region.id =:regionId")
