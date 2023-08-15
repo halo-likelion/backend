@@ -1,7 +1,7 @@
 package likelion.halo.hamso.dto.agriculture;
 
 import likelion.halo.hamso.domain.AgriMachine;
-import likelion.halo.hamso.domain.AgriRegion;
+import likelion.halo.hamso.domain.Tag;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.domain.type.Region1;
 import likelion.halo.hamso.domain.type.Region2;
@@ -10,10 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MachineInfoDto {
+public class AdminMachineInfoDto {
 
     private Long machineId; // 기계 종류 번호
     private AgriMachineType type; // 농기계 종류
@@ -28,14 +30,15 @@ public class MachineInfoDto {
     private Region2 region2;
     private Region3 region3;
 
-    public MachineInfoDto(AgriMachine agriMachine) {
-        this.machineId = agriMachine.getId();
+    private List<Tag> tagList;
+
+    public AdminMachineInfoDto(AgriMachine agriMachine) {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();
-        this.reservePossible = agriMachine.getReservePossible();
         this.region1 = agriMachine.getRegion().getRegion1();
         this.region2 = agriMachine.getRegion().getRegion2();
         this.region3 = agriMachine.getRegion().getRegion3();
+        this.tagList = agriMachine.getTagList();
     }
 }
