@@ -41,4 +41,8 @@ public class AgriMachine {
     @Column(name = "origin_cnt")
     @ColumnDefault("0")
     private Integer oriCnt; // 원래 개수
+
+
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
+    private List<Tag> tagList;
 }
