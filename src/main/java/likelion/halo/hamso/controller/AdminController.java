@@ -6,6 +6,7 @@ import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
+import likelion.halo.hamso.dto.agriculture.AdminMachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
@@ -76,6 +77,12 @@ public class AdminController {
     @PostMapping("/reserve/status")
     public ResponseEntity<ReservationStatus> updateReservationStatus(@RequestBody ReservationStatusDto reservationStatusInfo) {
         return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
+    }
+
+    @GetMapping("/machine-list")
+    public ResponseEntity<List<AdminMachineInfoDto>> getAdminMachineInfoDto(@RequestParam Long regionId) {
+        List<AdminMachineInfoDto> adminMachineInfoDtoList = agricultureService.getAdminMachineInfoList(regionId);
+        return new ResponseEntity<>(adminMachineInfoDtoList, HttpStatus.OK);
     }
 
 
