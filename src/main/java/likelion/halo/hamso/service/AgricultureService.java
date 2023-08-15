@@ -46,7 +46,6 @@ public class AgricultureService {
                 .price(infoDto.getPrice())
                 .region(oRegion.get())
                 .oriCnt(infoDto.getOriCnt())
-                .reservePossible(infoDto.getReservePossible())
                 .build();
 
         agriMachineRepository.save(machine);
@@ -62,7 +61,7 @@ public class AgricultureService {
                     .cnt(machine.getOriCnt())
                     .findDate(time.plusDays(i))
                     .machine(machine)
-                    .reservePossible(machine.getReservePossible())
+                    .reservePossible(true)
                     .build();
             possibleRepository.save(possible);
         }
