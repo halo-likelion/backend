@@ -69,7 +69,7 @@ public class AgricultureController {
         return new ResponseEntity<>(tagId, HttpStatus.OK);
     }
 
-    @PostMapping("/delete/tag")
+    @DeleteMapping("/delete/tag")
     public ResponseEntity<Void> deleteTag(@RequestParam Long tagId) {
         agricultureService.deleteTag(tagId);
         return new ResponseEntity<>(HttpStatus.OK);
