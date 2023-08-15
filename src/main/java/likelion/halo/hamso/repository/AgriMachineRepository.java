@@ -38,4 +38,7 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
                                        @Param("machineType") AgriMachineType machineType,
                                        @Param("tagColumn") String tagColumn,
                                        @Param("findDate") LocalDateTime findDate);
+
+    @Query("select m from AgriMachine m where m.region.id=:regionId")
+    List<AgriMachine> findByRegionId(Long regionId);
 }

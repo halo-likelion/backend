@@ -177,4 +177,17 @@ public class AgricultureService {
                 .collect(Collectors.toList());
         return dtoList;
     }
+
+    public List<AdminMachineInfoDto> getAdminMachineInfoList(Long regionId) {
+        List<AgriMachine> agriMachineList = agriMachineRepository.findByRegionId(regionId);
+        List<AdminMachineInfoDto> dtoList = convertMachineToAdminMachineInfoDto(agriMachineList);
+        return dtoList;
+    }
+
+    private static List<AdminMachineInfoDto> convertMachineToAdminMachineInfoDto(List<AgriMachine> list) {
+        List<AdminMachineInfoDto> dtoList = list.stream()
+                .map(a -> new AdminMachineInfoDto(a))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 }
