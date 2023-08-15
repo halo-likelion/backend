@@ -41,4 +41,5 @@ public class AgriMachine {
     @Column(name = "origin_cnt")
     @ColumnDefault("0")
     private Integer oriCnt;
+
 }

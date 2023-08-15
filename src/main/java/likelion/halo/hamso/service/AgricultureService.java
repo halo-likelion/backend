@@ -1,6 +1,7 @@
 package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.AgriMachine;
+import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
@@ -9,11 +10,13 @@ import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
+import likelion.halo.hamso.repository.PossibleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class AgricultureService {
     private final AgriMachineRepository agriMachineRepository;
     private final AgriRegionRepository agriRegionRepository;
+    private final PossibleRepository possibleRepository;
 
     @Transactional
     public Long addMachine(MachineInfoDto infoDto){
@@ -85,9 +89,30 @@ public class AgricultureService {
         } else {
             AgriMachine machine = oMachine.get();
             machine.setType(infoDto.getType());
-            machine.setContent(infoDto.getContent());
-            machine.setRegion(infoDto.getRegion());
             machine.setPrice(infoDto.getPrice());
+            machine.setContent(infoDto.getContent());
+            machine.setOriCnt(infoDto.getOriCnt());
+
+            Long regionId = infoDto.getRegionId();
+            if (regionId != null) {
+                AgriRegion region = agriRegionRepository.findById(regionId)
+                        .orElseThrow(() -> new NotFoundException("Region not found with id: " + regionId));
+                machine.setRegion(region);
+            }
+            Optional<AgriPossible> possible = possibleRepository.findByMachine(machine);
+
+        if (possible.isPresent()) { // If AgriPossible exists
+            AgriPossible agriPossible = possible.get();
+            agriPossible.setReservePossible(infoDto.getReservationPossible());
+        } else {
+            AgriPossible newPossible = AgriPossible.builder()
+                    .cnt(0)
+                    .findDate(LocalDateTime.now())
+                    .machine(machine)
+                    .reservePossible(infoDto.getReservationPossible())
+                    .build();
+            possibleRepository.save(newPossible);
+        }
         }
     }
 
