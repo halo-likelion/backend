@@ -29,6 +29,7 @@ public class MachineInfoDto {
     private Region3 region3;
 
     public MachineInfoDto(AgriMachine agriMachine) {
+        this.machineId = agriMachine.getId();
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();

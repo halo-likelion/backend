@@ -6,6 +6,7 @@ import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
+import likelion.halo.hamso.dto.agriculture.SearchOptionDto;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
@@ -28,7 +29,7 @@ public class AgricultureService {
 
     @Transactional
     public Long addMachine(MachineInfoDto infoDto){
-        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2());
+        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2(), infoDto.getRegion3());
         AgriMachine machine = AgriMachine.builder()
                 .type(infoDto.getType())
                 .content(infoDto.getContent())
@@ -121,5 +122,35 @@ public class AgricultureService {
     public List<AgriMachine> findMachineAll() {
         List<AgriMachine> machineList = agriMachineRepository.findAll();
         return machineList;
+    }
+
+    public List<MachineInfoDto> search(SearchOptionDto searchOptionDto) {
+        Optional<AgriRegion> oRegion =
+                agriRegionRepository.findByEachRegion(
+                        searchOptionDto.getRegion1(),
+                        searchOptionDto.getRegion2(),
+                        searchOptionDto.getRegion3());
+        if(oRegion.isEmpty()) {
+            throw new NotFoundException("존재하지 않는 지역 정보입니다.");
+        }
+        log.info("regionId = {}", oRegion.get().getId());
+
+        searchOptionDto.setWantTime(searchOptionDto.getWantTime().plusHours(9));
+
+        log.info("searchOptionDto = {}", searchOptionDto);
+
+        List<AgriMachine> machineList = agriMachineRepository.search(
+                oRegion.get().getId(),
+                searchOptionDto.getMachineType(),
+                searchOptionDto.getTagValue(),
+                searchOptionDto.getWantTime());
+        return convertMachineToMachineInfoDto(machineList);
+    }
+
+    private static List<MachineInfoDto> convertMachineToMachineInfoDto(List<AgriMachine> list) {
+        List<MachineInfoDto> dtoList = list.stream()
+                .map(a -> new MachineInfoDto(a))
+                .collect(Collectors.toList());
+        return dtoList;
     }
 }

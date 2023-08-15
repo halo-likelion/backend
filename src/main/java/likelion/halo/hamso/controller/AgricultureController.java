@@ -54,7 +54,9 @@ public class AgricultureController {
 //    }
 
     @PostMapping("/search")
-    public ResponseEntity<MachineInfoDto> getSearchResult(@RequestBody SearchOptionDto searchOptionDto) {
+    public ResponseEntity<List<MachineInfoDto>> getSearchResult(@RequestBody SearchOptionDto searchOptionDto) {
+        List<MachineInfoDto> searchResult = agricultureService.search(searchOptionDto);
+        return new ResponseEntity<>(searchResult, HttpStatus.OK);
 
     }
 }

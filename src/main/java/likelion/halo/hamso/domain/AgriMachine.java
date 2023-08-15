@@ -43,6 +43,11 @@ public class AgriMachine {
     private Integer oriCnt; // 원래 개수
 
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
     private List<Tag> tagList;
+
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<AgriPossible> possibleList;
 }
