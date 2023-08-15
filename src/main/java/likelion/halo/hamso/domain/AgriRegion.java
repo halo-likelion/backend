@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import likelion.halo.hamso.domain.type.Region1;
 import likelion.halo.hamso.domain.type.Region2;
+import likelion.halo.hamso.domain.type.Region3;
 import lombok.*;
 
 import java.util.List;
@@ -30,8 +31,13 @@ public class AgriRegion {
     @Column(name = "region2")
     private Region2 region2; // 시, 군, 구
 
-    public AgriRegion(String region1, String region2) {
-        this.region1 = Region1.valueOf(region1);
-        this.region2 = Region2.valueOf(region2);
+    @Enumerated(EnumType.STRING)
+    @Column(name = "region3")
+    private Region3 region3; // 시, 군, 구
+
+    public AgriRegion(Region1 region1, Region2 region2, Region3 region3) {
+        this.region1 = region1;
+        this.region2 = region2;
+        this.region3 = region3;
     }
 }
