@@ -1,20 +1,21 @@
 package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.AgriMachine;
+import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.type.AgriMachineType;
-import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
-import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
-import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
-import likelion.halo.hamso.dto.agriculture.SearchOptionDto;
+import likelion.halo.hamso.dto.agriculture.*;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.AgriMachineRepository;
 import likelion.halo.hamso.repository.AgriRegionRepository;
+import likelion.halo.hamso.repository.PossibleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,18 +27,41 @@ import java.util.stream.Collectors;
 public class AgricultureService {
     private final AgriMachineRepository agriMachineRepository;
     private final AgriRegionRepository agriRegionRepository;
+    private final PossibleRepository possibleRepository;
 
     @Transactional
-    public Long addMachine(MachineInfoDto infoDto){
-        AgriRegion region = new AgriRegion(infoDto.getRegion1(), infoDto.getRegion2(), infoDto.getRegion3());
+    public Long addMachine(MachineInsertDto infoDto){
+        Optional<AgriRegion> oRegion = agriRegionRepository.findByEachRegion(infoDto.getRegion1(), infoDto.getRegion2(), infoDto.getRegion3());
+        if(oRegion.isEmpty()) {
+            throw new NotFoundException("해당 지역 정보는 존재하지 않습니다.");
+        }
+
         AgriMachine machine = AgriMachine.builder()
                 .type(infoDto.getType())
                 .content(infoDto.getContent())
                 .price(infoDto.getPrice())
-                .region(region)
+                .region(oRegion.get())
+                .oriCnt(infoDto.getOriCnt())
+                .reservePossible(infoDto.getReservePossible())
                 .build();
 
         agriMachineRepository.save(machine);
+
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        Month month = now.getMonth();
+        int lastDay = month.maxLength();
+        LocalDateTime time = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        log.info("time = {}", time);
+        for(int i = 0;i<=lastDay;i++) {
+            AgriPossible possible = AgriPossible.builder()
+                    .cnt(machine.getOriCnt())
+                    .findDate(time.plusDays(i))
+                    .machine(machine)
+                    .reservePossible(machine.getReservePossible())
+                    .build();
+            possibleRepository.save(possible);
+        }
         return machine.getId();
     }
 

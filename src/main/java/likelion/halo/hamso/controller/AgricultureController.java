@@ -1,9 +1,6 @@
 package likelion.halo.hamso.controller;
 
-import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
-import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
-import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
-import likelion.halo.hamso.dto.agriculture.SearchOptionDto;
+import likelion.halo.hamso.dto.agriculture.*;
 import likelion.halo.hamso.service.AgricultureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -58,5 +55,11 @@ public class AgricultureController {
         List<MachineInfoDto> searchResult = agricultureService.search(searchOptionDto);
         return new ResponseEntity<>(searchResult, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<Long> addMachine(@RequestBody MachineInsertDto machineInsertDto) {
+        Long machineId = agricultureService.addMachine(machineInsertDto);
+        return new ResponseEntity<>(machineId, HttpStatus.OK);
     }
 }
