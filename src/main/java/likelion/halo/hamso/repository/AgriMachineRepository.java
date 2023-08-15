@@ -32,7 +32,8 @@ public interface AgriMachineRepository extends JpaRepository<AgriMachine, Long> 
             "AND (:machineType is null or m.type = :machineType) " +
             "AND (:tagColumn is null or t.tagColumn = :tagColumn) " +
             "AND (:findDate is null or p.findDate = :findDate) " +
-            "AND p.reservePossible = true ")
+            "AND p.reservePossible = true " +
+            "AND m.reservePossible = true ")
     List<AgriMachine> search(@Param("regionId") Long regionId,
                                        @Param("machineType") AgriMachineType machineType,
                                        @Param("tagColumn") String tagColumn,
