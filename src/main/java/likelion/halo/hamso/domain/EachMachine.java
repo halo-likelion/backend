@@ -2,6 +2,7 @@ package likelion.halo.hamso.domain;
 
 import jakarta.persistence.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
+import likelion.halo.hamso.dto.agriculture.EachMachineDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
