@@ -163,7 +163,7 @@ public class AgricultureService {
         }
         log.info("regionId = {}", oRegion.get().getId());
 
-        searchOptionDto.setWantTime(searchOptionDto.getWantTime().plusHours(9));
+        searchOptionDto.setWantTime(searchOptionDto.getWantTime());
 
         log.info("searchOptionDto = {}", searchOptionDto);
 
