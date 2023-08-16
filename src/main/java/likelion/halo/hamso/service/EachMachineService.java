@@ -7,6 +7,7 @@ import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.EachMachineDto;
+import likelion.halo.hamso.dto.agriculture.EachMachineInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
@@ -138,6 +139,19 @@ public class EachMachineService {
     public List<EachMachine> getEachMachinePossibleList(Long machineId) {
         List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
         return eachMachineList;
+    }
+
+    public List<EachMachineInfoDto> getEachMachinePossibleDtoList(Long machineId) {
+        List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
+        List<EachMachineInfoDto> eachMachineInfoDtoList = convertEachMachineToEachMachineInfoDto(eachMachineList);
+        return eachMachineInfoDtoList;
+    }
+
+    private static List<EachMachineInfoDto> convertEachMachineToEachMachineInfoDto(List<EachMachine> reservationList) {
+        List<EachMachineInfoDto> reservationLogDtoList = reservationList.stream()
+                .map(a -> new EachMachineInfoDto(a))
+                .collect(Collectors.toList());
+        return reservationLogDtoList;
     }
 
     public EachMachine findById(Long eachMachineId) {

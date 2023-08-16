@@ -38,7 +38,8 @@ public class EachMachineController {
 
     @GetMapping("/list")
     public ResponseEntity<List<EachMachineInfoDto>> getEachMachinePossibleListByMachineId(@RequestParam Long machineId) {
-
+        List<EachMachineInfoDto> eachMachineInfoDtoList = eachMachineService.getEachMachinePossibleDtoList(machineId);
+        return new ResponseEntity<>(eachMachineInfoDtoList, HttpStatus.OK);
     }
 
 }
