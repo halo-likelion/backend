@@ -25,6 +25,7 @@ public class Reservation {
     private Long id;
 
     private LocalDateTime wantTime; // 예약하기 원하는 시간
+    private LocalDateTime endTime; // 예약하기 원하는 시간
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status; // 예약 상태 RESERVING, RESERVED, FINISHED, CANCELED
@@ -60,6 +61,8 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "each_machine_id")
     private EachMachine eachMachine;
+
+    private Integer reserveDayCnt; // 연속 날짜
 
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
