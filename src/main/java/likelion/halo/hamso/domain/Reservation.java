@@ -59,6 +59,10 @@ public class Reservation {
     @Column(name = "lent_price")
     private Integer lentPrice; // 임대료
 
+    @OneToOne
+    @JoinColumn(name = "each_machine_id")
+    private EachMachine eachMachine;
+
     //==생성 메서드==//
     public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
         Reservation reservation = new Reservation();
