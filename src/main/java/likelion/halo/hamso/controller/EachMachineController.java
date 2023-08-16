@@ -36,4 +36,9 @@ public class EachMachineController {
         return new ResponseEntity<>(reservePossible, HttpStatus.OK);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<EachMachineInfoDto>> getEachMachinePossibleListByMachineId(@RequestParam Long machineId) {
+
+    }
+
 }
