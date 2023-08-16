@@ -1,9 +1,6 @@
 package likelion.halo.hamso.service;
 
-import likelion.halo.hamso.domain.AgriMachine;
-import likelion.halo.hamso.domain.AgriPossible;
-import likelion.halo.hamso.domain.EachMachine;
-import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.domain.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.EachMachineDto;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +34,7 @@ public class EachMachineService {
     private final PossibleRepository possibleRepository;
     private final MemberRepository memberRepository;
     private final EachMachineRepository eachMachineRepository;
+    private final EachMachinePossibleRepository eachMachinePossibleRepository;
 
 
     @Transactional
@@ -51,6 +50,22 @@ public class EachMachineService {
         eachMachine.setEachMachinePossible(eachMachineDto.getEachMachinePossible());
         eachMachineRepository.save(eachMachine);
         addCnt(machineId);
+
+
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        Month month = now.getMonth();
+        int lastDay = month.maxLength();
+        LocalDateTime time = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        log.info("time = {}", time);
+        for(int i = 0;i<=lastDay;i++) {
+            EachMachinePossible possible = EachMachinePossible.builder()
+                    .findDate(time.plusDays(i))
+                    .eachMachine(eachMachine)
+                    .reservePossible(true)
+                    .build();
+            eachMachinePossibleRepository.save(possible);
+        }
         return eachMachine.getId();
     }
 
