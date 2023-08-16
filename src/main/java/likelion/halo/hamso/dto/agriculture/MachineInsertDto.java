@@ -20,8 +20,6 @@ public class MachineInsertDto {
 
     private String content; // 농기계 설명
 
-    private Boolean reservePossible; // 예약 가능 여부
-
     private Integer oriCnt; // 원래 개수
 
     private Region1 region1;
