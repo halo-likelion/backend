@@ -78,10 +78,10 @@ public class AuthService {
     public TokenInfoDto login(MemberLoginDto memberInfo) {
         // userName X
         Member selectedMember = memberRepository.findByLoginId(memberInfo.getLoginId())
-                .orElseThrow(() -> new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId()));
+                .orElseThrow(() -> new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId())); // 404
         // password wrong
         if(!encoder.matches(memberInfo.getPassword(), selectedMember.getPassword())) {
-            throw new InvalidPasswordException("This is wrong password.");
+            throw new InvalidPasswordException("This is wrong password."); // 401
         }
         log.info("memberInfo = {}", memberInfo);
 
