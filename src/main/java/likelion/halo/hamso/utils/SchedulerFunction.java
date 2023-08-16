@@ -27,7 +27,7 @@ import java.util.List;
 
 import static java.time.LocalTime.now;
 
-//@Component
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class SchedulerFunction {
