@@ -63,6 +63,13 @@ public class AgricultureController {
         return new ResponseEntity<>(machineId, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/machine")
+    public ResponseEntity<Void> deleteMachine(@RequestParam("machineId") Long machineId) {
+        agricultureService.deleteMachine(machineId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @PostMapping("/insert/tag")
     public ResponseEntity<Long> addTag(@RequestBody TagDto tagDto) {
         Long tagId = agricultureService.addTag(tagDto);

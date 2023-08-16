@@ -39,13 +39,8 @@ public class AgriMachine {
     private AgriRegion region;
 
     @Column(name = "origin_cnt")
-    @ColumnDefault("5")
+    @ColumnDefault("0")
     private Integer oriCnt; // 원래 개수
-
-    @Column(name = "reserve_possible", columnDefinition = "TINYINT(1)")
-    @ColumnDefault("1")
-    private Boolean reservePossible; // 예약 가능 여부
-
 
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
     private List<Tag> tagList;

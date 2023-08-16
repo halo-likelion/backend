@@ -1,5 +1,6 @@
 package likelion.halo.hamso.repository;
 
+import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.Region1;
@@ -25,4 +26,7 @@ public interface PossibleRepository extends JpaRepository<AgriPossible, Long> {
 
     @Query("select p from AgriPossible p where p.machine.id =:machineId and p.findDate >=:start and p.findDate <=:end")
     List<AgriPossible> getPossibleList(Long machineId, LocalDateTime start, LocalDateTime end);
+
+    @Query("select p from AgriPossible p where p.machine.id =:machineId")
+    List<AgriPossible> findByMachineId(Long machineId);
 }

@@ -33,7 +33,6 @@ public class MachineInfoDto {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();
-        this.reservePossible = agriMachine.getReservePossible();
         this.region1 = agriMachine.getRegion().getRegion1();
         this.region2 = agriMachine.getRegion().getRegion2();
         this.region3 = agriMachine.getRegion().getRegion3();
