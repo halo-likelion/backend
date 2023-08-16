@@ -65,9 +65,12 @@ public class SecurityConfig{
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://59.79.207.32", "http://52.79.207.32", "http://59.79.207.32:9999", "http://52.79.207.32:9999"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
         configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // configuration 설정 후에 이 줄을 호출합니다.
+
         return source;
+
     }
 }
