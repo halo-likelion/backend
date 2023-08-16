@@ -110,4 +110,22 @@ public class EachMachineService {
         machine.setOriCnt(cnt);
         return machine.getOriCnt();
     }
+
+    @Transactional
+    public Boolean updateMachinePossible(Long eachMachineId) {
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 기계의 정보는 존재하지 않습니다!");
+        }
+        EachMachine eachMachine = oEachMachine.get();
+        Long machineId = eachMachine.getMachine().getId();
+        if(eachMachine.getEachMachinePossible()) {
+            eachMachine.setEachMachinePossible(false);
+            removeCnt(machineId);
+        } else {
+            eachMachine.setEachMachinePossible(true);
+            addCnt(machineId);
+        }
+        return eachMachine.getEachMachinePossible();
+    }
 }

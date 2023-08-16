@@ -26,6 +26,10 @@ public class EachMachine {
     @ColumnDefault("1")
     private Boolean eachMachinePossible; // 예약 가능 여부
 
+    @Column(name = "reserve_status", columnDefinition = "TINYINT(1)")
+    @ColumnDefault("0")
+    private Boolean reserveStatus; // 예약 여부
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "machine_id")
     private AgriMachine machine;

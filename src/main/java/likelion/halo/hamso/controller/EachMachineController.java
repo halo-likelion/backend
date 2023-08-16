@@ -30,4 +30,10 @@ public class EachMachineController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/status")
+    public ResponseEntity<Boolean> updateEachMachineReservePossible(@RequestParam Long eachMachineId) {
+        Boolean reservePossible = eachMachineService.updateMachinePossible(eachMachineId);
+        return new ResponseEntity<>(reservePossible, HttpStatus.OK);
+    }
+
 }
