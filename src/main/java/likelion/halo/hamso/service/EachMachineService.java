@@ -134,4 +134,17 @@ public class EachMachineService {
         }
         return eachMachine.getEachMachinePossible();
     }
+
+    public List<EachMachine> getEachMachinePossibleList(Long machineId) {
+        List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
+        return eachMachineList;
+    }
+
+    public EachMachine findById(Long eachMachineId) {
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 기계의 정보는 존재하지 않습니다!");
+        }
+        return oEachMachine.get();
+    }
 }

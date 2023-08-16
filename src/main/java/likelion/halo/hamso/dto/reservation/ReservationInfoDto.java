@@ -1,5 +1,6 @@
 package likelion.halo.hamso.dto.reservation;
 
+import likelion.halo.hamso.domain.EachMachine;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import lombok.*;
 
@@ -16,4 +17,6 @@ public class ReservationInfoDto {
     private Double workload; // 작업량
 
     private Integer reserveDayCnt; // 연속 날짜
+
+    private Long eachMachineId; // 배정된 개별 기계 고유 식별 번호
 }

@@ -3,6 +3,7 @@ package likelion.halo.hamso.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import likelion.halo.hamso.argumentresolver.Login;
 import likelion.halo.hamso.domain.AgriMachine;
+import likelion.halo.hamso.domain.EachMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
@@ -17,10 +18,7 @@ import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.exception.NotLoginException;
-import likelion.halo.hamso.service.AgricultureService;
-import likelion.halo.hamso.service.MemberService;
-import likelion.halo.hamso.service.ReservationService;
-import likelion.halo.hamso.service.SmsService;
+import likelion.halo.hamso.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,6 +42,7 @@ public class ReservationController {
     private final AgricultureService agricultureService;
     private final MemberService memberService;
     private final SmsService smsService;
+    private final EachMachineService eachMachineService;
 
     @PostMapping("/check-possible")
     public ResponseEntity<Boolean> checkReservePossible(@RequestBody ReservationCheckDto reservationCheckDto) {
@@ -68,6 +67,9 @@ public class ReservationController {
 
         Integer reserveDayCnt = reservationInfo.getReserveDayCnt();
 
+        Long eachMachineId = reservationInfo.getEachMachineId();
+        EachMachine eachMachine = eachMachineService.findById(eachMachineId);
+
         if(wantTime.isBefore(LocalDateTime.now())) {
             throw new NotAvailableReserveException("예약이 불가능합니다.");
         }
@@ -82,7 +84,7 @@ public class ReservationController {
             }
             // 예약 저장
             reservationInfo.setWantTime(wantTime.plusDays(i));
-            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
+            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine, eachMachine);
             log.info("reservation {} = {}", i, reservation);
             reservationService.makeReservation(reservation);
             // remove Cnt
