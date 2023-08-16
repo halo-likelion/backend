@@ -47,6 +47,8 @@ public class AuthService {
                 .email(memberInfo.getEmail())
                 .name(memberInfo.getName())
                 .phoneNo(memberInfo.getPhoneNo())
+                .address(memberInfo.getAddress())
+                .specificAddress(memberInfo.getSpecificAddress())
                 .build();
 
         memberRepository.save(member);
