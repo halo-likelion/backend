@@ -62,7 +62,7 @@ public class Reservation {
     private EachMachine eachMachine;
 
     //==생성 메서드==//
-    public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine, EachMachine eachMachine) {
+    public static Reservation createReservation(ReservationInfoDto reservationDto, Member member, AgriMachine machine) {
         Reservation reservation = new Reservation();
         reservation.setMember(member);
         reservation.setAgriMachine(machine);
@@ -72,7 +72,6 @@ public class Reservation {
         reservation.setWorkType(reservation.getWorkType());
         reservation.setWorkload(reservation.getWorkload());
         reservation.setLentPrice(machine.getPrice() * reservationDto.getReserveDayCnt());
-        reservation.setEachMachine(eachMachine);
         return reservation;
     }
 }

@@ -67,9 +67,6 @@ public class ReservationController {
 
         Integer reserveDayCnt = reservationInfo.getReserveDayCnt();
 
-        Long eachMachineId = reservationInfo.getEachMachineId();
-        EachMachine eachMachine = eachMachineService.findById(eachMachineId);
-
         if(wantTime.isBefore(LocalDateTime.now())) {
             throw new NotAvailableReserveException("예약이 불가능합니다.");
         }
@@ -84,7 +81,7 @@ public class ReservationController {
             }
             // 예약 저장
             reservationInfo.setWantTime(wantTime.plusDays(i));
-            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine, eachMachine);
+            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
             log.info("reservation {} = {}", i, reservation);
             reservationService.makeReservation(reservation);
             // remove Cnt

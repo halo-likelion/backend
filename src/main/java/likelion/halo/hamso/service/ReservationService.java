@@ -176,6 +176,23 @@ public class ReservationService {
         return reservation.getStatus();
     }
 
+    @Transactional
+    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        reservation.setStatus(reservationStatus);
+        reservation.setEachMachine(oEachMachine.get());
+        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+        return reservation.getStatus();
+    }
+
     public Reservation findReservationById(Long reservationId) {
         Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
         if(oReservation.isEmpty()) {

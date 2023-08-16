@@ -1,21 +1,14 @@
 package likelion.halo.hamso.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import likelion.halo.hamso.argumentresolver.Login;
-import likelion.halo.hamso.domain.AgriMachine;
 import likelion.halo.hamso.domain.Member;
 import likelion.halo.hamso.domain.Reservation;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.AdminMachineInfoDto;
-import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
 import likelion.halo.hamso.dto.member.MemberDto;
-import likelion.halo.hamso.dto.member.MemberLoginDto;
-import likelion.halo.hamso.dto.member.MemberUpdateAllDto;
 import likelion.halo.hamso.dto.reservation.*;
-import likelion.halo.hamso.exception.NotAvailableReserveException;
-import likelion.halo.hamso.exception.NotLoginException;
 import likelion.halo.hamso.service.AgricultureService;
 import likelion.halo.hamso.service.MemberService;
 import likelion.halo.hamso.service.ReservationService;
@@ -30,7 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -74,9 +66,9 @@ public class AdminController {
         return new ResponseEntity<>(reservationService.getReservationAdminInfoList(regionId), HttpStatus.OK);
     }
 
-    @PostMapping("/reserve/status")
-    public ResponseEntity<ReservationStatus> updateReservationStatus(@RequestBody ReservationStatusDto reservationStatusInfo) {
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
+    @PostMapping("/reserve/update")
+    public ResponseEntity<ReservationStatus> updateReserveList(@RequestBody ReservationUpdateDto reservationStatusInfo) {
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus(), reservationStatusInfo.getEachMachineId()), HttpStatus.OK);
     }
 
     @GetMapping("/machine-list")
