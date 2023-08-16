@@ -38,6 +38,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final PossibleRepository possibleRepository;
     private final MemberRepository memberRepository;
+    private final EachMachineRepository eachMachineRepository;
 
     public Boolean checkReservePossible(AgriMachineType machineType, Long regionId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
         Optional<AgriMachine> oMachine = agriMachineRepository.findByTypeAndRegion(machineType, regionId);
@@ -175,6 +176,23 @@ public class ReservationService {
         return reservation.getStatus();
     }
 
+    @Transactional
+    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        reservation.setStatus(reservationStatus);
+        reservation.setEachMachine(oEachMachine.get());
+        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+        return reservation.getStatus();
+    }
+
     public Reservation findReservationById(Long reservationId) {
         Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
         if(oReservation.isEmpty()) {
@@ -192,4 +210,6 @@ public class ReservationService {
         List<Reservation> all = reservationRepository.findStatusReservation(ReservationStatus.RESERVED);
         return all;
     }
+
+
 }

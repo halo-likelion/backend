@@ -61,6 +61,7 @@ public class AgricultureService {
                     .cnt(machine.getOriCnt())
                     .findDate(time.plusDays(i))
                     .machine(machine)
+                    .reservePossible(true)
                     .build();
             possibleRepository.save(possible);
         }

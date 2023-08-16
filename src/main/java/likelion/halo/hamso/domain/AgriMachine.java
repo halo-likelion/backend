@@ -39,9 +39,8 @@ public class AgriMachine {
     private AgriRegion region;
 
     @Column(name = "origin_cnt")
-    @ColumnDefault("5")
+    @ColumnDefault("0")
     private Integer oriCnt; // 원래 개수
-
 
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
     private List<Tag> tagList;
