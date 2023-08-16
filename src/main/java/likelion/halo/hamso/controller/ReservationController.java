@@ -68,6 +68,10 @@ public class ReservationController {
 
         Integer reserveDayCnt = reservationInfo.getReserveDayCnt();
 
+        if(wantTime.isBefore(LocalDateTime.now())) {
+            throw new NotAvailableReserveException("예약이 불가능합니다.");
+        }
+
         Long reservationId = 0L;
         for(int i=0;i<reserveDayCnt;i++) {
             // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?

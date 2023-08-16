@@ -85,6 +85,9 @@ public class EachMachineService {
             }
             return 0;
         }
+        for(AgriPossible agriPossible:agriPossibles) {
+            agriPossible.setCnt(cnt);
+        }
         machine.setOriCnt(cnt);
         return machine.getOriCnt();
     }
@@ -106,6 +109,9 @@ public class EachMachineService {
                     agriPossible.setReservePossible(true);
                 }
             }
+        }
+        for(AgriPossible agriPossible:agriPossibles) {
+            agriPossible.setCnt(cnt);
         }
         machine.setOriCnt(cnt);
         return machine.getOriCnt();

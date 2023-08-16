@@ -38,6 +38,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final PossibleRepository possibleRepository;
     private final MemberRepository memberRepository;
+    private final EachMachineRepository eachMachineRepository;
 
     public Boolean checkReservePossible(AgriMachineType machineType, Long regionId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
         Optional<AgriMachine> oMachine = agriMachineRepository.findByTypeAndRegion(machineType, regionId);
