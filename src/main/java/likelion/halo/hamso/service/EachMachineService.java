@@ -78,6 +78,10 @@ public class EachMachineService {
         EachMachine eachMachine = oEachMachine.get();
         eachMachineRepository.delete(eachMachine);
         removeCnt(eachMachine.getMachine().getId());
+        List<EachMachinePossible> eachMachinePossibles = eachMachinePossibleRepository.findListById(eachMachineId);
+        for(EachMachinePossible eachMachinePossible:eachMachinePossibles) {
+            eachMachinePossibleRepository.delete(eachMachinePossible);
+        }
     }
 
     @Transactional

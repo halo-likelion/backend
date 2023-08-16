@@ -13,4 +13,6 @@ import java.util.List;
 @Repository
 public interface EachMachinePossibleRepository extends JpaRepository<EachMachinePossible, Long> {
 
+    @Query("select p from EachMachine p where p.id=:eachMachineId")
+    List<EachMachinePossible> findListById(Long eachMachineId);
 }
