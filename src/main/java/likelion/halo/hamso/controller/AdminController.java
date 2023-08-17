@@ -68,7 +68,7 @@ public class AdminController {
 
     @PostMapping("/reserve/update")
     public ResponseEntity<ReservationStatus> updateReserveList(@RequestBody ReservationUpdateDto reservationStatusInfo) {
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus(), reservationStatusInfo.getEachMachineId()), HttpStatus.OK);
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
     }
 
     @GetMapping("/machine-list")
