@@ -144,12 +144,15 @@ public class ReservationController {
         Month month = wantTime.getMonth();
         int day = wantTime.getDayOfMonth();
 
+        ReservationStatus reservationStatus = reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED);
+
         MessageDto messageDto = new MessageDto();
         messageDto.setTo(loginMember.getPhoneNo());
-        messageDto.setContent("<렛츠-농사> " + loginMember.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 예약 신청이 취소되셨습니다.");
+        messageDto.setContent("<렛츠-농사> " + loginMember.getName() +"님 "+ reservation.getAgriMachine().getType()+"의 예약 신청이 취소되셨습니다.");
+
         SmsResponseDto response = smsService.sendSms(messageDto);
         log.info("message log = {}", response);
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED), HttpStatus.OK);
+        return new ResponseEntity<>(reservationStatus, HttpStatus.OK);
     }
 
 }

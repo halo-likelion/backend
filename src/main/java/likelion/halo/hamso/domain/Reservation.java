@@ -76,6 +76,7 @@ public class Reservation {
         reservation.setWorkload(reservation.getWorkload());
         reservation.setLentPrice(machine.getPrice() * reservationDto.getReserveDayCnt());
         reservation.setEndTime(reservationDto.getEndTime());
+        reservation.setReserveDayCnt(reservation.getReserveDayCnt());
         return reservation;
     }
 }
