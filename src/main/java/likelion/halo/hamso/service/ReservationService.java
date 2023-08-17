@@ -3,11 +3,14 @@ package likelion.halo.hamso.service;
 import likelion.halo.hamso.domain.*;
 import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.domain.type.ReservationStatus;
+import likelion.halo.hamso.dto.agriculture.EachMachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineInfoDto;
 import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
+import likelion.halo.hamso.dto.each.FindEachMachineDto;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
+import likelion.halo.hamso.dto.reservation.ReservationAssignEachMachine;
 import likelion.halo.hamso.dto.reservation.ReservationLogDto;
 import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
 import likelion.halo.hamso.exception.MemberDuplicateException;
@@ -19,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.standard.expression.Each;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -39,6 +43,8 @@ public class ReservationService {
     private final PossibleRepository possibleRepository;
     private final MemberRepository memberRepository;
     private final EachMachineRepository eachMachineRepository;
+    private final EachMachinePossibleRepository eachMachinePossibleRepository;
+    private final EachMachineService eachMachineService;
 
     public Boolean checkReservePossible(AgriMachineType machineType, Long regionId, LocalDateTime date){ // 해당 날짜에 해당 농기계 예약 가능여부 반환
         Optional<AgriMachine> oMachine = agriMachineRepository.findByTypeAndRegion(machineType, regionId);
@@ -51,31 +57,43 @@ public class ReservationService {
         return possible.getReservePossible();
     }
 
-    @Transactional
-    public Integer removeCnt(Long machineId, LocalDateTime date) {
-        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
-        int cnt = possible.getCnt();
-        cnt--;
-        if (cnt < 0) {
-            throw new NotEnoughCntException("No more stock to reserve");
+    public Boolean checkReserveAllDayPossible(Long machineId, LocalDateTime wantTime, Integer reserveDayCnt){
+        // 해당 날짜에 해당 농기계 예약 가능여부 반환
+        for(int i=0;i<reserveDayCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, wantTime.plusDays(i));
+            if(!possible.getReservePossible()) return false;
+
         }
-        if (cnt <= 0) {
-            possible.setReservePossible(false);
-        }
-        possible.setCnt(cnt);
-        return possible.getCnt();
+        return true;
     }
 
     @Transactional
-    public Integer addCnt(Long machineId, LocalDateTime date) {
-        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
-        int cnt = possible.getCnt();
-        cnt++;
-        if (cnt > 0) {
-            possible.setReservePossible(true);
+    public void removeCnt(Long machineId, LocalDateTime date, Integer reserveCnt) {
+        for(int i=0;i<reserveCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date.plusDays(i));
+            int cnt = possible.getCnt();
+            cnt--;
+            if (cnt < 0) {
+                throw new NotEnoughCntException("No more stock to reserve");
+            }
+            if (cnt <= 0) {
+                possible.setReservePossible(false);
+            }
+            possible.setCnt(cnt);
         }
-        possible.setCnt(cnt);
-        return possible.getCnt();
+    }
+
+    @Transactional
+    public void addCnt(Long machineId, LocalDateTime date, Integer reserveCnt) {
+        for(int i=0;i<reserveCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date.plusDays(i));
+            int cnt = possible.getCnt();
+            cnt++;
+            if (cnt > 0) {
+                possible.setReservePossible(true);
+            }
+            possible.setCnt(cnt);
+        }
     }
 
     @Transactional
@@ -172,26 +190,30 @@ public class ReservationService {
         }
         Reservation reservation = oReservation.get();
         reservation.setStatus(reservationStatus);
-        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+        if(reservationStatus.equals(ReservationStatus.CANCELED)) {
+            addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime(), reservation.getReserveDayCnt());
+        } else if (reservationStatus.equals(ReservationStatus.RESERVING)) {
+            removeCnt(reservation.getAgriMachine().getId(), reservation.getWantTime(), reservation.getReserveDayCnt());
+        }
         return reservation.getStatus();
     }
 
-    @Transactional
-    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
-        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
-        if(oReservation.isEmpty()) {
-            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
-        }
-        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
-        if(oEachMachine.isEmpty()) {
-            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
-        }
-        Reservation reservation = oReservation.get();
-        reservation.setStatus(reservationStatus);
-        reservation.setEachMachine(oEachMachine.get());
-        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
-        return reservation.getStatus();
-    }
+//    @Transactional
+//    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
+//        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+//        if(oReservation.isEmpty()) {
+//            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+//        }
+//        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+//        if(oEachMachine.isEmpty()) {
+//            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
+//        }
+//        Reservation reservation = oReservation.get();
+//        reservation.setStatus(reservationStatus);
+//        reservation.setEachMachine(oEachMachine.get());
+//        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+//        return reservation.getStatus();
+//    }
 
     public Reservation findReservationById(Long reservationId) {
         Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
@@ -212,4 +234,45 @@ public class ReservationService {
     }
 
 
+    @Transactional
+    public Long assignEachMachine(ReservationAssignEachMachine reservationAssignEachMachine) {
+        Long reservationId = reservationAssignEachMachine.getReservationId();
+        Long eachMachineId = reservationAssignEachMachine.getEachMachineId();
+        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+        if(oReservation.isEmpty()) {
+            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+        }
+        Reservation reservation = oReservation.get();
+        LocalDateTime wantTime = reservation.getWantTime();
+        LocalDateTime endTime = reservation.getEndTime();
+
+        // 해당 날짜에 예약 가능한 개별 기계 찾기
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 eachMachine 정보는 존재하지 않습니다.");
+        }
+        // 개별 기계 reservation에 반영하기
+        EachMachine newEachMachine = oEachMachine.get();
+        List<EachMachinePossible> newEachMachinePossibleList = eachMachinePossibleRepository.findByEachMachineId(newEachMachine.getId(), wantTime, endTime);
+
+        if(reservation.getEachMachine()==null) {
+            reservation.setEachMachine(newEachMachine);
+            for(EachMachinePossible eachMachinePossible:newEachMachinePossibleList) {
+                eachMachinePossible.setReservePossible(false);
+            }
+        } else {
+            EachMachine oldEachMachine = reservation.getEachMachine();
+            List<EachMachinePossible> oldEachMachinePossibleList = eachMachinePossibleRepository.findByEachMachineId(oldEachMachine.getId(), wantTime, endTime);
+            for(EachMachinePossible eachMachinePossible:oldEachMachinePossibleList) {
+                eachMachinePossible.setReservePossible(true);
+            }
+            reservation.setEachMachine(newEachMachine);
+            for(EachMachinePossible eachMachinePossible:newEachMachinePossibleList) {
+                eachMachinePossible.setReservePossible(false);
+            }
+        }
+
+
+        return newEachMachine.getId();
+    }
 }

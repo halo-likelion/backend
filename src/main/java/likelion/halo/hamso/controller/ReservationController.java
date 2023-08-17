@@ -10,10 +10,7 @@ import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
-import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
-import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
+import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotFoundException;
@@ -72,22 +69,25 @@ public class ReservationController {
         }
 
         Long reservationId = 0L;
-        for(int i=0;i<reserveDayCnt;i++) {
-            // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
-            log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
-            // 머신 타입으로 예약 가능하게 변경하기!
-            if(!reservationService.checkReservePossible(reservationInfo.getMachineId(), wantTime.plusDays(i))) {
-                throw new NotAvailableReserveException("예약이 불가능합니다.");
-            }
-            // 예약 저장
-            reservationInfo.setWantTime(wantTime.plusDays(i));
-            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
-            log.info("reservation {} = {}", i, reservation);
-            reservationService.makeReservation(reservation);
-            // remove Cnt
-            reservationService.removeCnt(machineId, wantTime.plusDays(i));
-            reservationId = reservation.getId();
+
+        LocalDateTime endTime = wantTime.plusDays(reserveDayCnt - 1);
+
+        // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
+        log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
+        // 머신 타입으로 예약 가능하게 변경하기!
+        if(!reservationService.checkReserveAllDayPossible(reservationInfo.getMachineId(), wantTime, reserveDayCnt)) {
+            throw new NotAvailableReserveException("예약이 불가능합니다.");
         }
+        // 예약 저장
+        reservationInfo.setWantTime(wantTime);
+        reservationInfo.setEndTime(endTime);
+
+        Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
+        log.info("reservation = {}", reservation);
+        reservationService.makeReservation(reservation);
+        // remove Cnt
+        reservationService.removeCnt(machineId, wantTime, reserveDayCnt);
+        reservationId = reservation.getId();
 
 
         // reservation message sending
@@ -141,12 +141,21 @@ public class ReservationController {
         Month month = wantTime.getMonth();
         int day = wantTime.getDayOfMonth();
 
+        ReservationStatus reservationStatus = reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED);
+
         MessageDto messageDto = new MessageDto();
         messageDto.setTo(loginMember.getPhoneNo());
-        messageDto.setContent("<렛츠-농사> " + loginMember.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 예약 신청이 취소되셨습니다.");
+        messageDto.setContent("<렛츠-농사> " + loginMember.getName() +"님 "+ reservation.getAgriMachine().getType()+"의 예약 신청이 취소되셨습니다.");
+
         SmsResponseDto response = smsService.sendSms(messageDto);
         log.info("message log = {}", response);
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED), HttpStatus.OK);
+        return new ResponseEntity<>(reservationStatus, HttpStatus.OK);
+    }
+
+    @PostMapping("/assign/each-machine")
+    public ResponseEntity<Long> assignEachMachine(@RequestBody ReservationAssignEachMachine reservationAssignEachMachine) {
+        Long eachMachineId = reservationService.assignEachMachine(reservationAssignEachMachine);
+        return new ResponseEntity<>(eachMachineId, HttpStatus.OK);
     }
 
 }

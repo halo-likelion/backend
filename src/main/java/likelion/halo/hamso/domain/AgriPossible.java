@@ -22,7 +22,7 @@ public class AgriPossible {
     @Column(name = "possible_id")
     private Long id;
 
-    @Column(name = "origin_cnt")
+    @Column(name = "day_cnt")
     private Integer cnt;
 
     private LocalDateTime findDate; // 날짜

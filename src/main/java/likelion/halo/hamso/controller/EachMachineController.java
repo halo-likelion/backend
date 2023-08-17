@@ -1,6 +1,7 @@
 package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.dto.agriculture.*;
+import likelion.halo.hamso.dto.each.FindEachMachineDto;
 import likelion.halo.hamso.dto.member.MemberDto;
 import likelion.halo.hamso.service.AgricultureService;
 import likelion.halo.hamso.service.EachMachineService;
@@ -36,9 +37,9 @@ public class EachMachineController {
         return new ResponseEntity<>(reservePossible, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<EachMachineInfoDto>> getEachMachinePossibleListByMachineId(@RequestParam Long machineId) {
-        List<EachMachineInfoDto> eachMachineInfoDtoList = eachMachineService.getEachMachinePossibleDtoList(machineId);
+    @PostMapping("/list")
+    public ResponseEntity<List<EachMachineInfoDto>> getEachMachinePossibleListByMachineId(@RequestBody FindEachMachineDto findEachMachineDto) {
+        List<EachMachineInfoDto> eachMachineInfoDtoList = eachMachineService.getEachMachinePossibleDtoList(findEachMachineDto);
         return new ResponseEntity<>(eachMachineInfoDtoList, HttpStatus.OK);
     }
 

@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public class ReservationLogDto {
     private LocalDateTime wantTime; // 예약 원하는 날짜
     private LocalDateTime createdAt; // 예약 신청 날짜
+    private LocalDateTime endTime; // 예약 원하는 날짜 끝나는 날짜
+    private Integer reserveCnt;
     private Long machineId; // 빌리기 원하는 농기계 아이디
     private Integer price; // 임대료
     private ReservationStatus reservationStatus; // 예약 상태
@@ -30,5 +32,7 @@ public class ReservationLogDto {
         this.price = reservationInfo.getLentPrice();
         this.reservationStatus =reservationInfo.getStatus();
         this.name = reservationInfo.getMember().getName();
+        this.endTime = reservationInfo.getEndTime();
+        this.reserveCnt = reservationInfo.getReserveDayCnt();
     }
 }
