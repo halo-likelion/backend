@@ -58,7 +58,7 @@ public class Reservation {
     @Column(name = "lent_price")
     private Integer lentPrice; // 임대료
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "each_machine_id")
     private EachMachine eachMachine;
 
@@ -72,11 +72,11 @@ public class Reservation {
         reservation.setWantTime(reservationDto.getWantTime());
         reservation.setStatus(ReservationStatus.RESERVED);
         reservation.setDeposit(false);
-        reservation.setWorkType(reservation.getWorkType());
-        reservation.setWorkload(reservation.getWorkload());
+        reservation.setWorkType(reservationDto.getWorkType());
+        reservation.setWorkload(reservationDto.getWorkload());
         reservation.setLentPrice(machine.getPrice() * reservationDto.getReserveDayCnt());
         reservation.setEndTime(reservationDto.getEndTime());
-        reservation.setReserveDayCnt(reservation.getReserveDayCnt());
+        reservation.setReserveDayCnt(reservationDto.getReserveDayCnt());
         return reservation;
     }
 }

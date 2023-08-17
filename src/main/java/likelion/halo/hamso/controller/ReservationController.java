@@ -10,10 +10,7 @@ import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.RegionMachineDto;
 import likelion.halo.hamso.dto.alert.MessageDto;
 import likelion.halo.hamso.dto.alert.SmsResponseDto;
-import likelion.halo.hamso.dto.reservation.ReservationCheckDto;
-import likelion.halo.hamso.dto.reservation.ReservationInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
+import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotAvailableReserveException;
 import likelion.halo.hamso.exception.NotFoundException;
@@ -153,6 +150,12 @@ public class ReservationController {
         SmsResponseDto response = smsService.sendSms(messageDto);
         log.info("message log = {}", response);
         return new ResponseEntity<>(reservationStatus, HttpStatus.OK);
+    }
+
+    @PostMapping("/assign/each-machine")
+    public ResponseEntity<Long> assignEachMachine(@RequestBody ReservationAssignEachMachine reservationAssignEachMachine) {
+        Long eachMachineId = reservationService.assignEachMachine(reservationAssignEachMachine);
+        return new ResponseEntity<>(eachMachineId, HttpStatus.OK);
     }
 
 }
