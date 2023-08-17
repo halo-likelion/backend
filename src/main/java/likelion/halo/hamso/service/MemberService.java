@@ -64,9 +64,10 @@ public class MemberService {
             throw new NotFoundException("Member not found with loginId: " + memberInfo.getLoginId());
         } else {
             Member member = oMember.get();
-            member.setName(member.getName());
-            member.setEmail(member.getEmail());
-            member.setPhoneNo(member.getPhoneNo());
+            member.setEmail(memberInfo.getEmail());
+            member.setPhoneNo(memberInfo.getPhoneNo());
+            member.setAddress(memberInfo.getAddress());
+            member.setSpecificAddress(memberInfo.getSpecificAddress());
         }
 
     }
