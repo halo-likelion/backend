@@ -63,7 +63,9 @@ public class SecurityConfig{
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","localhost:1", "http://59.79.207.32", "http://52.79.207.32", "http://59.79.207.32:9999", "http://52.79.207.32:9999"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","localhost:1", "http://59.79.207.32", "http://52.79.207.32", "http://59.79.207.32:9999",
+                "http://52.79.207.32:9999", "https://52.79.207.32:9999",
+                "https://letsnongsa.store"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
 
