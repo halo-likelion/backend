@@ -58,7 +58,7 @@ public class Reservation {
     @Column(name = "lent_price")
     private Integer lentPrice; // 임대료
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "each_machine_id")
     private EachMachine eachMachine;
 

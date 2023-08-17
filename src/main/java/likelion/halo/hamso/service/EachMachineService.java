@@ -1,13 +1,9 @@
 package likelion.halo.hamso.service;
 
 import likelion.halo.hamso.domain.*;
-import likelion.halo.hamso.domain.type.AgriMachineType;
-import likelion.halo.hamso.domain.type.ReservationStatus;
 import likelion.halo.hamso.dto.agriculture.EachMachineDto;
 import likelion.halo.hamso.dto.agriculture.EachMachineInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
+import likelion.halo.hamso.dto.each.FindEachMachineDto;
 import likelion.halo.hamso.exception.NotEnoughCntException;
 import likelion.halo.hamso.exception.NotFoundException;
 import likelion.halo.hamso.repository.*;
@@ -18,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -155,20 +150,21 @@ public class EachMachineService {
         return eachMachine.getEachMachinePossible();
     }
 
-    public List<EachMachine> getEachMachinePossibleList(Long machineId) {
-        List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
-        return eachMachineList;
-    }
+//    public List<EachMachine> getEachMachinePossibleList(Long machineId) {
+//        List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
+//        return eachMachineList;
+//    }
 
-    public List<EachMachineInfoDto> getEachMachinePossibleDtoList(Long machineId) {
-        List<EachMachine> eachMachineList = eachMachineRepository.findAllByMachinePossible(machineId);
-        List<EachMachineInfoDto> eachMachineInfoDtoList = convertEachMachineToEachMachineInfoDto(eachMachineList);
+    public List<EachMachineInfoDto> getEachMachinePossibleDtoList(FindEachMachineDto findEachMachineDto) {
+        List<EachMachinePossible> eachMachinePossibleList = eachMachinePossibleRepository.findByEachMachineIdAndDate(findEachMachineDto.getMachineId(), findEachMachineDto.getWantTime(), findEachMachineDto.getEndTime());
+
+        List<EachMachineInfoDto> eachMachineInfoDtoList = convertEachMachinePossibleToEachMachineInfoDto(eachMachinePossibleList);
         return eachMachineInfoDtoList;
     }
 
-    private static List<EachMachineInfoDto> convertEachMachineToEachMachineInfoDto(List<EachMachine> reservationList) {
+    private static List<EachMachineInfoDto> convertEachMachinePossibleToEachMachineInfoDto(List<EachMachinePossible> reservationList) {
         List<EachMachineInfoDto> reservationLogDtoList = reservationList.stream()
-                .map(a -> new EachMachineInfoDto(a))
+                .map(a -> new EachMachineInfoDto(a.getEachMachine()))
                 .collect(Collectors.toList());
         return reservationLogDtoList;
     }
