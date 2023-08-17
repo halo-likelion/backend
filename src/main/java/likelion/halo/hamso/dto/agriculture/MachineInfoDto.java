@@ -22,7 +22,7 @@ public class MachineInfoDto {
 
     private String content; // 농기계 설명
 
-    private Boolean reservePossible; // 예약 가능 여부
+//    private Boolean reservePossible; // 예약 가능 여부
 
     private Region1 region1;
     private Region2 region2;
