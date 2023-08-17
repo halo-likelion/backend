@@ -90,6 +90,6 @@ public class AgricultureController {
 
     @GetMapping("/possible")
     public List<AgriPossible> getPossibleList() {
-        return possibleRepository.findByMachineId(103);
+        return possibleRepository.findByMachineId(103L);
     }
 }
