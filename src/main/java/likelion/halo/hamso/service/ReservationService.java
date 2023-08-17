@@ -51,31 +51,43 @@ public class ReservationService {
         return possible.getReservePossible();
     }
 
-    @Transactional
-    public Integer removeCnt(Long machineId, LocalDateTime date) {
-        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
-        int cnt = possible.getCnt();
-        cnt--;
-        if (cnt < 0) {
-            throw new NotEnoughCntException("No more stock to reserve");
+    public Boolean checkReserveAllDayPossible(Long machineId, LocalDateTime wantTime, Integer reserveDayCnt){
+        // 해당 날짜에 해당 농기계 예약 가능여부 반환
+        for(int i=0;i<reserveDayCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, wantTime.plusDays(i));
+            if(!possible.getReservePossible()) return false;
+
         }
-        if (cnt <= 0) {
-            possible.setReservePossible(false);
-        }
-        possible.setCnt(cnt);
-        return possible.getCnt();
+        return true;
     }
 
     @Transactional
-    public Integer addCnt(Long machineId, LocalDateTime date) {
-        AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date);
-        int cnt = possible.getCnt();
-        cnt++;
-        if (cnt > 0) {
-            possible.setReservePossible(true);
+    public void removeCnt(Long machineId, LocalDateTime date, Integer reserveCnt) {
+        for(int i=0;i<reserveCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date.plusDays(i));
+            int cnt = possible.getCnt();
+            cnt--;
+            if (cnt < 0) {
+                throw new NotEnoughCntException("No more stock to reserve");
+            }
+            if (cnt <= 0) {
+                possible.setReservePossible(false);
+            }
+            possible.setCnt(cnt);
         }
-        possible.setCnt(cnt);
-        return possible.getCnt();
+    }
+
+    @Transactional
+    public void addCnt(Long machineId, LocalDateTime date, Integer reserveCnt) {
+        for(int i=0;i<reserveCnt;i++) {
+            AgriPossible possible = possibleRepository.getMachineDateInfo(machineId, date.plusDays(i));
+            int cnt = possible.getCnt();
+            cnt++;
+            if (cnt > 0) {
+                possible.setReservePossible(true);
+            }
+            possible.setCnt(cnt);
+        }
     }
 
     @Transactional
@@ -172,26 +184,30 @@ public class ReservationService {
         }
         Reservation reservation = oReservation.get();
         reservation.setStatus(reservationStatus);
-        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+        if(reservationStatus.equals(ReservationStatus.CANCELED)) {
+            addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime(), reservation.getReserveDayCnt());
+        } else if (reservationStatus.equals(ReservationStatus.RESERVING)) {
+            removeCnt(reservation.getAgriMachine().getId(), reservation.getWantTime(), reservation.getReserveDayCnt());
+        }
         return reservation.getStatus();
     }
 
-    @Transactional
-    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
-        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
-        if(oReservation.isEmpty()) {
-            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
-        }
-        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
-        if(oEachMachine.isEmpty()) {
-            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
-        }
-        Reservation reservation = oReservation.get();
-        reservation.setStatus(reservationStatus);
-        reservation.setEachMachine(oEachMachine.get());
-        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
-        return reservation.getStatus();
-    }
+//    @Transactional
+//    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus, Long eachMachineId) {
+//        Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
+//        if(oReservation.isEmpty()) {
+//            throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
+//        }
+//        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+//        if(oEachMachine.isEmpty()) {
+//            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
+//        }
+//        Reservation reservation = oReservation.get();
+//        reservation.setStatus(reservationStatus);
+//        reservation.setEachMachine(oEachMachine.get());
+//        addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime());
+//        return reservation.getStatus();
+//    }
 
     public Reservation findReservationById(Long reservationId) {
         Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
