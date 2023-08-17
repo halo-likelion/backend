@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/each")
+@RequestMapping("/api/each")
 public class EachMachineController {
     private final AgricultureService agricultureService;
     private final EachMachineService eachMachineService;

@@ -33,7 +33,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reserve")
+@RequestMapping("/api/reserve")
 public class ReservationController {
     private final ReservationService reservationService;
     private final AgricultureService agricultureService;

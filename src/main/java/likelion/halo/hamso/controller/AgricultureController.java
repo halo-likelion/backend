@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/agriculture")
+@RequestMapping("/api/agriculture")
 public class AgricultureController {
     private final AgricultureService agricultureService;
     private final PossibleRepository possibleRepository;

@@ -27,7 +27,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/alert")
+@RequestMapping("/api/alert")
 public class SmsController {
     private final SmsService smsService;
     private final MemberService memberService;

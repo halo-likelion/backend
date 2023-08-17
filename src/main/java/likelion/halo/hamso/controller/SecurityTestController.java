@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/security")
+@RequestMapping("/api/security")
 public class SecurityTestController {
 
     @PostMapping
