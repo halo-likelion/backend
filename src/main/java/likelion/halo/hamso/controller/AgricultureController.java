@@ -1,6 +1,8 @@
 package likelion.halo.hamso.controller;
 
+import likelion.halo.hamso.domain.AgriPossible;
 import likelion.halo.hamso.dto.agriculture.*;
+import likelion.halo.hamso.repository.PossibleRepository;
 import likelion.halo.hamso.service.AgricultureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/agriculture")
 public class AgricultureController {
     private final AgricultureService agricultureService;
+    private final PossibleRepository possibleRepository;
 
     @GetMapping("/machine-list")
     public ResponseEntity<List<MachineInfoDto>> getMachineList() {
@@ -83,5 +86,10 @@ public class AgricultureController {
     public ResponseEntity<Void> deleteTag(@RequestParam("tagId") Long tagId) {
         agricultureService.deleteTag(tagId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/possible")
+    public List<AgriPossible> getPossibleList() {
+        return possibleRepository.findAll();
     }
 }
