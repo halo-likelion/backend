@@ -72,11 +72,11 @@ public class Reservation {
         reservation.setWantTime(reservationDto.getWantTime());
         reservation.setStatus(ReservationStatus.RESERVED);
         reservation.setDeposit(false);
-        reservation.setWorkType(reservation.getWorkType());
-        reservation.setWorkload(reservation.getWorkload());
+        reservation.setWorkType(reservationDto.getWorkType());
+        reservation.setWorkload(reservationDto.getWorkload());
         reservation.setLentPrice(machine.getPrice() * reservationDto.getReserveDayCnt());
         reservation.setEndTime(reservationDto.getEndTime());
-        reservation.setReserveDayCnt(reservation.getReserveDayCnt());
+        reservation.setReserveDayCnt(reservationDto.getReserveDayCnt());
         return reservation;
     }
 }
