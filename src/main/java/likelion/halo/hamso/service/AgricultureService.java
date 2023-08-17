@@ -164,7 +164,7 @@ public class AgricultureService {
 
         searchOptionDto.setWantTime(searchOptionDto.getWantTime());
 
-        log.info("searchOptionDto = {}", searchOptionDto);
+        log.info("searchOptionDtoService = {}", searchOptionDto);
 
         List<AgriMachine> machineList = agriMachineRepository.search(
                 oRegion.get().getId(),
