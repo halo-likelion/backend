@@ -29,4 +29,8 @@ public class EachMachine {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "machine_id")
     private AgriMachine machine;
+
+    @OneToMany(mappedBy = "eachMachine", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<EachMachinePossible> eachMachinePossibleList;
 }

@@ -48,4 +48,8 @@ public class AgriMachine {
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<AgriPossible> possibleList;
+
+    @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<EachMachine> eachMachineList;
 }
