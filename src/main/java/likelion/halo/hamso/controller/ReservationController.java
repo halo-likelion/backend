@@ -72,22 +72,25 @@ public class ReservationController {
         }
 
         Long reservationId = 0L;
-        for(int i=0;i<reserveDayCnt;i++) {
-            // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
-            log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
-            // 머신 타입으로 예약 가능하게 변경하기!
-            if(!reservationService.checkReservePossible(reservationInfo.getMachineId(), wantTime.plusDays(i))) {
-                throw new NotAvailableReserveException("예약이 불가능합니다.");
-            }
-            // 예약 저장
-            reservationInfo.setWantTime(wantTime.plusDays(i));
-            Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
-            log.info("reservation {} = {}", i, reservation);
-            reservationService.makeReservation(reservation);
-            // remove Cnt
-            reservationService.removeCnt(machineId, wantTime.plusDays(i));
-            reservationId = reservation.getId();
+
+        LocalDateTime endTime = wantTime.plusDays(reserveDayCnt - 1);
+
+        // 예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?
+        log.info("checkDuplicateReservation:  예약할 날짜를 보내줬을 때 원래 있던 예약과 겹치는지?");
+        // 머신 타입으로 예약 가능하게 변경하기!
+        if(!reservationService.checkReserveAllDayPossible(reservationInfo.getMachineId(), wantTime, reserveDayCnt)) {
+            throw new NotAvailableReserveException("예약이 불가능합니다.");
         }
+        // 예약 저장
+        reservationInfo.setWantTime(wantTime);
+        reservationInfo.setEndTime(endTime);
+
+        Reservation reservation = Reservation.createReservation(reservationInfo, loginMember, machine);
+        log.info("reservation = {}", reservation);
+        reservationService.makeReservation(reservation);
+        // remove Cnt
+        reservationService.removeCnt(machineId, wantTime, reserveDayCnt);
+        reservationId = reservation.getId();
 
 
         // reservation message sending
