@@ -3,6 +3,7 @@ package likelion.halo.hamso.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3UploadService {
@@ -36,10 +38,16 @@ public class S3UploadService {
 
         String contentDisposition = "attachment; filename=\"" +  originalFilename + "\"";
 
+        log.info("urlResource = {}", urlResource);
+
         // header에 CONTENT_DISPOSITION 설정을 통해 클릭 시 다운로드 진행
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(urlResource);
 
+    }
+
+    public void deleteImage(String originalFilename)  {
+        amazonS3.deleteObject(bucket, originalFilename);
     }
 }
