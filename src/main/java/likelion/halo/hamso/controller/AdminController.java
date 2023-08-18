@@ -68,6 +68,9 @@ public class AdminController {
 
     @PostMapping("/reserve/update")
     public ResponseEntity<ReservationStatus> updateReserveList(@RequestBody ReservationUpdateDto reservationStatusInfo) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        if(reservationStatusInfo.getReservationStatus().equals(ReservationStatus.CANCELED)) {
+            throw new RuntimeException("취소된 예약 상태는 수정이 더 이상 불가능합니다.");
+        }
         Long reservationId = reservationStatusInfo.getReservationId();
         if(reservationStatusInfo.getReservationStatus().equals(ReservationStatus.RESERVED)) {
             Reservation reservation = reservationService.findReservationById(reservationId);
