@@ -30,6 +30,8 @@ public class MachineInfoDto {
 
     private String imageUrl; // 농기계 설명
 
+    private Long regionId;
+
     public MachineInfoDto(AgriMachine agriMachine) {
         this.machineId = agriMachine.getId();
         this.type = agriMachine.getType();
@@ -39,5 +41,6 @@ public class MachineInfoDto {
         this.region2 = agriMachine.getRegion().getRegion2();
         this.region3 = agriMachine.getRegion().getRegion3();
         this.imageUrl = agriMachine.getImageUrl();
+        this.regionId = agriMachine.getRegion().getId();
     }
 }

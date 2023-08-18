@@ -94,4 +94,8 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private List<Reservation> reservationList;
 }
