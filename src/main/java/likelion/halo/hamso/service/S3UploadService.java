@@ -6,6 +6,7 @@ import likelion.halo.hamso.dto.s3.FileDetail;
 import likelion.halo.hamso.utils.AmazonS3ResourceStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +26,7 @@ public class S3UploadService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public FileDetail save(MultipartFile multipartFile) {
+    public FileDetail save(MultipartFile multipartFile) throws FileUploadException {
         FileDetail fileDetail = FileDetail.multipartOf(multipartFile);
         amazonS3ResourceStorage.store(fileDetail.getPath(), multipartFile);
         return fileDetail;

@@ -19,6 +19,8 @@ public class FileDetail {
     private String path;
     private long bytes;
 
+    private String fileUrl; // 추가된 필드
+
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
