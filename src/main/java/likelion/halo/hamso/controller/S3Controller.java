@@ -15,7 +15,8 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/s3", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "" +
+        "", produces = APPLICATION_JSON_VALUE)
 public class S3Controller {
     private final S3UploadService s3UploadService;
 
