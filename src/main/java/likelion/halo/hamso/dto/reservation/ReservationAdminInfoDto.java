@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReservationAdminInfoDto {
     private LocalDateTime wantTime; // 예약 원하는 날짜
+    private LocalDateTime endTime; // 예약 원하는 날짜
     private LocalDateTime createdAt; // 예약 신청 날짜
     private Long machineId; // / 빌리기 원하는 농기계 ID
 
@@ -43,5 +44,6 @@ public class ReservationAdminInfoDto {
         this.workload = reservationInfo.getWorkload();
         this.workType = reservationInfo.getWorkType();
         this.reservationId = reservationInfo.getId();
+        this.endTime=reservationInfo.getEndTime();
     }
 }
