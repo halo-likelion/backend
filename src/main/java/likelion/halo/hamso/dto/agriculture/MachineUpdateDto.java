@@ -20,11 +20,14 @@ public class MachineUpdateDto {
 
     private AgriRegion region;
 
+    private String imageUrl; // 농기계 설명
+
     public MachineUpdateDto(AgriMachine agriMachine) {
         this.id = agriMachine.getId();
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
         this.content = agriMachine.getContent();
         this.region = agriMachine.getRegion();
+        this.imageUrl = agriMachine.getImageUrl();
     }
 }

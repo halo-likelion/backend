@@ -26,6 +26,8 @@ public class MachineInsertDto {
     private Region2 region2;
     private Region3 region3;
 
+    private String imageUrl; // 농기계 설명
+
     public MachineInsertDto(AgriMachine agriMachine) {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
@@ -34,5 +36,6 @@ public class MachineInsertDto {
         this.region2 = agriMachine.getRegion().getRegion2();
         this.region3 = agriMachine.getRegion().getRegion3();
         this.oriCnt = agriMachine.getOriCnt();
+        this.imageUrl = agriMachine.getImageUrl();
     }
 }
