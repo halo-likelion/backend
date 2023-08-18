@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReservationLogSpecificDto {
     private LocalDateTime wantTime; // 예약 원하는 날짜
+    private LocalDateTime endTime; // 예약 원하는 날짜
+    private Integer reserveDayCnt;
     private LocalDateTime createdAt; // 예약 신청 날짜
     private Long machineId; // 빌리기 원하는 농기계 아이디
     private Integer price; // 임대료
@@ -37,5 +39,7 @@ public class ReservationLogSpecificDto {
         this.region =  reservationInfo.getAgriMachine().getRegion();
         this.reservationId = reservationInfo.getId();
         this.name = reservationInfo.getMember().getName();
+        this.endTime = reservationInfo.getEndTime();
+        this.reserveDayCnt = reservationInfo.getReserveDayCnt();
     }
 }

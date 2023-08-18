@@ -31,7 +31,7 @@ public class AgriMachine {
     private Integer price; // 임대 가격
 
     @Lob
-    @Column(name = "machine_content")
+    @Column(name = "machine_content",  columnDefinition = "TEXT")
     private String content; // 농기계 설명
 
 

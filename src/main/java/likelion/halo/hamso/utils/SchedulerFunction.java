@@ -27,7 +27,7 @@ import java.util.List;
 
 import static java.time.LocalTime.now;
 
-//@Component
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class SchedulerFunction {
@@ -43,7 +43,7 @@ public class SchedulerFunction {
         LocalDateTime now = LocalDateTime.now();
         List<Reservation> reservationList = reservationService.getReservingReservation();
         for(Reservation reservation:reservationList) {
-            if(reservation.getWantTime().isBefore(now.plusDays(1))){
+            if(reservation.getEndTime().isBefore(now.plusDays(1))){
                 reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.CANCELED);
             }
         }
@@ -54,7 +54,8 @@ public class SchedulerFunction {
         LocalDateTime now = LocalDateTime.now();
         List<Reservation> reservationList = reservationService.getReservedReservation();
         for(Reservation reservation:reservationList) {
-            if(reservation.getWantTime().isBefore(now)){
+            LocalDateTime endTime = reservation.getEndTime();
+            if(endTime.isBefore(now)){
                 reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.FINISHED);
             }
         }
@@ -73,14 +74,14 @@ public class SchedulerFunction {
                 Member member = reservation.getMember();
                 MessageDto messageDto = new MessageDto();
                 messageDto.setTo(member.getPhoneNo());
-                messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 "+ reservation.getAgriMachine().getType() +"이(가) 예약상태 예정입니다.");
+                messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) [" +year + "년" + month.getValue() + "월" + day + "일" +"]에 임대 예정입니다.");
                 SmsResponseDto response = smsService.sendSms(messageDto);
                 log.info("message log = {}", response);
             }
         }
     }
 
-    @Scheduled(cron = "0 0 0 * * ?", zone="Asia/Seoul") // 매달 1일
+//    @Scheduled(cron = "0 0 0 * * ?", zone="Asia/Seoul") // 매달 1일
     public void insertMonthNewPossibleData(){
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
