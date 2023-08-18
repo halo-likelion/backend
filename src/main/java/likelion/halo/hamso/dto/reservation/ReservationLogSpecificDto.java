@@ -2,6 +2,7 @@ package likelion.halo.hamso.dto.reservation;
 
 import likelion.halo.hamso.domain.AgriRegion;
 import likelion.halo.hamso.domain.Reservation;
+import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.domain.type.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,8 @@ public class ReservationLogSpecificDto {
 
     private String name; // 예약한 사람 이름
 
+    private AgriMachineType machineType;
+
     public ReservationLogSpecificDto(Reservation reservationInfo) {
         this.wantTime = reservationInfo.getWantTime();
         this.createdAt = reservationInfo.getCreatedAt();
@@ -41,5 +44,6 @@ public class ReservationLogSpecificDto {
         this.name = reservationInfo.getMember().getName();
         this.endTime = reservationInfo.getEndTime();
         this.reserveDayCnt = reservationInfo.getReserveDayCnt();
+        this.machineType = reservationInfo.getAgriMachine().getType();
     }
 }
