@@ -1,7 +1,6 @@
 package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.domain.AgriPossible;
-import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.*;
 import likelion.halo.hamso.repository.PossibleRepository;
 import likelion.halo.hamso.service.AgricultureService;
@@ -97,5 +96,10 @@ public class AgricultureController {
     @PostMapping("/update/image")
     public void updateMachineImageByType(@RequestBody MachineImageUpdateDto machineImageUpdateDto) {
         agricultureService.updateMachineImageByType(machineImageUpdateDto);
+    }
+
+    @PostMapping("/update/content")
+    public void updateMachineContentByType(@RequestBody MachineContentUpdateDto contentUpdateDto) {
+        agricultureService.updateMachineContentByType(contentUpdateDto);
     }
 }

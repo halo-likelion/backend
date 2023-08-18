@@ -221,4 +221,13 @@ public class AgricultureService {
             agriMachine.setImageUrl(dto.getImageUrl());
         }
     }
+
+
+    @Transactional
+    public void updateMachineContentByType(MachineContentUpdateDto dto) {
+        List<AgriMachine> machineList = agriMachineRepository.findByType(dto.getMachineType());
+        for(AgriMachine agriMachine:machineList) {
+            agriMachine.setContent(dto.getContent());
+        }
+    }
 }
