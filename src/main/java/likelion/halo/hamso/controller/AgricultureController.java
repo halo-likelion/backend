@@ -1,6 +1,7 @@
 package likelion.halo.hamso.controller;
 
 import likelion.halo.hamso.domain.AgriPossible;
+import likelion.halo.hamso.domain.type.AgriMachineType;
 import likelion.halo.hamso.dto.agriculture.*;
 import likelion.halo.hamso.repository.PossibleRepository;
 import likelion.halo.hamso.service.AgricultureService;
@@ -91,5 +92,10 @@ public class AgricultureController {
     @GetMapping("/possible")
     public List<AgriPossible> getPossibleList() {
         return possibleRepository.findByMachineId(103L);
+    }
+
+    @PostMapping("/update/image")
+    public void updateMachineImageByType(@RequestBody MachineImageUpdateDto machineImageUpdateDto) {
+        agricultureService.updateMachineImageByType(machineImageUpdateDto);
     }
 }

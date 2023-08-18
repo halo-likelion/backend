@@ -32,6 +32,8 @@ public class AdminMachineInfoDto {
 
     private List<Tag> tagList;
 
+    private String imageUrl;
+
     public AdminMachineInfoDto(AgriMachine agriMachine) {
         this.type = agriMachine.getType();
         this.price = agriMachine.getPrice();
@@ -40,5 +42,6 @@ public class AdminMachineInfoDto {
         this.region2 = agriMachine.getRegion().getRegion2();
         this.region3 = agriMachine.getRegion().getRegion3();
         this.tagList = agriMachine.getTagList();
+        this.imageUrl = agriMachine.getImageUrl();
     }
 }

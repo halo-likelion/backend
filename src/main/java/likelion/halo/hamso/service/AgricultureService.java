@@ -84,13 +84,9 @@ public class AgricultureService {
         return oMachine.get();
     }
 
-    public MachineInfoDto findByMachineType(AgriMachineType type){
-        Optional<AgriMachine> oMachine = agriMachineRepository.findByType(type);
-        if(oMachine.isEmpty()) {
-            throw new NotFoundException("Machine not found with type: " + type.toString());
-        } else {
-            return new MachineInfoDto(oMachine.get());
-        }
+    public List<MachineInfoDto> findByMachineType(AgriMachineType type){
+        List<AgriMachine> machineList = agriMachineRepository.findByType(type);
+        return convertMachineToMachineInfoDto(machineList);
     }
 
     public List<MachineInfoDto> findMachineInfoDtoAll() {
@@ -216,5 +212,13 @@ public class AgricultureService {
             throw new NotFoundException("해당 정보의 태그는 존재하지 않습니다!");
         }
         tagRepository.delete(oTag.get());
+    }
+
+    @Transactional
+    public void updateMachineImageByType(MachineImageUpdateDto dto) {
+        List<AgriMachine> machineList = agriMachineRepository.findByType(dto.getMachineType());
+        for(AgriMachine agriMachine:machineList) {
+            agriMachine.setImageUrl(dto.getImageUrl());
+        }
     }
 }
