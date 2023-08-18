@@ -9,10 +9,7 @@ import likelion.halo.hamso.dto.agriculture.MachineUpdateDto;
 import likelion.halo.hamso.dto.agriculture.RegionInfoDto;
 import likelion.halo.hamso.dto.each.FindEachMachineDto;
 import likelion.halo.hamso.dto.member.MemberDto;
-import likelion.halo.hamso.dto.reservation.ReservationAdminInfoDto;
-import likelion.halo.hamso.dto.reservation.ReservationAssignEachMachine;
-import likelion.halo.hamso.dto.reservation.ReservationLogDto;
-import likelion.halo.hamso.dto.reservation.ReservationLogSpecificDto;
+import likelion.halo.hamso.dto.reservation.*;
 import likelion.halo.hamso.exception.MemberDuplicateException;
 import likelion.halo.hamso.exception.NotEnoughCntException;
 import likelion.halo.hamso.exception.NotFoundException;
@@ -183,13 +180,23 @@ public class ReservationService {
     }
 
     @Transactional
-    public ReservationStatus updateReservationStatus(Long reservationId, ReservationStatus reservationStatus) {
+    public ReservationStatus updateReservationStatus(ReservationUpdateDto reservationUpdateDto) {
+        Long reservationId = reservationUpdateDto.getReservationId();
+        Long eachMachineId = reservationUpdateDto.getEachMachineId();
+        ReservationStatus reservationStatus = reservationUpdateDto.getReservationStatus();
         Optional<Reservation> oReservation = reservationRepository.findById(reservationId);
         if(oReservation.isEmpty()) {
             throw new NotFoundException("해당 예약 번호의 예약 내역은 존재하지 않습니다.");
         }
         Reservation reservation = oReservation.get();
         reservation.setStatus(reservationStatus);
+
+        Optional<EachMachine> oEachMachine = eachMachineRepository.findById(eachMachineId);
+        if(oEachMachine.isEmpty()) {
+            throw new NotFoundException("해당 기계 정보는 존재하지 않습니다.");
+
+        }
+        reservation.setEachMachine(oEachMachine.get());
         if(reservationStatus.equals(ReservationStatus.CANCELED)) {
             addCnt(reservation.getAgriMachine().getId(), reservation.getWantTime(), reservation.getReserveDayCnt());
         } else if (reservationStatus.equals(ReservationStatus.RESERVING)) {

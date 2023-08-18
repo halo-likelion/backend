@@ -84,10 +84,10 @@ public class AdminController {
                 SmsResponseDto response = smsService.sendSms(messageDto);
                 log.info("message log = {}", response);
 
-                return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, ReservationStatus.RESERVED), HttpStatus.OK);
+                return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo), HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo), HttpStatus.OK);
     }
 
     @GetMapping("/machine-list")
