@@ -52,4 +52,7 @@ public class AgriMachine {
     @OneToMany(mappedBy = "machine", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<EachMachine> eachMachineList;
+
+    @Column(name = "image_url")
+    private String imageUrl; // 농기계 설명
 }
