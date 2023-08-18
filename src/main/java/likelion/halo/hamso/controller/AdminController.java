@@ -55,7 +55,7 @@ public class AdminController {
             messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) 입금 확인되어 예약 신청 확정되셨습니다.");
             SmsResponseDto response = smsService.sendSms(messageDto);
             log.info("message log = {}", response);
-            reservationService.updateReservationStatus(reservationId, ReservationStatus.RESERVED);
+//            reservationService.updateReservationStatus(reservationId, ReservationStatus.RESERVED);
         }
 
         return new ResponseEntity<>(depositStatus, HttpStatus.OK);

@@ -44,7 +44,7 @@ public class SchedulerFunction {
         List<Reservation> reservationList = reservationService.getReservingReservation();
         for(Reservation reservation:reservationList) {
             if(reservation.getEndTime().isBefore(now.plusDays(1))){
-                reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.CANCELED);
+//                reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.CANCELED);
             }
         }
     }
@@ -56,7 +56,7 @@ public class SchedulerFunction {
         for(Reservation reservation:reservationList) {
             LocalDateTime endTime = reservation.getEndTime();
             if(endTime.isBefore(now)){
-                reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.FINISHED);
+//                reservationService.updateReservationStatus(reservation.getId(), ReservationStatus.FINISHED);
             }
         }
     }

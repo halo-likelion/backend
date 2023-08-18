@@ -144,7 +144,8 @@ public class ReservationController {
         Month month = wantTime.getMonth();
         int day = wantTime.getDayOfMonth();
 
-        ReservationStatus reservationStatus = reservationService.updateReservationStatus(reservationId, ReservationStatus.CANCELED);
+        ReservationUpdateDto reservationUpdateDto = new ReservationUpdateDto(reservationId, ReservationStatus.CANCELED, reservation.getEachMachine().getId());
+        ReservationStatus reservationStatus = reservationService.updateReservationStatus(reservationUpdateDto);
 
         MessageDto messageDto = new MessageDto();
         messageDto.setTo(loginMember.getPhoneNo());
