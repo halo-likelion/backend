@@ -67,8 +67,23 @@ public class AdminController {
     }
 
     @PostMapping("/reserve/update")
-    public ResponseEntity<ReservationStatus> updateReserveList(@RequestBody ReservationUpdateDto reservationStatusInfo) {
-        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationStatusInfo.getReservationId(), reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
+    public ResponseEntity<ReservationStatus> updateReserveList(@RequestBody ReservationUpdateDto reservationStatusInfo) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        Long reservationId = reservationStatusInfo.getReservationId();
+        if(reservationStatusInfo.getReservationStatus().equals(ReservationStatus.RESERVED)) {
+            Reservation reservation = reservationService.findReservationById(reservationId);
+
+            Boolean depositStatus = reservationService.updateDepositStatus(reservationId);
+            if(depositStatus) {
+                Member member = reservation.getMember();
+                MessageDto messageDto = new MessageDto();
+                messageDto.setTo(member.getPhoneNo());
+                messageDto.setContent("<렛츠-농사> " + member.getName() +"님 "+ reservation.getAgriMachine().getType()+"이(가) 입금 확인되어 예약 신청 확정되셨습니다.");
+                SmsResponseDto response = smsService.sendSms(messageDto);
+                log.info("message log = {}", response);
+                reservationService.updateReservationStatus(reservationId, ReservationStatus.RESERVED);
+            }
+        }
+        return new ResponseEntity<>(reservationService.updateReservationStatus(reservationId, reservationStatusInfo.getReservationStatus()), HttpStatus.OK);
     }
 
     @GetMapping("/machine-list")
