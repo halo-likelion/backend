@@ -62,7 +62,7 @@ naver-cloud-sms:
 cloud:
   aws:
     s3:
-      bucket: letsnongsa-bucket
+      bucket: nongsa-bucket
     credentials:
       access-key: AKIAZBR5GYMZIWQJYR5K
       secret-key: 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

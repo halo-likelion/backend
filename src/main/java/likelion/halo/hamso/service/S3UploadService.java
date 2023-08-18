@@ -2,6 +2,8 @@ package likelion.halo.hamso.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import likelion.halo.hamso.dto.s3.FileDetail;
+import likelion.halo.hamso.utils.AmazonS3ResourceStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +20,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class S3UploadService {
     private final AmazonS3 amazonS3;
+    private final AmazonS3ResourceStorage amazonS3ResourceStorage;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    public FileDetail save(MultipartFile multipartFile) {
+        FileDetail fileDetail = FileDetail.multipartOf(multipartFile);
+        amazonS3ResourceStorage.store(fileDetail.getPath(), multipartFile);
+        return fileDetail;
+    }
 
     public String saveFile(MultipartFile multipartFile) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();

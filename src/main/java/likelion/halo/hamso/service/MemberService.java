@@ -117,8 +117,10 @@ public class MemberService {
         }
         Member member = oMember.get();
 
-        if(encoder.matches(member.getPassword(), newPassword)) {
+        if(encoder.matches(member.getPassword(), oldPassword)) {
             member.setPassword(encoder.encode(newPassword));
+        } else {
+            throw new NotFoundException("비밀 번호가 일치하지 않습니다." );
         }
         return true;
     }
