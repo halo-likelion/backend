@@ -29,6 +29,11 @@ public class S3UploadService {
     public FileDetail save(MultipartFile multipartFile) throws FileUploadException {
         FileDetail fileDetail = FileDetail.multipartOf(multipartFile);
         amazonS3ResourceStorage.store(fileDetail.getPath(), multipartFile);
+
+        // S3에 저장된 파일의 URL 생성
+        String fileUrl = amazonS3.getUrl(bucket, fileDetail.getPath()).toString();
+        fileDetail.setFileUrl(fileUrl);
+
         return fileDetail;
     }
 
