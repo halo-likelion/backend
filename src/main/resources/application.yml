@@ -64,8 +64,8 @@ cloud:
     s3:
       bucket: nongsa-bucket
     credentials:
-      access-key: AKIAZBR5GYMZIWQJYR5K
-      secret-key: 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
+      access-key: "${ACCESS_KEY}"
+      secret-key: "${SECRET_KEY}"
     region:
       static: ap-northeast-2
       auto: false
